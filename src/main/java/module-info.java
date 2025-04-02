@@ -1,6 +1,7 @@
 module com.example.knk_gr1 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.knk_gr1 to javafx.fxml;
