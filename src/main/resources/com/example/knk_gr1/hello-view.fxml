@@ -2,9 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
+
+
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.knk_gr1.HelloController">
     <padding>
@@ -13,4 +17,20 @@
 
     <Label fx:id="welcomeText"/>
     <Button text="Hello!" onAction="#onHelloButtonClick"/>
+
+
+    <TableView fx:id="tableView" layoutX="50" layoutY="50" prefWidth="400" prefHeight="250">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="100"/>
+            <TableColumn fx:id="emriColumn" text="Emri" prefWidth="150"/>
+            <TableColumn fx:id="kodiPostarColumn" text="Kodi Postar" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+
+    <TextField fx:id="emriInput" promptText="Emri i Komunës" />
+    <TextField fx:id="kodiPostarInput" promptText="Kodi Postar" />
+
+
+    <Button text="Shto Komunë" onAction="#onAddKomunaButtonClick"/>
 </VBox>
