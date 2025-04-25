@@ -1,14 +1,20 @@
-package models.Dto;
+package models.Dto.AdresaDto;
 
-public class UpdateAdresaDto {
+public class CreateAdresaDto {
+    private int id;
     private String rruga;
     private int numri;
     private int kodi_postar;
 
-    public UpdateAdresaDto(String rruga, int numri, int kodi_postar) {
+    public CreateAdresaDto(int id, String rruga, int numri, int kodi_postar) {
+        this.id = id;
         this.rruga = rruga;
         this.numri = numri;
         this.kodi_postar = kodi_postar;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getRruga() {

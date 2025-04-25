@@ -1,11 +1,11 @@
-package models.Dto;
+package models.Dto.AdresaDto;
 
-public class CreateAdresaDto {
+public class UpdateAdresaDto {
     private String rruga;
     private int numri;
     private int kodi_postar;
 
-    public CreateAdresaDto(String rruga, int numri, int kodi_postar) {
+    public UpdateAdresaDto(String rruga, int numri, int kodi_postar) {
         this.rruga = rruga;
         this.numri = numri;
         this.kodi_postar = kodi_postar;
@@ -35,3 +35,4 @@ public class CreateAdresaDto {
         this.kodi_postar = kodi_postar;
     }
 }
+
