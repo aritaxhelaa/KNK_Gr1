@@ -5,17 +5,17 @@ import java.sql.SQLException;
 
 public class Objekti {
     private int id;
-    private String lloji;
+    private TipiObjektit tipiObjektit;
     private String emri;
     private int rrugaId;
     private String numriNderteses;
     private String koordinatatGPS;
     private int kodiPostarId;
 
-    private Objekti(int id, String lloji, String emri, int rrugaId, String numriNderteses,
+    private Objekti(int id, TipiObjektit tipiObjektit, String emri, int rrugaId, String numriNderteses,
                     String koordinatatGPS, int kodiPostarId) {
         this.id = id;
-        this.lloji = lloji;
+        this.tipiObjektit = tipiObjektit;
         this.emri = emri;
         this.rrugaId = rrugaId;
         this.numriNderteses = numriNderteses;
@@ -31,12 +31,12 @@ public class Objekti {
         this.id = id;
     }
 
-    public String getLloji() {
-        return lloji;
+    public TipiObjektit getTipiObjektit() {
+        return tipiObjektit;
     }
 
-    public void setLloji(String lloji) {
-        this.lloji = lloji;
+    public void setTipiObjektit(TipiObjektit tipiObjektit) {
+        this.tipiObjektit = tipiObjektit;
     }
 
     public String getEmri() {
@@ -81,18 +81,21 @@ public class Objekti {
 
     public static Objekti getInstance(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
-        String lloji = resultSet.getString("lloji");
+        int tipiObjektitId = resultSet.getInt("tipi_objektit_id");
         String emri = resultSet.getString("emri");
         int rrugaId = resultSet.getInt("rruga_id");
         String numriNderteses = resultSet.getString("numri_nderteses");
         String koordinatatGPS = resultSet.getString("koordinatat_gps");
         int kodiPostarId = resultSet.getInt("kodi_postar_id");
 
-        return new Objekti(id, lloji, emri, rrugaId, numriNderteses, koordinatatGPS, kodiPostarId);
+        String tipiEmri = resultSet.getString("tipi_objektit_emri"); // duhet ta lexosh këtë nga databaza
+        TipiObjektit tipiObjektit = new TipiObjektit(tipiObjektitId, tipiEmri);
+
+        return new Objekti(id, tipiObjektit, emri, rrugaId, numriNderteses, koordinatatGPS, kodiPostarId);
     }
 
     @Override
     public String toString() {
-        return emri + " (" + lloji + ")";
+        return emri + " (" + tipiObjektit.getEmri() + ")";
     }
 }

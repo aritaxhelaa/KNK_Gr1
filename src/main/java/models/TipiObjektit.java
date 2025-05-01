@@ -7,7 +7,7 @@ public class TipiObjektit {
     private int id;
     private String emri;
 
-    private TipiObjektit(int id, String emri) {
+    public TipiObjektit(int id, String emri) {
         this.id = id;
         this.emri = emri;
     }
