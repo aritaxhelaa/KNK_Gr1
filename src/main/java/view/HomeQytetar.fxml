@@ -92,7 +92,7 @@
         </Label>
             <Label fx:id="lblWelcome" layoutX="127.0" layoutY="27.0" prefHeight="18.0" prefWidth="139.0" text="Label" />
             <Button fx:id="btnKerkoAdrese" layoutX="85.0" layoutY="152.0" mnemonicParsing="false" onAction="#kerkoAdrese" text="Kerko adrese" />
-            <Button fx:id="btnKerkoAdrese" layoutX="186.0" layoutY="152.0" mnemonicParsing="false" onAction="#shfaqHarte" text="Shfaq ne harte" />
+            <Button fx:id="btnShfaqHarte" layoutX="186.0" layoutY="152.0" mnemonicParsing="false" onAction="#shfaqHarte" text="Shfaq ne harte" />
             <Button fx:id="btnDil" layoutX="304.0" layoutY="152.0" mnemonicParsing="false" onAction="#dil" prefHeight="26.0" prefWidth="44.0" text="Dil" />
       </children>
     </AnchorPane>
