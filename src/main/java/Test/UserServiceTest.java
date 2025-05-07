@@ -2,24 +2,30 @@ package Test;
 
 import models.User;
 import models.Dto.UserDto.CreateUserDto;
-import repository.UserRepository;
+import models.Dto.UserDto.UpdateUserDto;
 import services.UserService;
 
 public class UserServiceTest {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         UserService userService = new UserService();
 
         try {
+            // Testo leximin e një përdoruesi
+            User user = userService.getById(1);
+            System.out.println("Emri: " + user.getName());
 
-            CreateUserDto dto = new CreateUserDto("TestUser", "testuser@example.com", 24, "qytetar");
-            User u = userService.create(dto);
-            System.out.println("User i krijuar: " + u);
+            // Testo krijimin e një përdoruesi të ri
+//            CreateUserDto createUser = new CreateUserDto("Arben", "arben@gmail.com", 25, "qytetar");
+//            userService.create(createUser);
 
+            // Testo përditësimin e një përdoruesi
+//            UpdateUserDto updateUser = new UpdateUserDto();
+//            updateUser.setId(1);
+//            updateUser.setEmail("arben_updated@gmail.com");
+//            userService.update(updateUser);
 
-            User fromDb = userService.getById(u.getId());
-            System.out.println("Nga DB: " + fromDb.getName() + ", " + fromDb.getEmail());
-
-            // userService.delete(u.getId());
+            // Testo fshirjen
+//            userService.delete(5);
 
         } catch (Exception e) {
             e.printStackTrace();

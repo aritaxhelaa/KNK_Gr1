@@ -2,35 +2,43 @@ package Test;
 
 import Database.DBConnector;
 import models.User;
+import models.Dto.UserDto.UpdateUserDto;
 import repository.UserRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserRepositoryTest {
     public static void main(String[] args) {
         Connection connection = DBConnector.getConnection();
-
         try {
-            Statement stmt = connection.createStatement();
+            Statement stm = connection.createStatement();
             String query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
-            ResultSet result = stmt.executeQuery(query);
-
+            ResultSet result = stm.executeQuery(query);
             if (result.next()) {
-                User u = User.getInstance(result);
-                System.out.println("User: " + u.getName() + " - " + u.getEmail());
+                User user = User.getInstance(result);
+                System.out.println("ID: " + user.getId());
+                System.out.println("Email: " + user.getEmail());
             }
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Test direkt për getById
         UserRepository userRepository = new UserRepository();
         User user = userRepository.getById(1);
         if (user != null) {
-            System.out.println("Nga ID 1: " + user.getName());
+            System.out.println("Emri: " + user.getName());
         }
+
+        // Test përditësim
+//        UpdateUserDto updateUser = new UpdateUserDto();
+//        updateUser.setId(1);
+//        updateUser.setEmail("updated.email@gmail.com");
+//        userRepository.update(updateUser);
+
+        // Test fshirje
+//        userRepository.delete(3);
     }
 }
