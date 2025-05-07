@@ -47,4 +47,13 @@ public class AdresaService {
         }
         return adresa;
     }
+
+    public void delete(int id) throws Exception {
+        if (id <= 0) {
+            throw new Exception("ID nuk është valid për fshirje.");
+        }
+
+        this.adresaRepository.delete(id);
+    }
+
 }
