@@ -4,6 +4,8 @@ public class UpdateUserDto {
     private int id;
     private String email;
 
+    public UpdateUserDto() {}
+
     public UpdateUserDto(int id, String email) {
         this.id = id;
         this.email = email;
@@ -20,4 +22,9 @@ public class UpdateUserDto {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
