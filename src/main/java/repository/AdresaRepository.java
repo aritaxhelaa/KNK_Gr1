@@ -21,7 +21,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
     @Override
     public Adresa create(CreateAdresaDto adresaDto) {
         String query = """
-                INSERT INTO adresa (rruga, numri, kodiPostar)
+                INSERT INTO adresa (rruga, numri, kodi_postar)
                 VALUES (?, ?, ?)
                 """;
         try {
@@ -56,7 +56,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
             params.add(adresaDto.getNumri());
         }
         if (adresaDto.getKodi_postar() != null) {
-            query.append("kodiPostar = ?, ");
+            query.append("kodi_postar = ?, ");
             params.add(adresaDto.getKodi_postar());
         }
 

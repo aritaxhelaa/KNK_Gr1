@@ -28,7 +28,7 @@ public class User {
         String email = result.getString("email");
         int age = result.getInt("age");
         String roli = result.getString("roli");
-        String passwordHash = result.getString("passwordHash");
+        String passwordHash = result.getString("password_hash");
         String salt = result.getString("salt");
         return new User(id, name, email, age, roli, passwordHash, salt);
     }

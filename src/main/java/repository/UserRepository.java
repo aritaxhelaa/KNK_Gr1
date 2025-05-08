@@ -21,7 +21,7 @@ public class UserRepository extends BaseRepository<User, CreateUserDto, UpdateUs
     @Override
     public User create(CreateUserDto userDto) {
         String query = """
-                INSERT INTO users (name, email, age, roli, passwordHash, salt)
+                INSERT INTO users (name, email, age, roli, password_hash, salt)
                 VALUES (?, ?, ?, ?, ?, ?)
                 """;
         try {

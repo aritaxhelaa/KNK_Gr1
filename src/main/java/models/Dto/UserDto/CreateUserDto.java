@@ -17,6 +17,10 @@ public class CreateUserDto {
         this.salt = salt;
     }
 
+    public CreateUserDto(String name, String email, int age, String roli) {
+        this(name, email, age, roli, null, null);
+    }
+
     public String getName() { return name; }
     public String getEmail() { return email; }
     public int getAge() { return age; }

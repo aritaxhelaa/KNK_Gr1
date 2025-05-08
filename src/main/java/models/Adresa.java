@@ -50,9 +50,9 @@ public class Adresa {
     }
     public static Adresa getInstance(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");//
-        String rruga = resultSet.getNString("rruga");
+        String rruga = resultSet.getString("rruga");
         int numri = resultSet.getInt("numri");
-        int kodiPostar = resultSet.getInt("kodiPostar");
+        int kodiPostar = resultSet.getInt("kodi_postar");
         return new Adresa(id, rruga, numri, kodiPostar);
 
     }
