@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import models.User;
 import services.UserService;
 import models.Dto.UserDto.LoginUserDto;
+import services.SceneManager;
+import utils.SceneLocator;
 
 public class LogInController {
 
@@ -15,10 +17,10 @@ public class LogInController {
     private TextField Username;
 
     @FXML
-    private PasswordField Password;
+    private TextField Password;
 
     @FXML
-    private Button LogInBttn;
+    private Button LoginBttn;
 
     @FXML
     private Label ErrorLable;
@@ -27,7 +29,7 @@ public class LogInController {
 
     @FXML
     private void initialize() {
-        LogInBttn.setOnAction(event -> handleLogin());
+        LoginBttn.setOnAction(event -> handleLogin());
     }
 
     private void handleLogin() {
@@ -45,12 +47,15 @@ public class LogInController {
             LoginUserDto loginDto = new LoginUserDto(email, password);
             User user = userService.login(loginDto);
 
+            // Përkohësisht:
+            ErrorLable.setText("Login i suksesshëm! Roli: " + user.getRoli());
+
 
             // Roli: admin, komunal, qytetar → hap faqen përkatëse
 //            switch (user.getRoli()) {
-//                case "admin" -> openDashboard("admin-view.fxml");
-//                case "komunal" -> openDashboard("komunal-view.fxml");
-//                case "qytetar" -> openDashboard("qytetar-view.fxml");
+//                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
+//                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
+//                case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
 //                default -> ErrorLable.setText("Roli i panjohur.");
 //            }
 
@@ -59,15 +64,15 @@ public class LogInController {
         }
     }
 
-//    private void openDashboard(String fxmlPath) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/" + fxmlPath));
-//            Scene scene = new Scene(loader.load());
-//            Stage stage = (Stage) Username.getScene().getWindow();
-//            stage.setScene(scene);
-//        } catch (Exception e) {
-//            ErrorLable.setText("Nuk u hap pamja përkatëse.");
-//            e.printStackTrace();
-//        }
-//    }
+    private void openDashboard(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + fxmlPath));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) Username.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk u hap pamja përkatëse.");
+            e.printStackTrace();
+        }
+    }
 }
