@@ -2,7 +2,9 @@ package services;
 
 import models.User;
 import models.Dto.UserDto.CreateUserDto;
+import models.Dto.UserDto.LoginUserDto;
 import repository.UserRepository;
+import util.PasswordHasher;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -37,6 +39,29 @@ public class UserService {
         User user = this.userRepository.create(createUser);
         if (user == null) {
             throw new Exception("Krijimi i përdoruesit dështoi.");
+        }
+
+        return user;
+    }
+
+    public User login(LoginUserDto loginDto) throws Exception {
+        if (loginDto.getEmail().isEmpty() || loginDto.getPassword().isEmpty()) {
+            throw new Exception("Email dhe fjalëkalimi nuk mund të jenë bosh.");
+        }
+
+        User user = this.userRepository.getByEmail(loginDto.getEmail());
+        if (user == null) {
+            throw new Exception("Përdoruesi nuk ekziston.");
+        }
+
+        boolean passwordValid = PasswordHasher.compareSaltedHash(
+                loginDto.getPassword(),
+                user.getSalt(),
+                user.getPasswordHash()
+        );
+
+        if (!passwordValid) {
+            throw new Exception("Fjalëkalimi është i pasaktë.");
         }
 
         return user;
