@@ -1,0 +1,75 @@
+package Controllers;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import models.Dto.UserDto.CreateUserDto;
+import services.UserService;
+import util.PasswordHasher;
+
+public class RegisterController {
+
+    @FXML private TextField NameField;
+    @FXML private TextField EmailField;
+    @FXML private TextField AgeField;
+    @FXML private PasswordField PasswordField;
+    @FXML private PasswordField ConfirmPasswordField;
+    @FXML private Label ErrorLabel;
+    @FXML private Button RegisterButton;
+
+    private final UserService userService = new UserService();
+
+    @FXML
+    public void initialize() {
+        RegisterButton.setOnAction(event -> handleRegister());
+    }
+
+    private void handleRegister() {
+        ErrorLabel.setText("");
+
+        String name = NameField.getText().trim();
+        String email = EmailField.getText().trim();
+        String ageText = AgeField.getText().trim();
+        String password = PasswordField.getText();
+        String confirmPassword = ConfirmPasswordField.getText();
+
+        if (name.isEmpty() || email.isEmpty() || ageText.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            ErrorLabel.setText("Ju lutem plotësoni të gjitha fushat.");
+            return;
+        }
+
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+        } catch (NumberFormatException e) {
+            ErrorLabel.setText("Mosha duhet të jetë numër.");
+            return;
+        }
+
+        if (!email.matches("^.+@.+\\..+$")) {
+            ErrorLabel.setText("Email nuk është valid.");
+            return;
+        }
+
+        if (password.length() < 8) {
+            ErrorLabel.setText("Passwordi duhet të ketë të paktën 8 karaktere.");
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            ErrorLabel.setText("Passwordet nuk përputhen.");
+            return;
+        }
+
+        String salt = PasswordHasher.generateSalt();
+        String hashedPassword = PasswordHasher.generateSaltedHash(password, salt);
+
+        CreateUserDto dto = new CreateUserDto(name, email, age, "qytetar", hashedPassword, salt);
+
+        try {
+            userService.create(dto);
+            ErrorLabel.setText("Regjistrimi u krye me sukses!");
+        } catch (Exception e) {
+            ErrorLabel.setText(e.getMessage());
+        }
+    }
+}
