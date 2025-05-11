@@ -21,24 +21,13 @@ public class RegisterController {
     @FXML private Button RegisterBtn;
     @FXML private Label BackToLogin;
 
-
-
     private final UserService userService = new UserService();
 
+    /**
+     * Kjo metodë thirret kur klikohet butoni "Register"
+     * Lidhet nga Scene Builder me `onAction="handleRegister"`
+     */
     @FXML
-    public void initialize() {
-        RegisterBtn.setOnAction(event -> handleRegister());
-        
-        BackToLogin.setOnMouseClicked(event -> {
-            try {
-                SceneManager.load("/view/LoginView.fxml");
-            } catch (Exception e) {
-                ErrorLabel.setText("Nuk mund të hapet faqja e kyçjes.");
-                e.printStackTrace();
-            }
-        });
-    }
-
     private void handleRegister() {
         ErrorLabel.setText("");
 
@@ -76,7 +65,7 @@ public class RegisterController {
             return;
         }
 
-        // ✅ Kontrollo nëse emaili tashmë ekziston
+        // Kontrollo nëse emaili ekziston
         User existingUser = userService.getByEmail(email);
         if (existingUser != null) {
             ErrorLabel.setText("Ky email tashmë është në përdorim.");
@@ -90,10 +79,9 @@ public class RegisterController {
 
         try {
             User newUser = userService.create(dto);
-
-            // ✅ Ruaj përdoruesin në sesion dhe redirect në dashboard sipas rolit
             SessionManager.setCurrentUser(newUser);
 
+            // Redirect sipas rolit
 //            switch (newUser.getRoli()) {
 //                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
 //                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
@@ -101,8 +89,24 @@ public class RegisterController {
 //                default -> ErrorLabel.setText("Roli i panjohur.");
 //            }
 
+            ErrorLabel.setText("Regjistrimi u krye me sukses!");
+
         } catch (Exception e) {
             ErrorLabel.setText(e.getMessage());
+        }
+    }
+
+    /**
+     * Kjo metodë thirret kur klikon "Already have an account?"
+     * Lidhet nga Scene Builder me `onMouseClicked="goToLogin"`
+     */
+    @FXML
+    private void goToLogin() {
+        try {
+            SceneManager.load("/view/LoginView.fxml");
+        } catch (Exception e) {
+            ErrorLabel.setText("Nuk mund të hapet faqja e kyçjes.");
+            e.printStackTrace();
         }
     }
 }
