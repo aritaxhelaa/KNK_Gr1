@@ -1,0 +1,151 @@
+/* Enhanced styling for Kosovo Address System */
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-background-color: #f8f9fa;
+}
+
+/* Main BorderPane styling */
+BorderPane {
+    -fx-background-color: white;
+}
+
+/* Improved sidebar styling with deeper blue */
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom, #003366, #002250);
+    -fx-padding: 10 15 20 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 12, 0, 4, 0);
+}
+
+/* Improved sidebar buttons */
+.sidebar-button {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 160px;
+    -fx-pref-height: 45px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 0 5 0 10;
+    -fx-alignment: center-left;
+    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.1) transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+    -fx-translate-x: 2;
+}
+
+.sidebar-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-translate-x: 1;
+}
+
+/* Logo styling */
+.sidebar ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.2), 10, 0, 0, 0);
+    -fx-opacity: 0.95;
+}
+
+/* Main content styling */
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+    -fx-padding: 10 0 15 0;
+}
+
+VBox {
+    -fx-padding: 25;
+    -fx-spacing: 15;
+}
+
+/* Search section styling */
+.search-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+    -fx-border-color: transparent transparent #d4af37 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 5 0 5 0;
+}
+
+/* Form elements styling */
+GridPane {
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+    -fx-padding: 10 0 0 0;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: normal;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 3, 0, 0, 1);
+}
+
+.text-field:focused {
+    -fx-border-color: #d4af37;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.2), 5, 0, 0, 0);
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 0;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 3, 0, 0, 1);
+}
+
+.combo-box:focused {
+    -fx-border-color: #d4af37;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.2), 5, 0, 0, 0);
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #f8f8f8;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #003366;
+}
+
+/* Search button styling */
+.search-button {
+    -fx-background-color: linear-gradient(#d4af37, #c4a030);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0.2, 0, 1);
+    -fx-padding: 10 25;
+}
+
+.search-button:hover {
+    -fx-background-color: linear-gradient(#e0bb43, #d4af37);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.3, 0, 1);
+}
+
+.search-button:pressed {
+    -fx-background-color: #b49429;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0.1, 0, 1);
+    -fx-translate-y: 1;
+}
