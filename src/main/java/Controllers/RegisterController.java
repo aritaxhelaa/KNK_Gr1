@@ -18,13 +18,25 @@ public class RegisterController {
     @FXML private PasswordField PasswordField;
     @FXML private PasswordField ConfirmPasswordField;
     @FXML private Label ErrorLabel;
-    @FXML private Button RegisterButton;
+    @FXML private Button RegisterBtn;
+    @FXML private Label BackToLogin;
+
+
 
     private final UserService userService = new UserService();
 
     @FXML
     public void initialize() {
-        RegisterButton.setOnAction(event -> handleRegister());
+        RegisterBtn.setOnAction(event -> handleRegister());
+        
+        BackToLogin.setOnMouseClicked(event -> {
+            try {
+                SceneManager.load("/view/LoginView.fxml");
+            } catch (Exception e) {
+                ErrorLabel.setText("Nuk mund të hapet faqja e kyçjes.");
+                e.printStackTrace();
+            }
+        });
     }
 
     private void handleRegister() {

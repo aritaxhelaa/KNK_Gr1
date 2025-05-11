@@ -25,11 +25,24 @@ public class LogInController {
     @FXML
     private Label ErrorLable;
 
+    @FXML
+    private Label CreateUsr; // ✅ Labeli që klikojmë për të shkuar në regjistrim
+
     private final UserService userService = new UserService();
 
     @FXML
     private void initialize() {
         LoginBttn.setOnAction(event -> handleLogin());
+
+        // 🔗 Kalimi në faqen e regjistrimit kur klikohet "Create your account"
+        CreateUsr.setOnMouseClicked(event -> {
+            try {
+                SceneManager.load("/view/RegisterView.fxml");
+            } catch (Exception e) {
+                ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+                e.printStackTrace();
+            }
+        });
     }
 
     private void handleLogin() {
@@ -49,7 +62,6 @@ public class LogInController {
 
             // Përkohësisht:
             ErrorLable.setText("Login i suksesshëm! Roli: " + user.getRoli());
-
 
             // Roli: admin, komunal, qytetar → hap faqen përkatëse
 //            switch (user.getRoli()) {
