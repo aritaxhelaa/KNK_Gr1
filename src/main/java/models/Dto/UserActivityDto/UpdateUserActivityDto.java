@@ -1,14 +1,24 @@
 package models.Dto.UserActivityDto;
 
 public class UpdateUserActivityDto {
+    private int id;
     private String veprimi;
     private String entiteti;
     private int entitetiId;
 
-    public UpdateUserActivityDto(String veprimi, String entiteti, int entitetiId) {
+    public UpdateUserActivityDto(int id, String veprimi, String entiteti, int entitetiId) {
+        this.id = id;
         this.veprimi = veprimi;
         this.entiteti = entiteti;
         this.entitetiId = entitetiId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getVeprimi() {
