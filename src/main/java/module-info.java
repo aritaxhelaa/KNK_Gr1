@@ -3,6 +3,7 @@ module com.example.knk_gr1 {
     requires javafx.fxml;
     requires java.sql;
 
+    exports com.example.knk_gr1;
 
 //    opens com.example.knk_gr1 to javafx.fxml;
 //    exports com.example.knk_gr1;
@@ -27,6 +28,9 @@ module com.example.knk_gr1 {
 
    opens utils to javafx.fxml;
    exports utils;
+
+   opens Application to javafx.fxml;
+   exports Application;
 
 
 }
