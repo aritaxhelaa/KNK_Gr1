@@ -66,4 +66,9 @@ public class UserService {
 
         return user;
     }
+    //per me pa se a u regjistru maheret ky user
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
 }

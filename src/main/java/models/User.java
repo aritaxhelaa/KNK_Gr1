@@ -12,7 +12,7 @@ public class User {
     private String passwordHash;
     private String salt;
 
-    public User(int id, String name, String email, int age, String roli, String passwordHash, String salt) {
+    private User(int id, String name, String email, int age, String roli, String passwordHash, String salt) {
         this.id = id;
         this.name = name;
         this.email = email;

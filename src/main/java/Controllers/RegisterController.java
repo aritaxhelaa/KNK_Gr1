@@ -3,8 +3,12 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.Dto.UserDto.CreateUserDto;
+import models.User;
 import services.UserService;
 import util.PasswordHasher;
+import util.SessionManager;
+import services.SceneManager;
+import utils.SceneLocator;
 
 public class RegisterController {
 
@@ -60,14 +64,31 @@ public class RegisterController {
             return;
         }
 
+        // ✅ Kontrollo nëse emaili tashmë ekziston
+        User existingUser = userService.getByEmail(email);
+        if (existingUser != null) {
+            ErrorLabel.setText("Ky email tashmë është në përdorim.");
+            return;
+        }
+
         String salt = PasswordHasher.generateSalt();
         String hashedPassword = PasswordHasher.generateSaltedHash(password, salt);
 
         CreateUserDto dto = new CreateUserDto(name, email, age, "qytetar", hashedPassword, salt);
 
         try {
-            userService.create(dto);
-            ErrorLabel.setText("Regjistrimi u krye me sukses!");
+            User newUser = userService.create(dto);
+
+            // ✅ Ruaj përdoruesin në sesion dhe redirect në dashboard sipas rolit
+            SessionManager.setCurrentUser(newUser);
+
+//            switch (newUser.getRoli()) {
+//                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
+//                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
+//                case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
+//                default -> ErrorLabel.setText("Roli i panjohur.");
+//            }
+
         } catch (Exception e) {
             ErrorLabel.setText(e.getMessage());
         }

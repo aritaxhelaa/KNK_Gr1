@@ -10,7 +10,7 @@ public class KodiPostar {
     private String regjioni;
     private int komunaId;
 
-    public KodiPostar(int id, String kodi, String nenregjioni, String regjioni, int komunaId) {
+    private KodiPostar(int id, String kodi, String nenregjioni, String regjioni, int komunaId) {
         this.id = id;
         this.kodi = kodi;
         this.nenregjioni = nenregjioni;
