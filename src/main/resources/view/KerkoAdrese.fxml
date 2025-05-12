@@ -64,10 +64,10 @@
                     <children>
                         <Label text="Komuna:" />
                         <ComboBox prefWidth="350.0" promptText="Zgjidhni komunën" GridPane.columnIndex="1" />
-                        <Label text="Emri i vendbanimit:" GridPane.rowIndex="1" />
-                        <TextField promptText="Shkruani emrin e vendbanimit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Rruga:" GridPane.rowIndex="2" />
-                        <TextField promptText="Shkruani emrin e rrugës" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Rruga:" GridPane.rowIndex="1" />
+                        <TextField promptText="Shkruani emrin e rrugës" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Objekti:" GridPane.rowIndex="2" />
+                        <TextField promptText="Shkruani numrin e objektit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="Kërko" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                     </children>
                 </GridPane>
