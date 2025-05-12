@@ -5,6 +5,8 @@ import models.Dto.KodiPostarDto.CreateKodiPostarDto;
 import models.Dto.KodiPostarDto.UpdateKodiPostarDto;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KodiPostarRepository extends BaseRepository<KodiPostar, CreateKodiPostarDto, UpdateKodiPostarDto> {
 
@@ -66,4 +68,43 @@ public class KodiPostarRepository extends BaseRepository<KodiPostar, CreateKodiP
         }
         return null;
     }
+
+    // 🆕 Shto kjo metodë për kërkim sipas emrit të Komunës
+    public KodiPostar getByKomunaName(String komunaName) {
+        String query = """
+            SELECT kp.* FROM kodi_postar kp
+            JOIN komuna k ON kp.komuna_id = k.id
+            WHERE k.emri = ?
+        """;
+
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setString(1, komunaName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return KodiPostar.getInstance(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    // Vazhdohet nga kodi yt ekzistues
+    public List<KodiPostar> getByKomunaId(int komunaId) {
+        List<KodiPostar> lista = new ArrayList<>();
+        String query = "SELECT * FROM kodi_postar WHERE komuna_id = ?";
+
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setInt(1, komunaId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(KodiPostar.getInstance(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
 }

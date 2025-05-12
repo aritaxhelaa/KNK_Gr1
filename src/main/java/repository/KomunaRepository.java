@@ -1,13 +1,13 @@
-package repository;
-
-
-import models.Komuna;
-import models.Dto.KomunaDto.CreateKomunaDto;
-import models.Dto.KomunaDto.UpdateKomunaDto;
-
-import java.sql.*;
-import java.util.ArrayList;
-
+//package repository;
+//
+//import models.Komuna;
+//import models.Dto.KomunaDto.CreateKomunaDto;
+//import models.Dto.KomunaDto.UpdateKomunaDto;
+//
+//import java.sql.*;
+//import java.util.ArrayList;
+//import java.util.List;
+//
 //public class KomunaRepository extends BaseRepository<Komuna, CreateKomunaDto, UpdateKomunaDto> {
 
 //    public KomunaRepository() {
@@ -55,5 +55,21 @@ import java.util.ArrayList;
 //        }
 //        return null;
 //    }
+//
+//    // ✅ Metodë e re për t’i marrë të gjitha komunat
+//    public ArrayList<Komuna> getAll() {
+//        ArrayList<Komuna> komunaList = new ArrayList<>();
+//        String query = "SELECT * FROM komuna";
+//
+//        try (Statement stmt = this.connection.createStatement();
+//             ResultSet rs = stmt.executeQuery(query)) {
+//            while (rs.next()) {
+//                komunaList.add(Komuna.getInstance(rs));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return komunaList;
+//    }
 //}
-

@@ -1,12 +1,10 @@
 package models;
 
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Komuna {
-}
-
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-
-//public class Komuna {
 //    private int id;
 //    private String emri;
 //
@@ -31,4 +29,4 @@ public class Komuna {
 //    public String toString() {
 //        return emri;
 //    }
-//}
+}

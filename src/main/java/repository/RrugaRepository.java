@@ -6,6 +6,7 @@ import models.Dto.RrugaDto.UpdateRrugaDto;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, UpdateRrugaDto> {
 
@@ -82,4 +83,21 @@ public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, Updat
         }
         return null;
     }
+    public List<Rruga> getByKomunaId(int komunaId) {
+        List<Rruga> lista = new ArrayList<>();
+        String query = "SELECT * FROM rruga WHERE komuna_id = ?";
+
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setInt(1, komunaId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(Rruga.getInstance(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
 }

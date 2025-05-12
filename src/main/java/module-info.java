@@ -3,6 +3,8 @@ module com.example.knk_gr1 {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
+    requires javafx.web;
+
 
     exports com.example.knk_gr1;
 
@@ -15,23 +17,23 @@ module com.example.knk_gr1 {
 //    opens java2 to javafx.fxml;
 //    exports java2;
 
-   opens Controllers to javafx.fxml;
-   exports Controllers;
+    opens Controllers to javafx.fxml;
+    exports Controllers;
 
-   opens models to javafx.fxml;
-   exports models;
+    opens models to javafx.fxml;
+    exports models;
 
-   opens repository to javafx.fxml;
-   exports repository;
+    opens repository to javafx.fxml;
+    exports repository;
 
-   opens services to javafx.fxml;
-   exports services;
+    opens services to javafx.fxml;
+    exports services;
 
-   opens utils to javafx.fxml;
-   exports utils;
+    opens utils to javafx.fxml;
+    exports utils;
 
-   opens Application to javafx.fxml;
-   exports Application;
+    opens Application to javafx.fxml;
+    exports Application;
 
 
 }
