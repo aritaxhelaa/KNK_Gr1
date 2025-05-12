@@ -3,14 +3,35 @@ package models.Dto.KomunaDto;
 public class UpdateKomunaDto {
     private int id;
     private String emri;
+    private Integer kodi_postar;
 
-    public UpdateKomunaDto(int id, String emri) {
+    public UpdateKomunaDto(int id, String emri, Integer kodi_postar) {
         this.id = id;
+        this.emri = emri;
+        this.kodi_postar = kodi_postar;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmri() {
+        return emri;
+    }
+
+    public void setEmri(String emri) {
         this.emri = emri;
     }
 
-    public int getId() { return id; }
-    public String getEmri() { return emri; }
+    public Integer getKodi_postar() {
+        return kodi_postar;
+    }
 
-    public void setEmri(String emri) { this.emri = emri; }
+    public void setKodi_postar(Integer kodi_postar) {
+        this.kodi_postar = kodi_postar;
+    }
 }
