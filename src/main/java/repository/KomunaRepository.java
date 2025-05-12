@@ -54,7 +54,7 @@ public class KomunaRepository extends BaseRepository<Komuna, CreateKomunaDto, Up
        } return null;
     }
 
-    // ✅ Metodë e re për t’i marrë të gjitha komunat
+    //  Metodë e re për t’i marrë të gjitha komunat
     public ArrayList<Komuna> getAll() {
         ArrayList<Komuna> komunaList = new ArrayList<>();
         String query = "SELECT * FROM komuna";
