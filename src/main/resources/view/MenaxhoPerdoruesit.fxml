@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,45 +13,76 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.lang.String?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
             <children>
                 <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/KosovoLogo.png" />
+                        <Image url="@../Images/KosovoLogo.png"/>
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Menaxho Përdoruesit" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Menaxho Vendbanimet" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika Kombetare" />
+                <Button styleClass="sidebar-button" text="Menaxho Përdoruesit"/>
+                <Button styleClass="sidebar-button" text="Menaxho Vendbanimet"/>
+                <Button styleClass="sidebar-button" text="Statistika Kombetare"/>
             </children>
         </VBox>
     </left>
 
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="25" bottom="25" left="25" right="25"/>
+            </padding>
             <children>
-                <Label prefWidth="548.0" styleClass="title" text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë" wrapText="true">
+                <Label prefWidth="548.0" styleClass="title"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistrimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       wrapText="true">
                     <font>
-                        <Font name="System Bold" size="23.0" />
+                        <Font name="System Bold" size="23.0"/>
                     </font>
                 </Label>
-                <Label styleClass="search-label" text="Menaxho Përdoruesit" />
 
-                <TableView fx:id="tabelaPerdoruesve" prefHeight="400.0" prefWidth="550.0" styleClass="table-view">
+                <Label styleClass="search-label" text="Menaxho Përdoruesit"/>
+
+                <TableView fx:id="tabelaPerdoruesve" prefHeight="300.0" prefWidth="550.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="colUser" prefWidth="130.0" text="User" />
-                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="Pozita" />
-                        <TableColumn fx:id="colData" prefWidth="140.0" text="Data e krijimit" />
-                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="Delete user" />
-                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="Update user" />
+                        <TableColumn fx:id="colUser" prefWidth="130.0" text="User"/>
+                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="Pozita"/>
+                        <TableColumn fx:id="colData" prefWidth="140.0" text="Data e krijimit"/>
+                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="Delete user"/>
+                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="Update user"/>
                     </columns>
                 </TableView>
+
+                <!-- Nderrimi i rolit -->
+                <VBox fx:id="formaUpdate" spacing="10.0" visible="false">
+                    <Label text="Përdorues i përzgjedhur:"/>
+                    <Label fx:id="lblEmriZgjedhur" text="-" />
+
+                    <Label text="Ndrysho Rolin:"/>
+                    <ComboBox fx:id="comboRoli">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Qytetar"/>
+                                <String fx:value="Zyrtar Komunal"/>
+                                <String fx:value="Admin"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+
+                    <Button text="Ruaj Ndryshimet" onAction="#ruajNdryshimin"/>
+                </VBox>
+
             </children>
         </VBox>
     </center>
