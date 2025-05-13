@@ -7,45 +7,80 @@ import javafx.scene.layout.Pane;
 import utils.SceneLocator;
 
 public class SceneManager {
-    private static SceneManager instance;
+    private static SceneManager sceneManager;
     private Scene scene;
+    private LanguageManager languageManager;
     private String currentPath;
 
-    private SceneManager() {
+    // Konstruktor privat për të inicializuar vetëm një instancë
+    private SceneManager(){
+        this.languageManager = LanguageManager.getInstance();
         this.currentPath = SceneLocator.LOGIN_PAGE;
-        this.scene = initScene();
+        this.scene = this.initScene();
     }
 
-    public static SceneManager getInstance() {
-        if (instance == null) instance = new SceneManager();
-        return instance;
+    // Pjesa që do të përdoret për të krijuar vetëm një instancë të SceneManager
+    public static SceneManager getInstance(){
+        if(sceneManager == null)
+            sceneManager = new SceneManager();
+        return sceneManager;
     }
 
-    private Scene initScene() {
-        try {
-            return new Scene(loadFXML(currentPath));
-        } catch (Exception e) {
+    // Kjo metodë krijon një skenë me parent të ngarkuar nga FXML
+    private Scene initScene(){
+        try{
+            return new Scene(this.getParent(currentPath));
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
 
-    public static void load(String path) throws Exception {
-        if (instance == null) throw new Exception("SceneManager not initialized!");
-        instance.setRoot(path);
+    // Kjo metodë ngarkon pamjen nga një FXML dhe e vendos si root të skenës
+    public static void load(String path) throws Exception{
+        if(sceneManager == null){
+            throw new Exception("Scene manager is not initialized yet!");
+        }
+        sceneManager.loadParent(path);
     }
 
-    private void setRoot(String path) throws Exception {
+    // Kjo metodë mbush një pane specifik me një FXML
+    public static void load(String path, Pane pane) throws Exception{
+        if(sceneManager == null){
+            throw new Exception("Scene manager is not initialized yet!");
+        }
+        sceneManager.loadParent(path, pane);
+    }
+
+    // Kjo metodë ngarkon parent nga FXML dhe e vendos si root të skenës
+    private void loadParent(String path) throws Exception{
+        Parent parent = getParent(path);
         this.currentPath = path;
-        Parent root = loadFXML(path);
-        scene.setRoot(root);
+        scene.setRoot(parent);
     }
 
-    private Parent loadFXML(String path) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+    // Kjo metodë mbush një pane me një parent të ngarkuar nga FXML
+    private void loadParent(String path, Pane pane) throws Exception{
+        pane.getChildren().clear();
+        Parent parent = getParent(path);
+        pane.getChildren().add(parent);
+    }
+
+    // Kjo metodë merr një parent nga FXML dhe vendos edhe bundles për gjuhën aktuale
+    private Parent getParent(String path) throws Exception{
+        FXMLLoader loader = new FXMLLoader(
+                this.getClass().getResource(path)
+        );
+        loader.setResources(this.languageManager.getResourceBundle());
         return loader.load();
     }
 
+    // Pjesa që ngarkon përsëri skenën aktuale
+    public static void reload() throws Exception{
+        load(sceneManager.currentPath);
+    }
+
+    // Ky është getteri për të marrë skenën
     public Scene getScene() {
         return scene;
     }

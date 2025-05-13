@@ -42,7 +42,7 @@ public class KomunaRepositoryTest {
         Komuna komuna = komunaRepository.create(createKomunaDto);
 
         // Përdorim të tre argumentet që kërkohen nga konstruktorja e UpdateKomunaDto
-        UpdateKomunaDto updateKomunaDto = new UpdateKomunaDto(komuna.getId(), "Komuna Test Update", 10000); // Kalojmë id, emrin dhe kodi_postar
+        UpdateKomunaDto updateKomunaDto = new UpdateKomunaDto(komuna.getId(), "Komuna Test Update"); // Kalojmë id, emrin dhe kodi_postar
         Komuna updatedKomuna = komunaRepository.update(updateKomunaDto);
 
         if (updatedKomuna != null && updatedKomuna.getEmri().equals("Komuna Test Update")) {

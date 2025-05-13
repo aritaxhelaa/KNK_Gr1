@@ -40,7 +40,7 @@ public class KomunaService {
         if (dto.getId() <= 0) {
             throw new Exception("ID nuk është valid për përditësim.");
         }
-        if (dto.getEmri() == null && dto.getKodi_postar() == null) {
+        if (dto.getEmri() == null) {
             throw new Exception("Të paktën një fushë duhet të ndryshohet për përditësim.");
         }
         Komuna komuna = this.komunaRepository.update(dto);

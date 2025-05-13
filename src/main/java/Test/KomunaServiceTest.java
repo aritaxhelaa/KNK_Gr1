@@ -44,7 +44,7 @@ public class KomunaServiceTest {
         try {
             Komuna komuna = komunaService.create(createKomunaDto);
             // Duhet të kalohen të tre argumentet (id, emri, kodi_postar)
-            UpdateKomunaDto updateKomunaDto = new UpdateKomunaDto(komuna.getId(), "Komuna Test Update", 10000); // Kodi postari është i nevojshëm
+            UpdateKomunaDto updateKomunaDto = new UpdateKomunaDto(komuna.getId(), "Komuna Test Update"); // Kodi postari është i nevojshëm
             Komuna updatedKomuna = komunaService.update(updateKomunaDto);
 
             if (updatedKomuna != null && updatedKomuna.getEmri().equals("Komuna Test Update")) {

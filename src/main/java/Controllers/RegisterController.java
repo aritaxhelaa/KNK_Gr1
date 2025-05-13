@@ -81,13 +81,7 @@ public class RegisterController {
             User newUser = userService.create(dto);
             SessionManager.setCurrentUser(newUser);
 
-            // Redirect sipas rolit
-//            switch (newUser.getRoli()) {
-//                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
-//                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
-//                case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
-//                default -> ErrorLabel.setText("Roli i panjohur.");
-//            }
+            SceneManager.load("/view/LoginView.fxml");
 
             ErrorLabel.setText("Regjistrimi u krye me sukses!");
 

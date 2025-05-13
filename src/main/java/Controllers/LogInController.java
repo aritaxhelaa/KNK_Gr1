@@ -30,10 +30,6 @@ public class LogInController {
 
     private final UserService userService = new UserService();
 
-    /**
-     * Metoda që lidhet me butonin "Log in"
-     * e cila do të thirret nga SceneBuilder me `onAction="handleLogin"`
-     */
     @FXML
     private void handleLogin() {
         String email = Username.getText().trim();
@@ -53,22 +49,18 @@ public class LogInController {
             ErrorLable.setText("Login i suksesshëm! Roli: " + user.getRoli());
 
             // Redirect sipas rolit
-//            switch (user.getRoli()) {
+            switch (user.getRoli()) {
 //                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
-//                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
-//                case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
-//                default -> ErrorLable.setText("Roli i panjohur.");
-//            }
+                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
+                case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
+                default -> ErrorLable.setText("Roli i panjohur.");
+            }
 
         } catch (Exception e) {
             ErrorLable.setText(e.getMessage());
         }
     }
 
-    /**
-     * Metoda që lidhet me klikimin në "Create your account"
-     * e cila do të thirret nga SceneBuilder me `onMouseClicked="goToRegister"`
-     */
     @FXML
     private void goToRegister() {
         try {
@@ -79,16 +71,5 @@ public class LogInController {
         }
     }
 
-    // Metodë rezervë nëse do ta përdorësh manualisht diku
-    private void openDashboard(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + fxmlPath));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) Username.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (Exception e) {
-            ErrorLable.setText("Nuk u hap pamja përkatëse.");
-            e.printStackTrace();
-        }
-    }
+
 }
