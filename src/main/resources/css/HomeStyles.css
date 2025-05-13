@@ -223,3 +223,33 @@ GridPane {
     -fx-text-fill: #666;
     -fx-font-style: italic;
 }
+
+
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 15 20;
+    -fx-spacing: 5;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.1, 0, 2);
+    -fx-min-width: 160px;
+    -fx-max-width: 160px;
+}
+
+.stat-icon {
+    -fx-font-size: 26px;
+    -fx-text-fill: #003366;
+}
+
+.stat-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222222;
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}

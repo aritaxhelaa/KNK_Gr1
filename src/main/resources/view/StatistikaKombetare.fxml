@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="600.0" prefWidth="900.0"
+            stylesheets="@../css/HomeStyles.css">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="20.0" prefWidth="200.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <children>
+                <ImageView fitWidth="160.0" fitHeight="150.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/KosovoLogo.png"/>
+                    </image>
+                </ImageView>
+                <Button text="Menaxho Përdoruesit" styleClass="sidebar-button"/>
+                <Button text="Menaxho Vendbanimet" styleClass="sidebar-button"/>
+                <Button text="Statistika Kombetare" styleClass="sidebar-button"/>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="25.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="25.0" right="25.0" bottom="25.0" left="25.0"/>
+            </padding>
+            <children>
+                <Label styleClass="title"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistrimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       wrapText="true">
+                    <font><Font name="System Bold" size="22.0"/></font>
+                </Label>
+
+                <Label styleClass="search-label" text="Statistika Kombetare"/>
+
+                <FlowPane fx:id="statPane" hgap="15" vgap="15" alignment="CENTER">
+                    <children>
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="👤" styleClass="stat-icon"/>
+                            <Label fx:id="lblGjithsej" text="450" styleClass="stat-value"/>
+                            <Label text="Përdorues gjithsej" styleClass="stat-label"/>
+                        </VBox>
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="✅" styleClass="stat-icon"/>
+                            <Label fx:id="lblAktiv" text="120" styleClass="stat-value"/>
+                            <Label text="Përdorues aktiv" styleClass="stat-label"/>
+                        </VBox>
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="🧑" styleClass="stat-icon"/>
+                            <Label fx:id="lblQytetare" text="330" styleClass="stat-value"/>
+                            <Label text="Qytetarë të regjistruar" styleClass="stat-label"/>
+                        </VBox>
+                        <VBox styleClass="stat-card" alignment="CENTER">
+                            <Label text="🏛" styleClass="stat-icon"/>
+                            <Label fx:id="lblZyrtare" text="30" styleClass="stat-value"/>
+                            <Label text="Zyrtarë Komunal" styleClass="stat-label"/>
+                        </VBox>
+                    </children>
+                </FlowPane>
+
+
+                <BarChart fx:id="barChartPerdorues" prefHeight="300.0" prefWidth="800.0"
+                          title="Regjistrimet mujore për vitin 2025">
+                    <xAxis><CategoryAxis fx:id="xMuajt" label="Muaji"/></xAxis>
+                    <yAxis><NumberAxis fx:id="yNumri" label="Nr. përdoruesve"/></yAxis>
+                </BarChart>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
