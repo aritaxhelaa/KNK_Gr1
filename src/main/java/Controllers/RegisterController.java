@@ -81,7 +81,7 @@ public class RegisterController {
             User newUser = userService.create(dto);
             SessionManager.setCurrentUser(newUser);
 
-            SceneManager.load("/view/LoginView.fxml");
+            SceneManager.load(SceneLocator.LOGIN_PAGE);
 
             ErrorLabel.setText("Regjistrimi u krye me sukses!");
 

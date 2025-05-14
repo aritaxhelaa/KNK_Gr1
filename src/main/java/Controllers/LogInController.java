@@ -64,7 +64,8 @@ public class LogInController {
     @FXML
     private void goToRegister() {
         try {
-            SceneManager.load("/view/RegisterView.fxml");
+            SceneManager.load(SceneLocator.REGISTER_PAGE);
+
         } catch (Exception e) {
             ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
             e.printStackTrace();

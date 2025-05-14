@@ -40,9 +40,9 @@ public class AdresaController {
             ArrayList<Komuna> komunat = komunaRepository.getAll();
             ArrayList<Rruga> rruget = rrugaRepository.getAll();
 
-//            for (Komuna k : komunat) {
-//                komunaComboBox.getItems().add(k.getEmri());
-//            }
+            for (Komuna k : komunat) {
+                komunaComboBox.getItems().add(k.getEmri());
+            }
 
             for (Rruga r : rruget) {
                 rrugaComboBox.getItems().add(r.getEmri());
@@ -89,7 +89,8 @@ public class AdresaController {
     @FXML
     private void handleBack() {
         try {
-            SceneManager.load(SceneLocator.LOGIN_PAGE);
+            SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
+//            SceneManager.load("/view/QytetariView.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }
