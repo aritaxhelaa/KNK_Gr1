@@ -2,7 +2,9 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import models.Qyteti;
 
 public class HomeQytetarController {
 
@@ -22,7 +24,11 @@ public class HomeQytetarController {
     private void initialize() {
         // Tekst mirëseardhjeje mund të vendoset dinamikisht më vonë
         lblWelcome.setText("Mirë se vini, qytetar!");
+        //comboLloji.getItems().addAll(new Qyteti(), new Fshat());
     }
+
+    @FXML
+    private ComboBox<Object> comboLloji;
 
     @FXML
     private void kerkoAdrese() {

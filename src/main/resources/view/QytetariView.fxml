@@ -25,7 +25,7 @@
                 </ImageView>
 
                 <Button text="Kërko Adresë" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
-                <Button text="Lista e Vendbanimeve" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
+                <Button text="Kërkimet e fundit" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
                 <Button text="Gjej Adresën në Hartë" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
             </children>
         </VBox>
@@ -52,15 +52,18 @@
                         <Label text="Komuna:"/>
                         <ComboBox promptText="- Zgjidh -" GridPane.columnIndex="1"/>
 
-                        <Label text="Emri i vendbanimit:" GridPane.rowIndex="1"/>
-                        <TextField promptText="" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Lloji i vendbanimit:" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="comboLloji" promptText="- Zgjidh -" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                        <Label text="Rruga:" GridPane.rowIndex="2"/>
+                        <Label text="Emri i vendbanimit:" GridPane.rowIndex="2"/>
                         <TextField promptText="" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <Label text="Rruga:" GridPane.rowIndex="3"/>
+                        <TextField promptText="" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
                         <Button text="Kërko"
                                 style="-fx-background-color: #d9a441; -fx-text-fill: white; -fx-font-weight: bold;"
-                                prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="RIGHT"/>
+                                prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.halignment="RIGHT"/>
                     </children>
                 </GridPane>
             </children>
