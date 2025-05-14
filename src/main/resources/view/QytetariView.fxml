@@ -7,26 +7,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Controllers.HomeQytetarController"
-            prefHeight="600.0" prefWidth="800.0"
-            style="-fx-background-color: #fff2dc;">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
-    <!-- Sidebar në të majtë -->
+
     <left>
-        <VBox prefWidth="200.0" spacing="20.0" style="-fx-background-color: #002147;" BorderPane.alignment="CENTER">
-            <padding><Insets top="20" right="10" left="10" bottom="20"/></padding>
+        <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20.0" right="20.0" left="20.0" bottom="20.0"/></padding>
             <children>
-                <ImageView fitHeight="120.0" fitWidth="130.0" preserveRatio="true">
+                <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Images/KosovoLogo.png"/>
                     </image>
                 </ImageView>
-
-                <Button text="Kërko Adresë" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
-                <Button text="Kërkimet e fundit" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
-                <Button text="Gjej Adresën në Hartë" style="-fx-background-color: #ffffff; -fx-text-fill: #002147; -fx-font-weight: bold;" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërko Adresë">
+                </Button>
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërkimet e fundit">
+                </Button>
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Gjej Adresën në Hartë">-->
+                </Button>
             </children>
         </VBox>
     </left>
