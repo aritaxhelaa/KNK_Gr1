@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.KerkoInfoController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <children>
+        <VBox spacing="20.0" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+            <Label text="Rezultatet e Kërkimit"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tabelaRezultateve" prefWidth="760">
+                <columns>
+                    <TableColumn fx:id="colKomuna" text="Komuna" prefWidth="180"/>
+                    <TableColumn fx:id="colVendbanimi" text="Vendbanimi" prefWidth="180"/>
+                    <TableColumn fx:id="colLagjia" text="Lagjia" prefWidth="180"/>
+                    <TableColumn fx:id="colAdresa" text="Adresa" prefWidth="180"/>
+                </columns>
+            </TableView>
+
+            <Button text="Kthehu" onAction="#handleKthehu"
+                    style="-fx-background-color: #d9a441; -fx-text-fill: white;" />
+        </VBox>
+    </children>
+</AnchorPane>
