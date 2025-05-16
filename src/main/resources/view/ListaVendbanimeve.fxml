@@ -11,7 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="Controllers.ListaVendbanimeveController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../css/HomeStyles.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -24,15 +28,10 @@
                         <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Regjistro Vendbanim">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërko Adresë">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Lista e Vendbanimeve">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika">
-
-                </Button>
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Regjistro Vendbanim" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërko Adresë" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Lista e Vendbanimeve" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika" />
             </children>
         </VBox>
     </left>
@@ -40,20 +39,22 @@
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Label prefWidth="548.0" styleClass="title" text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë" wrapText="true">
+                <Label prefWidth="548.0" styleClass="title"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0" />
                     </font>
                 </Label>
                 <Label styleClass="search-label" text="Lista e Vendbanimeve" />
-            <TableView prefHeight="200.0" prefWidth="200.0" styleClass="table-view">
-              <columns>
-                <TableColumn prefWidth="150.0" text="Komuna" />
-                <TableColumn prefWidth="150.0" text="Emri i Vendbanimit" />
-                  <TableColumn prefWidth="100.0" text="Lloji" />
-                  <TableColumn prefWidth="150.0" text="Kodi Postar" />
-              </columns>
-            </TableView>
+
+                <TableView fx:id="vendbanimeTable" prefHeight="400.0" prefWidth="548.0" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="rrugaColumn" prefWidth="150.0" text="Rruga" />
+                        <TableColumn fx:id="numriColumn" prefWidth="100.0" text="Numri" />
+                        <TableColumn fx:id="kodiPostarColumn" prefWidth="150.0" text="Kodi Postar" />
+                    </columns>
+                </TableView>
             </children>
         </VBox>
     </center>
