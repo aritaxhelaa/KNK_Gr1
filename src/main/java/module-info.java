@@ -3,7 +3,7 @@ module com.example.knk_gr1 {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
-    //requires javafx.web;
+    requires javafx.web;
 
 
   //  exports com.example.knk_gr1;
