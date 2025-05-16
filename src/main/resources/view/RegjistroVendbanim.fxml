@@ -14,7 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="Controllers.RegjistroVendbanimController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../css/HomeStyles.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -27,15 +31,10 @@
                         <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Regjistro Vendbanim">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërko Adresë">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Lista e Vendbanimeve">
-                </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika">
-
-                </Button>
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Regjistro Vendbanim" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërko Adresë" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Lista e Vendbanimeve" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika" />
             </children>
         </VBox>
     </left>
@@ -43,7 +42,9 @@
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Label prefWidth="548.0" styleClass="title" text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë" wrapText="true">
+                <Label prefWidth="548.0" styleClass="title"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0" />
                     </font>
@@ -56,28 +57,36 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
                     </columnConstraints>
                     <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Label text="Komuna:" />
-                        <ComboBox prefWidth="350.0" promptText="Zgjidhni komunën" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="komunaComboBox" prefWidth="350.0" promptText="Zgjidhni komunën" GridPane.columnIndex="1" />
+
+                        <Label text="Emri i vendbanimit:" GridPane.rowIndex="1" />
+                        <TextField fx:id="emriVendbanimitField" promptText="Shkruani emrin e vendbanimit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Lloji i vendbanimit:" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="llojiVendbanimitComboBox" prefWidth="350.0" promptText="Zgjidhni llojin e vendbanimit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
                         <Label text="Rruga:" GridPane.rowIndex="3" />
-                        <TextField promptText="Shkruani emrin e rrugës" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="rrugaField" promptText="Shkruani emrin e rrugës" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
                         <Label text="Objekti:" GridPane.rowIndex="4" />
-                        <TextField promptText="Shkruani numrin e objektit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="Ruaj" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                  <Label text="Lloji i vendbanimit:" GridPane.rowIndex="2" />
-                  <Label text="Emri i vendbanimit:" GridPane.rowIndex="1" />
-                  <TextField promptText="Shkruani emrin e vendbanimit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox prefWidth="350.0" promptText="Zgjidhni llojin e vendbanimit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Kodi postar:" GridPane.rowIndex="5" />
-                  <TextField promptText="Shkruani kodin postar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="objektiField" promptText="Shkruani numrin e objektit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                        <Label text="Kodi postar:" GridPane.rowIndex="5" />
+                        <TextField fx:id="kodiPostarField" promptText="Shkruani kodin postar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                        <Button fx:id="saveButton" onAction="#handleSave" mnemonicParsing="false"
+                                prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="Ruaj"
+                                GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                     </children>
                 </GridPane>
             </children>

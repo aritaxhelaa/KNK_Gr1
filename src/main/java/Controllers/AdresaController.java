@@ -94,7 +94,7 @@ public class AdresaController {
     @FXML
     private void handleBack() {
         try {
-            SceneManager.load(SceneLocator.LOGIN_PAGE);
+            SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
         } catch (Exception e) {
             messageLabel.setText("Nuk u kthye dot.");
             e.printStackTrace();
