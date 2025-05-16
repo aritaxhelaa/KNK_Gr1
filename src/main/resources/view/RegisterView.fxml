@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.RegisterController"
+            stylesheets="@../css/LoginRegister.css"
+            prefWidth="900.0"
+            prefHeight="600.0"
+            minWidth="850.0"
+            minHeight="550.0">
 
-<VBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.RegisterController">
-    <children>
-        <AnchorPane prefHeight="500.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
-            <children>
-                <!-- Left Pane (Visual Branding) -->
-                <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #263238;">
-                    <children>
-                        <ImageView fitHeight="234.0" fitWidth="206.0" layoutX="72.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Images/registerLogo.png" />
-                            </image>
-                        </ImageView>
-                        <Label layoutX="93.0" layoutY="93.0" prefHeight="45.0" prefWidth="243.0" text="Register now" textAlignment="JUSTIFY" textFill="#fff9f0">
-                            <font>
-                                <Font name="Calibri Bold" size="26.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </Pane>
+    <!-- SIDEBAR IDENTIK -->
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="2" prefWidth="300" styleClass="sidebar">
+            <VBox.margin>
+                <Insets top="40" />
+            </VBox.margin>
 
-                <!-- Right Pane (Form) -->
-                <Pane layoutX="348.0" layoutY="-1.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #FFF9F0;">
-                    <children>
-                        <Label layoutX="76.0" layoutY="40.0" text="Create Account">
-                            <font>
-                                <Font name="Calibri Bold" size="25.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="NameField" layoutX="62.0" layoutY="100.0" prefHeight="37.0" prefWidth="219.0" promptText="Full Name" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                        <TextField fx:id="EmailField" layoutX="62.0" layoutY="150.0" prefHeight="37.0" prefWidth="219.0" promptText="Email" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                        <TextField fx:id="AgeField" layoutX="62.0" layoutY="200.0" prefHeight="37.0" prefWidth="219.0" promptText="Age" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                        <PasswordField fx:id="PasswordField" layoutX="62.0" layoutY="250.0" prefHeight="37.0" prefWidth="219.0" promptText="Password" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                        <PasswordField fx:id="ConfirmPasswordField" layoutX="62.0" layoutY="300.0" prefHeight="37.0" prefWidth="219.0" promptText="Confirm Password" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                        <Button fx:id="RegisterBtn" layoutX="97.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #263238; -fx-background-radius: 20;" text="Register" textFill="#fcfafa">
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
-                        <Label fx:id="ErrorLabel" layoutX="71.0" layoutY="410.0" prefHeight="17.0" prefWidth="219.0" textFill="#e53935" />
-                        <Label fx:id="BackToLogin" layoutX="90.0" layoutY="440.0" onMouseClicked="#goToLogin" style="-fx-cursor: hand;" text="Already have an account? Log in" textFill="#0e249c" />
-                    </children>
-                </Pane>
-            </children>
-        </AnchorPane>
-    </children>
-</VBox>
+            <!-- Logo e Kosovës -->
+            <ImageView fitHeight="200" preserveRatio="true" styleClass="kosovo-logo">
+                <image>
+                    <Image url="@../Images/KosovoLogo.png"/>
+                </image>
+            </ImageView>
+
+            <!-- Separator i artë -->
+            <Separator styleClass="gold-separator" />
+
+            <!-- Tekst i njëjtë me login -->
+            <Label text="%title" styleClass="sidebar-title">
+                <VBox.margin>
+                    <Insets top="2"/>
+                </VBox.margin>
+            </Label>
+
+            <!-- Hapësirë për frymëmarrje -->
+            <Region prefHeight="40" />
+        </VBox>
+    </left>
+
+    <!-- FORMA E REGJISTRIMIT -->
+    <center>
+        <StackPane alignment="CENTER" styleClass="content-container">
+            <VBox spacing="10" alignment="CENTER" styleClass="form-container" maxWidth="350">
+                <HBox alignment="TOP_RIGHT" styleClass="language-buttons">
+                    <Button fx:id="sqButton" text="AL" onAction="#switchToSq" />
+                    <Button fx:id="enButton" text="EN" onAction="#switchToEn" />
+                </HBox>
+
+                <Label text="%register.title" styleClass="form-title" />
+
+                <TextField fx:id="NameField" promptText="%register.name" styleClass="text-field" />
+                <TextField fx:id="EmailField" promptText="%register.email" styleClass="text-field" />
+                <TextField fx:id="AgeField" promptText="%register.age" styleClass="text-field" />
+                <PasswordField fx:id="PasswordField" promptText="%register.password" styleClass="password-field" />
+                <PasswordField fx:id="ConfirmPasswordField" promptText="%register.confirm_password" styleClass="password-field" />
+
+                <Button fx:id="RegisterBtn" text="%register.button" onAction="#handleRegister" styleClass="button-submit" />
+                <Label fx:id="ErrorLabel" textFill="red"/>
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label text="%login.no_account" />
+                    <Label fx:id="BackToLogin" text="%register.back" onMouseClicked="#goToLogin" styleClass="switch-link" />
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

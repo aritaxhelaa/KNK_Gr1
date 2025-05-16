@@ -1,87 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.LogInController"
+            stylesheets="@../css/LoginRegister.css"
+            prefWidth="900.0"
+            prefHeight="600.0"
+            minWidth="850.0"
+            minHeight="550.0">
 
-  This file is available and licensed under the following license:
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="2" prefWidth="300" styleClass="sidebar">
+            <VBox.margin>
+                <Insets top="40" />
+            </VBox.margin>
 
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
+            <!-- Logo e Kosovës (më e madhe dhe me efekt hijë) -->
+            <ImageView fitHeight="200" preserveRatio="true" styleClass="kosovo-logo">
+                <image>
+                    <Image url="@../Images/KosovoLogo.png"/>
+                </image>
+            </ImageView>
 
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
+            <!-- Separator afër logos -->
+            <Separator styleClass="gold-separator" />
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+            <!-- Teksti afër separatorit -->
+            <Label text="%title" styleClass="sidebar-title">
+                <VBox.margin>
+                    <Insets top="2"/>
+                </VBox.margin>
+            </Label>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LogInController">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="500.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
-      <children>
-            <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #263238;">
-               <children>
-                  <ImageView fitHeight="263.0" fitWidth="180.0" layoutX="82.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/images/logo.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="FindYourAddress" layoutX="80.0" layoutY="93.0" prefHeight="45.0" prefWidth="243.0" text="Find your address" textAlignment="JUSTIFY" textFill="#fff9f0">
-                     <font>
-                        <Font name="Calibri Bold" size="26.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane layoutX="348.0" layoutY="-1.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #FFF9F0;">
-               <children>
-                  <Label fx:id="LogInTxt" layoutX="76.0" layoutY="72.0" prefHeight="30.0" prefWidth="75.0" text="Log in">
-                     <font>
-                        <Font name="Calibri Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="41.0" layoutY="112.0" text="Dont't have an account?" />
-                  <Label fx:id="CreateUsr" layoutX="179.0" layoutY="112.0" onMouseClicked="#goToRegister" style="-fx-cursor: hand;" text="Create your account" textFill="#0e249c" />
-                  <TextField fx:id="Username" layoutX="62.0" layoutY="161.0" prefHeight="37.0" prefWidth="219.0" promptText="Email" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-                  <Button fx:id="LoginBttn" layoutX="97.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="69.0" style="-fx-background-color: #263238; -fx-background-radius: 20; -fx-cursor: hand;" text="Log in" textFill="#fcfafa">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </Button>
-                  <Label fx:id="ErrorLable" layoutX="71.0" layoutY="344.0" prefHeight="17.0" prefWidth="219.0" textFill="#e53935" />
-                  <PasswordField fx:id="Password" layoutX="62.0" layoutY="213.0" prefHeight="37.0" prefWidth="219.0" promptText="Password" style="-fx-background-color: #FFF9F0; -fx-border-radius: 20px; -fx-border-color: #263238;" />
-               </children>
-            </Pane>
-      </children>
-    </AnchorPane>
-  </children>
-</VBox>
+            <!-- Hapësirë për frymëmarrje vizuale -->
+            <Region prefHeight="40" />
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane alignment="CENTER" styleClass="content-container">
+            <VBox spacing="10" alignment="CENTER" styleClass="form-container" maxWidth="350">
+                <HBox alignment="TOP_RIGHT" styleClass="language-buttons">
+                    <Button fx:id="sqButton" text="AL" onAction="#switchToAlbanian" />
+                    <Button fx:id="enButton" text="EN" onAction="#switchToEnglish" />
+                </HBox>
+
+                <Label text="%login.title" styleClass="form-title" />
+                <TextField fx:id="Username" promptText="%login.email" styleClass="text-field" />
+                <PasswordField fx:id="Password" promptText="%login.password" styleClass="password-field" />
+                <Button fx:id="LoginBttn" text="%login.button" onAction="#handleLogin" styleClass="button-submit" />
+                <Label fx:id="ErrorLable" textFill="red" />
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label text="%login.no_account" />
+                    <Label text="%login.create_account" onMouseClicked="#goToRegister" styleClass="switch-link" />
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

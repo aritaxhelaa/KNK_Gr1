@@ -1,20 +1,24 @@
 package Application;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import services.SceneManager;
+import utils.SceneLocator;
 
 public class MainTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AdresaView.fxml"));
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("Sistemi për Regjistrimin e Adresave");
-            primaryStage.setScene(scene);
+            // Inicializo SceneManager
+            SceneManager sceneManager = SceneManager.getInstance();
+
+            // Ngarko skenën e AdresaView (adresës) direkt
+            SceneManager.load(SceneLocator.ADRESA_PAGE); // duhet të kesh këtë në SceneLocator
+
+            primaryStage.setScene(sceneManager.getScene());
+            primaryStage.setTitle("Testo - AdresaView me shumëgjuhësi");
             primaryStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,4 +28,3 @@ public class MainTest extends Application {
         launch(args);
     }
 }
-

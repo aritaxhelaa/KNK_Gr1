@@ -9,6 +9,9 @@ import util.PasswordHasher;
 import util.SessionManager;
 import services.SceneManager;
 import utils.SceneLocator;
+import services.LanguageManager;
+
+import java.util.Locale;
 
 public class RegisterController {
 
@@ -23,10 +26,6 @@ public class RegisterController {
 
     private final UserService userService = new UserService();
 
-    /**
-     * Kjo metodë thirret kur klikohet butoni "Register"
-     * Lidhet nga Scene Builder me `onAction="handleRegister"`
-     */
     @FXML
     private void handleRegister() {
         ErrorLabel.setText("");
@@ -38,7 +37,7 @@ public class RegisterController {
         String confirmPassword = ConfirmPasswordField.getText();
 
         if (name.isEmpty() || email.isEmpty() || ageText.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            ErrorLabel.setText("Ju lutem plotësoni të gjitha fushat.");
+            ErrorLabel.setText(getText("error.empty_fields"));
             return;
         }
 
@@ -46,29 +45,28 @@ public class RegisterController {
         try {
             age = Integer.parseInt(ageText);
         } catch (NumberFormatException e) {
-            ErrorLabel.setText("Mosha duhet të jetë numër.");
+            ErrorLabel.setText(getText("error.age_not_number"));
             return;
         }
 
         if (!email.matches("^.+@.+\\..+$")) {
-            ErrorLabel.setText("Email nuk është valid.");
+            ErrorLabel.setText(getText("error.invalid_email"));
             return;
         }
 
         if (password.length() < 8) {
-            ErrorLabel.setText("Passwordi duhet të ketë të paktën 8 karaktere.");
+            ErrorLabel.setText(getText("error.password_short"));
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            ErrorLabel.setText("Passwordet nuk përputhen.");
+            ErrorLabel.setText(getText("error.password_mismatch"));
             return;
         }
 
-        // Kontrollo nëse emaili ekziston
         User existingUser = userService.getByEmail(email);
         if (existingUser != null) {
-            ErrorLabel.setText("Ky email tashmë është në përdorim.");
+            ErrorLabel.setText(getText("error.email_exists"));
             return;
         }
 
@@ -81,26 +79,45 @@ public class RegisterController {
             User newUser = userService.create(dto);
             SessionManager.setCurrentUser(newUser);
 
+            ErrorLabel.setText(getText("register.success"));
             SceneManager.load(SceneLocator.LOGIN_PAGE);
-
-            ErrorLabel.setText("Regjistrimi u krye me sukses!");
 
         } catch (Exception e) {
             ErrorLabel.setText(e.getMessage());
         }
     }
 
-    /**
-     * Kjo metodë thirret kur klikon "Already have an account?"
-     * Lidhet nga Scene Builder me `onMouseClicked="goToLogin"`
-     */
     @FXML
     private void goToLogin() {
         try {
-            SceneManager.load("/view/LoginView.fxml");
+            SceneManager.load(SceneLocator.LOGIN_PAGE);
         } catch (Exception e) {
-            ErrorLabel.setText("Nuk mund të hapet faqja e kyçjes.");
+            ErrorLabel.setText(getText("register.cannot_open_login"));
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void switchToEn() {
+        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
+        reloadScene();
+    }
+
+    @FXML
+    private void switchToSq() {
+        LanguageManager.getInstance().setLocale(new Locale("sq"));
+        reloadScene();
+    }
+
+    private void reloadScene() {
+        try {
+            SceneManager.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getText(String key) {
+        return LanguageManager.getInstance().getResourceBundle().getString(key);
     }
 }

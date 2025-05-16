@@ -1,34 +1,30 @@
 package Controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import models.User;
-import models.Dto.UserDto.LoginUserDto;
 import services.SceneManager;
 import services.UserService;
 import utils.SceneLocator;
+import models.User;
+import models.Dto.UserDto.LoginUserDto;
+import services.LanguageManager;
+
+import java.util.Locale;
 
 public class LogInController {
 
-    @FXML
-    private TextField Username;
-
-    @FXML
-    private PasswordField Password;
-
-    @FXML
-    private Button LoginBttn;
-
-    @FXML
-    private Label ErrorLable;
-
-    @FXML
-    private Label CreateUsr;
+    @FXML private TextField Username;
+    @FXML private PasswordField Password;
+    @FXML private Button LoginBttn;
+    @FXML private Label ErrorLable;
+    @FXML private Label CreateUsr;
 
     private final UserService userService = new UserService();
+
+    @FXML
+    private void initialize() {
+
+    }
 
     @FXML
     private void handleLogin() {
@@ -38,7 +34,7 @@ public class LogInController {
         ErrorLable.setText("");
 
         if (email.isEmpty() || password.isEmpty()) {
-            ErrorLable.setText("Ju lutem plotësoni të gjitha fushat.");
+            ErrorLable.setText(LanguageManager.getInstance().getResourceBundle().getString("error.empty_fields"));
             return;
         }
 
@@ -48,9 +44,7 @@ public class LogInController {
 
             ErrorLable.setText("Login i suksesshëm! Roli: " + user.getRoli());
 
-            // Redirect sipas rolit
             switch (user.getRoli()) {
-//                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
                 case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
                 case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
                 default -> ErrorLable.setText("Roli i panjohur.");
@@ -65,12 +59,29 @@ public class LogInController {
     private void goToRegister() {
         try {
             SceneManager.load(SceneLocator.REGISTER_PAGE);
-
         } catch (Exception e) {
             ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
             e.printStackTrace();
         }
     }
 
+    @FXML
+    private void switchToEnglish() {
+        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
+        try {
+            SceneManager.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @FXML
+    private void switchToAlbanian() {
+        LanguageManager.getInstance().setLocale(new Locale("sq"));
+        try {
+            SceneManager.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,96 +1,121 @@
 package Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import models.KodiPostar;
-import models.Komuna;
-import models.Rruga;
-import repository.KodiPostarRepository;
-import repository.KomunaRepository;
-import repository.RrugaRepository;
+import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
 
-import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class AdresaController {
 
-    @FXML private ComboBox<String> komunaComboBox;
-    @FXML private ComboBox<String> rrugaComboBox;
-    @FXML private TextField numriField;
-    @FXML private Label kodiPostarLabel;
-    @FXML private WebView mapView;
-
-    // Repozitorit do inicializohen vetëm në momentin kur kërkohen
-    private KomunaRepository komunaRepository;
-    private RrugaRepository rrugaRepository;
-    private KodiPostarRepository kodiPostarRepository;
+    @FXML
+    private ComboBox<String> komunaComboBox;
 
     @FXML
-    public void initialize() {
-        try {
-            // Lazy initialization
-            if (komunaRepository == null) komunaRepository = new KomunaRepository();
-            if (rrugaRepository == null) rrugaRepository = new RrugaRepository();
+    private ComboBox<String> rrugaComboBox;
 
-            ArrayList<Komuna> komunat = komunaRepository.getAll();
-            ArrayList<Rruga> rruget = rrugaRepository.getAll();
+    @FXML
+    private TextField numriField;
 
-            for (Komuna k : komunat) {
-                komunaComboBox.getItems().add(k.getEmri());
-            }
+    @FXML
+    private Label messageLabel;
 
-            for (Rruga r : rruget) {
-                rrugaComboBox.getItems().add(r.getEmri());
-            }
+    @FXML
+    private Label kodiPostarLabel;
 
-        } catch (Exception e) {
-            System.out.println("Gabim gjatë mbushjes së kombo-boxëve: " + e.getMessage());
-        }
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Button shfaqBtn;
+
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private WebView mapView;
+
+    @FXML
+    private void initialize() {
+        loadLocalizedTexts();
+    }
+
+    private void loadLocalizedTexts() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
+        titleLabel.setText(bundle.getString("label.title"));
+        shfaqBtn.setText(bundle.getString("button.shfaq"));
+        backBtn.setText(bundle.getString("button.back"));
+
+        komunaComboBox.setPromptText(bundle.getString("prompt.komuna"));
+        rrugaComboBox.setPromptText(bundle.getString("prompt.rruga"));
+        numriField.setPromptText(bundle.getString("prompt.numri"));
+
+        messageLabel.setText("");
+        kodiPostarLabel.setText("");
     }
 
     @FXML
     private void handleShowMap() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         String komuna = komunaComboBox.getValue();
         String rruga = rrugaComboBox.getValue();
         String numri = numriField.getText();
 
         if (komuna == null || rruga == null || numri.isEmpty()) {
-            kodiPostarLabel.setText("Ju lutem plotësoni të gjitha fushat.");
+            messageLabel.setText(bundle.getString("message.error.missing"));
+            kodiPostarLabel.setText("");
             return;
         }
 
+        // Simulimi për test
+        if (komuna.equalsIgnoreCase("Prishtinë")) {
+            kodiPostarLabel.setText(bundle.getString("message.success") + ": 10000");
+            messageLabel.setText("");
+            loadMap("https://www.google.com/maps?q=Prishtina");
+        } else {
+            kodiPostarLabel.setText("");
+            messageLabel.setText(bundle.getString("message.error.notfound"));
+        }
+    }
+
+    private void loadMap(String url) {
+        WebEngine webEngine = mapView.getEngine();
+        webEngine.load(url);
+    }
+
+
+    @FXML
+    private void handleBack() {
         try {
-            if (kodiPostarRepository == null) kodiPostarRepository = new KodiPostarRepository();
-
-            KodiPostar kodiPostar = kodiPostarRepository.getByKomunaName(komuna);
-            if (kodiPostar != null) {
-                kodiPostarLabel.setText(kodiPostar.getKodi());
-            } else {
-                kodiPostarLabel.setText("Kodi postar nuk u gjet.");
-            }
-
-            // Harta
-            String query = rruga + " " + numri + ", " + komuna + ", Kosovo";
-            String mapUrl = "https://www.google.com/maps?q=" + query.replace(" ", "+");
-            WebEngine webEngine = mapView.getEngine();
-            webEngine.load(mapUrl);
-
+            SceneManager.load(SceneLocator.LOGIN_PAGE);
         } catch (Exception e) {
-            kodiPostarLabel.setText("Gabim gjatë kërkimit të kodit postar.");
+            messageLabel.setText("Nuk u kthye dot.");
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void handleBack() {
+    private void switchToEn() {
+        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
         try {
-            SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
-//            SceneManager.load("/view/QytetariView.fxml");
+            SceneManager.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void switchToSq() {
+        LanguageManager.getInstance().setLocale(new Locale("sq"));
+        try {
+            SceneManager.reload();
         } catch (Exception e) {
             e.printStackTrace();
         }

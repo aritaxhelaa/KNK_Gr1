@@ -8,7 +8,9 @@ public class LanguageManager {
     private static LanguageManager instance;
     private Locale locale;
     private LanguageManager(){
-        this.locale = new Locale("sq");
+//        this.locale = new Locale("sq");
+        this.locale = Locale.getDefault();
+
     }
     public static LanguageManager getInstance(){
         if(instance == null){
