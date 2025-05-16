@@ -1,51 +1,160 @@
 package Controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import models.Qyteti;
+import javafx.scene.control.*;
+import models.Komuna;
+import models.Fshati;
+import repository.FshatiRepository;
+import repository.KomunaRepository;
+import repository.QytetiRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomeQytetarController {
+
+    @FXML
+    private ComboBox<String> comboKomuna;
+
+    @FXML
+    private ComboBox<String> comboEmriVendbanimit;
+
+    @FXML
+    private TextField txtRruga;
+
+    @FXML
+    private Label lblKerkoAdrese;
+
+    @FXML
+    private Label lblLlojiVendbanimit;
+
+    @FXML
+    private Label lblRruga;
+
+    @FXML
+    private Button btnKerko;
+
+    @FXML
+    private Label lblTitulli;
 
     @FXML
     private Label lblWelcome;
 
     @FXML
-    private Button btnKerkoAdrese;
+    private RadioButton radioQytet;
 
     @FXML
-    private Button btnShfaqHarte;
+    private RadioButton radioFshat;
 
     @FXML
-    private Button btnDil;
+    private ToggleGroup llojiGroup;
+
+    private FilteredList<String> filteredVendbanime;
 
     @FXML
     private void initialize() {
         // Tekst mirëseardhjeje mund të vendoset dinamikisht më vonë
         lblWelcome.setText("Mirë se vini, qytetar!");
-        //comboLloji.getItems().addAll(new Qyteti(), new Fshat());
+        // Mbush dropdown e komunave nga databaza
+        List<Komuna> komunaList = komunaRepository.getAll();
+        comboKomuna.setItems(FXCollections.observableArrayList(
+                komunaList.stream().map(Komuna::getEmri).collect(Collectors.toList())
+        ));
+
+        // Përgatit filtrimin për vendbanime
+        filteredVendbanime = new FilteredList<>(FXCollections.observableArrayList(), p -> true);
+        comboEmriVendbanimit.setItems(filteredVendbanime);
+        comboEmriVendbanimit.setEditable(true);
+
+        comboEmriVendbanimit.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            final TextField editor = comboEmriVendbanimit.getEditor();
+            final String selected = comboEmriVendbanimit.getSelectionModel().getSelectedItem();
+
+            // Filtro opsionet sipas input-it
+            filteredVendbanime.setPredicate(item -> {
+                if (newVal == null || newVal.isEmpty()) return true;
+                String lower = newVal.toLowerCase();
+                return item.toLowerCase().contains(lower);
+            });
+
+            // Mos lejo zgjedhje të pavlefshme automatikisht
+            if (selected == null || !selected.equals(editor.getText())) {
+                comboEmriVendbanimit.getSelectionModel().clearSelection();
+            }
+        });
+    }
+
+    public QytetiRepository getQytetiRepository() {
+        return qytetiRepository;
     }
 
     @FXML
-    private ComboBox<Object> comboLloji;
-
-    @FXML
-    private void kerkoAdrese() {
-        System.out.println("Klikohet: Kërko Adresë");
-        // TODO: Ngarko KërkoAdresë.fxml
+    private void handleLlojiZgjedhur() {
+        if (radioQytet.isSelected()) {
+            System.out.println("Qytet");
+            // veprime nëse është qytet
+        } else if (radioFshat.isSelected()) {
+            System.out.println("Fshat");
+            // veprime nëse është fshat
+        }
     }
 
-    @FXML
-    private void shfaqHarte() {
-        System.out.println("Klikohet: Shfaq në Hartë");
-        // TODO: Ngarko AdresaMapView.fxml
-    }
+    private final KomunaRepository komunaRepository = new KomunaRepository();
+    private final QytetiRepository qytetiRepository = new QytetiRepository();
+    private final FshatiRepository fshatiRepository = new FshatiRepository();
 
     @FXML
-    private void dil() {
-        System.out.println("Klikohet: Dil");
-        // TODO: Kthehu në faqen e login
+    private void handleKomunaLlojiChanged() {
+        String lloji = null;
+        if (radioQytet.isSelected()) {
+            lloji = "Qytet";
+        } else if (radioFshat.isSelected()) {
+            lloji = "Fshat";
+        }
+        String komuna = comboKomuna.getValue();
+
+        if (lloji == null || komuna == null) {
+            comboEmriVendbanimit.getItems().clear();
+            return;
+        }
+
+        if (lloji.equals("Qytet")) {
+            filteredVendbanime.setAll(List.of(komuna));
+            comboEmriVendbanimit.getSelectionModel().selectFirst();
+        } else if (lloji.equals("Fshat")) {
+            List<String> fshatrat = fshatiRepository.getByKomunaName(komuna)
+                    .stream()
+                    .map(Fshati::getEmri)
+                    .collect(Collectors.toList());
+            filteredVendbanime.setAll(fshatrat);
+        }
+    }
+
+@FXML
+private void kerkoAdrese() {
+    String komuna = comboKomuna.getValue();
+    String lloji = radioQytet.isSelected() ? "Qytet" : radioFshat.isSelected() ? "Fshat" : null;
+    String vendbanimi = comboEmriVendbanimit.getValue();
+    String rruga = txtRruga.getText();
+
+    if (komuna == null || lloji == null || vendbanimi == null || rruga.isBlank()) {
+        showAlert("Ju lutem plotësoni të gjitha fushat!");
+        return;
+    }
+
+    // TODO: Dergo keto informata ne skenen KerkoInfo.fxml (p.sh. permes SceneManager ose FXMLLoader)
+
+    System.out.println("Kërkimi u dërgua me sukses: "
+            + komuna + " / " + lloji + " / " + vendbanimi + " / " + rruga);
+}
+
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Vërejtje");
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
 

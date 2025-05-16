@@ -3,13 +3,13 @@ module com.example.knk_gr1 {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
-    requires javafx.web;
+    //requires javafx.web;
 
 
+  //  exports com.example.knk_gr1;
+
+    opens com.example.knk_gr1 to javafx.fxml;
     exports com.example.knk_gr1;
-
-//    opens com.example.knk_gr1 to javafx.fxml;
-//    exports com.example.knk_gr1;
 //    exports com.example.database;
 //    exports com.example.models;
 //    exports com.example.repository;

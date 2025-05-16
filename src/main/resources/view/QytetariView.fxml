@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="Controllers.HomeQytetarController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
 
     <left>
@@ -23,7 +23,7 @@
                 </Button>
                 <Button mnemonicParsing="false" styleClass="sidebar-button" text="Kërkimet e fundit">
                 </Button>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Gjej Adresën në Hartë">-->
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Gjej Adresën në Hartë">
                 </Button>
             </children>
         </VBox>
@@ -34,11 +34,17 @@
         <VBox spacing="20" alignment="TOP_LEFT" prefWidth="600.0" prefHeight="600.0" BorderPane.alignment="CENTER">
             <padding><Insets top="40" left="40" right="40" bottom="20"/></padding>
             <children>
-                <Label text="Zhvillimi i Sistemit Interaktiv për regjistrimin dhe gjetjen e adresave të vendbanimeve në Kosovë"
+
+                <Label fx:id="lblWelcome"
+                       text="Mirë se vini!"
+                       style="-fx-font-size: 16px; -fx-text-fill: #006699; -fx-font-weight: bold;" />
+
+                <Label fx:id="lblTitulli"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistrimin dhe gjetjen e adresave të vendbanimeve në Kosovë"
                        wrapText="true"
                        style="-fx-text-fill: #002147; -fx-font-size: 18px; -fx-font-weight: bold;" />
 
-                <Label text="Kërko Adresë" styleClass="search-label" />
+                <Label fx:id="lblKerkoAdrese" text="Kërko Adresë" styleClass="search-label" />
                 <GridPane hgap="10" vgap="10" prefWidth="548.0">
                     <columnConstraints>
                         <ColumnConstraints prefWidth="150.0" minWidth="10.0" hgrow="SOMETIMES"/>
@@ -52,19 +58,22 @@
                     </rowConstraints>
 
                     <children>
-                        <Label text="Komuna:"/>
-                        <ComboBox promptText="- Zgjidhni komunën -" GridPane.columnIndex="1" prefWidth="350.0"/>
+                        <Label fx:id="lblKomuna" text="Komuna:"/>
+                        <ComboBox fx:id="comboKomuna" promptText="- Zgjidhni komunën -" GridPane.columnIndex="1" prefWidth="350.0" onAction="#handleKomunaLlojiChanged"/>
 
-                        <Label text="Lloji i vendbanimit:" GridPane.rowIndex="1"/>
-                        <ComboBox fx:id="comboLloji" promptText="- Zgjidhni vendbanimin-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label fx:id="lblLlojiVendbanimit" text="Lloji i vendbanimit:" GridPane.rowIndex="1"/>
 
-                        <Label text="Emri i vendbanimit:" GridPane.rowIndex="2"/>
-                        <TextField promptText="" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <RadioButton fx:id="radioQytet" text="Qytet" toggleGroup="$llojiGroup" onAction="#handleKomunaLlojiChanged"/>
+                            <RadioButton fx:id="radioFshat" text="Fshat" toggleGroup="$llojiGroup" onAction="#handleKomunaLlojiChanged"/>
+                        </HBox>
 
-                        <Label text="Rruga:" GridPane.rowIndex="3"/>
-                        <TextField promptText="" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <ComboBox fx:id="comboEmriVendbanimit" promptText="- Zgjidhni vendbanimin -" prefWidth="350.0" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="Kërko" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                        <Label fx:id="lblRruga" text="Rruga:" GridPane.rowIndex="3"/>
+                        <TextField fx:id="txtRruga" promptText="" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                        <Button fx:id="btnKerko" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="Kërko" onAction="#kerkoAdrese" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                     </children>
                 </GridPane>
             </children>
