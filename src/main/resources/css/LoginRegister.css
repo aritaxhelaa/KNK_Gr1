@@ -16,7 +16,9 @@
 
 /* Sidebar me gradient dhe hije */
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, #263238, #37474f);
+ -fx-background-color: linear-gradient(to bottom, #263238, #37474f);
+-fx-background-color: linear-gradient(to bottom, #003366, #002250);
+
     -fx-padding: 40 20;
     -fx-alignment: TOP_CENTER;
     -fx-spacing: 2;
@@ -107,8 +109,8 @@
     -fx-background-radius: 12;
     -fx-padding: 40;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 25, 0.3, 0, 2);
-    -fx-max-width: 520;
-    -fx-min-width: 420;
+    -fx-max-width: 400;
+    -fx-min-width: 320;
 }
 
 /* Separator afër logos, pa padding */
