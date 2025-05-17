@@ -68,6 +68,7 @@
                             <RadioButton fx:id="radioFshat" text="Fshat" toggleGroup="$llojiGroup" onAction="#handleKomunaLlojiChanged"/>
                         </HBox>
 
+                        <Label fx:id="lblEmriVendbanimit" text="Emri i vendbanimit:" GridPane.rowIndex="2"/>
                         <ComboBox fx:id="comboEmriVendbanimit" promptText="- Zgjidhni vendbanimin -" prefWidth="350.0" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
                         <Label fx:id="lblRruga" text="Rruga:" GridPane.rowIndex="3"/>

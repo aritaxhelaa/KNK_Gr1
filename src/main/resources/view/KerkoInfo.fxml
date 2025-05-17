@@ -19,6 +19,7 @@
                     <TableColumn fx:id="colVendbanimi" text="Vendbanimi" prefWidth="180"/>
                     <TableColumn fx:id="colLagjia" text="Lagjia" prefWidth="180"/>
                     <TableColumn fx:id="colAdresa" text="Adresa" prefWidth="180"/>
+                    <TableColumn fx:id="colKodiPostar" text="Kodi Postar" prefWidth="180"/>
                 </columns>
             </TableView>
 

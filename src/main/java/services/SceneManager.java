@@ -4,13 +4,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import utils.SceneLocator;
+
+import java.io.IOException;
 
 public class SceneManager {
     private static SceneManager sceneManager;
     private Scene scene;
     private LanguageManager languageManager;
     private String currentPath;
+
 
     // Konstruktor privat për të inicializuar vetëm një instancë
     private SceneManager(){
@@ -25,6 +29,7 @@ public class SceneManager {
             sceneManager = new SceneManager();
         return sceneManager;
     }
+
 
     // Kjo metodë krijon një skenë me parent të ngarkuar nga FXML
     private Scene initScene(){
@@ -84,4 +89,6 @@ public class SceneManager {
     public Scene getScene() {
         return scene;
     }
+
+
 }

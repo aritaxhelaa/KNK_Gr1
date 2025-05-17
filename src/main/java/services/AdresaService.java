@@ -1,9 +1,12 @@
 package services;
 
 import models.Adresa;
+import models.Dto.AdresaDto.AdresaViewDto;
 import models.Dto.AdresaDto.CreateAdresaDto;
 import models.Dto.AdresaDto.UpdateAdresaDto;
 import repository.AdresaRepository;
+
+import java.util.List;
 
 public class AdresaService {
     private AdresaRepository adresaRepository;
@@ -54,6 +57,10 @@ public class AdresaService {
         }
 
         this.adresaRepository.delete(id);
+    }
+    
+    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String rruga) {
+        return adresaRepository.kerkoAdresa(komuna, lloji, vendbanimi, rruga);
     }
 
 }
