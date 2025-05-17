@@ -80,4 +80,27 @@ public class UserRepository extends BaseRepository<User, CreateUserDto, UpdateUs
         }
         return null;
     }
+
+    public int countAll() {
+        String query = "SELECT COUNT(*) FROM users";
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countByRoli(String roli) {
+        String query = "SELECT COUNT(*) FROM users WHERE roli = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, roli);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

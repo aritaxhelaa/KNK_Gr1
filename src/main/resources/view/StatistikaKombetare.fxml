@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane fx:controller="Controllers.StatistikaKombetareController"
+            xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             prefHeight="600.0" prefWidth="900.0"
             stylesheets="@../css/HomeStyles.css">
@@ -55,27 +56,26 @@
                     <children>
                         <VBox styleClass="stat-card" alignment="CENTER">
                             <Label text="👤" styleClass="stat-icon"/>
-                            <Label fx:id="lblGjithsej" text="450" styleClass="stat-value"/>
+                            <Label fx:id="lblGjithsej" text="-" styleClass="stat-value"/>
                             <Label text="Përdorues gjithsej" styleClass="stat-label"/>
                         </VBox>
                         <VBox styleClass="stat-card" alignment="CENTER">
                             <Label text="✅" styleClass="stat-icon"/>
-                            <Label fx:id="lblAktiv" text="120" styleClass="stat-value"/>
+                            <Label fx:id="lblAktiv" text="-" styleClass="stat-value"/>
                             <Label text="Përdorues aktiv" styleClass="stat-label"/>
                         </VBox>
                         <VBox styleClass="stat-card" alignment="CENTER">
                             <Label text="🧑" styleClass="stat-icon"/>
-                            <Label fx:id="lblQytetare" text="330" styleClass="stat-value"/>
+                            <Label fx:id="lblQytetare" text="-" styleClass="stat-value"/>
                             <Label text="Qytetarë të regjistruar" styleClass="stat-label"/>
                         </VBox>
                         <VBox styleClass="stat-card" alignment="CENTER">
                             <Label text="🏛" styleClass="stat-icon"/>
-                            <Label fx:id="lblZyrtare" text="30" styleClass="stat-value"/>
+                            <Label fx:id="lblZyrtare" text="-" styleClass="stat-value"/>
                             <Label text="Zyrtarë Komunal" styleClass="stat-label"/>
                         </VBox>
                     </children>
                 </FlowPane>
-
 
                 <BarChart fx:id="barChartPerdorues" prefHeight="300.0" prefWidth="800.0"
                           title="Regjistrimet mujore për vitin 2025">
