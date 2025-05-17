@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <?import java.lang.String?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+
+<BorderPane fx:controller="Controllers.MenaxhoPerdoruesitController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css"
             xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="">
+            xmlns:fx="http://javafx.com/fxml/1">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -64,7 +64,6 @@
                     </columns>
                 </TableView>
 
-                <!-- Nderrimi i rolit -->
                 <VBox fx:id="formaUpdate" spacing="10.0" visible="false">
                     <Label text="Përdorues i përzgjedhur:"/>
                     <Label fx:id="lblEmriZgjedhur" text="-" />
