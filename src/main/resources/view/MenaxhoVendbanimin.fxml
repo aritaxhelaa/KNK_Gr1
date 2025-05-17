@@ -11,7 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="Controllers.MenaxhoVendbaniminController"
+            maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../css/HomeStyles.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -34,7 +40,9 @@
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Label prefWidth="548.0" styleClass="title" text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë" wrapText="true">
+                <Label prefWidth="548.0" styleClass="title"
+                       text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0" />
                     </font>
