@@ -5,16 +5,14 @@ public class AdresaViewDto {
     private String komuna;
     private String vendbanimi;
     private String lagjia;
-    private String rruga;
-    private int numri;
+    private String adresa;
     private int kodiPostar;
 
-    public AdresaViewDto(String komuna, String vendbanimi, String lagjia, String rruga, int numri, int kodiPostar) {
+    public AdresaViewDto(String komuna, String vendbanimi, String lagjia, String adresa, int kodiPostar) {
         this.komuna = komuna;
         this.vendbanimi = vendbanimi;
         this.lagjia = lagjia;
-        this.rruga = rruga;
-        this.numri = numri;
+        this.adresa = adresa;
         this.kodiPostar = kodiPostar;
     }
 
@@ -30,20 +28,12 @@ public class AdresaViewDto {
         return lagjia;
     }
 
-    public String getRruga() {
-        return rruga;
-    }
-
-    public int getNumri() {
-        return numri;
+    public String getAdresa() {
+        return adresa;
     }
 
     public int getKodiPostar() {
         return kodiPostar;
-    }
-
-    public String getAdresa() {
-        return rruga + " " + numri;
     }
 
 }

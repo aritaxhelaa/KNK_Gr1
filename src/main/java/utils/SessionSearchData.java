@@ -4,13 +4,13 @@ public class SessionSearchData {
     private String komuna;
     private String lloji;
     private String vendbanimi;
-    private String rruga;
+    private String adresa;
 
-    public SessionSearchData(String komuna, String lloji, String vendbanimi, String rruga) {
+    public SessionSearchData(String komuna, String lloji, String vendbanimi, String adresa) {
         this.komuna = komuna;
         this.lloji = lloji;
         this.vendbanimi = vendbanimi;
-        this.rruga = rruga;
+        this.adresa = adresa;
     }
 
     public String getKomuna() {
@@ -25,7 +25,7 @@ public class SessionSearchData {
         return vendbanimi;
     }
 
-    public String getRruga() {
-        return rruga;
+    public String getAdresa() {
+        return adresa;
     }
 }

@@ -40,8 +40,8 @@ public class KerkoInfoController extends BaseController{
 
     private AdresaService adresaService = new AdresaService();
 
-    public void setKerkimi(String komuna, String lloji, String vendbanimi, String rruga) {
-        List<AdresaViewDto> rezultatet = adresaService.kerkoAdresa(komuna, lloji, vendbanimi, rruga);
+    public void setKerkimi(String komuna, String lloji, String vendbanimi, String adresa) {
+        List<AdresaViewDto> rezultatet = adresaService.kerkoAdresa(komuna, lloji, vendbanimi, adresa);
         tabelaRezultateve.setItems(FXCollections.observableArrayList(rezultatet));
     }
 
@@ -59,7 +59,7 @@ public class KerkoInfoController extends BaseController{
                     data.getKomuna(),
                     data.getLloji(),
                     data.getVendbanimi(),
-                    data.getRruga()
+                    data.getAdresa()
             );
             tabelaRezultateve.setItems(FXCollections.observableArrayList(rezultatet));
         }

@@ -87,7 +87,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
 
 
 
-    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String rruga) {
+    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String adresa) {
         List<AdresaViewDto> rezultatet = new ArrayList<>();
 
         String vendbanimiTabela = lloji.equalsIgnoreCase("Fshat") ? "fshati" : "qyteti";
@@ -105,7 +105,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         try (PreparedStatement ps = this.connection.prepareStatement(query)) {
             ps.setString(1, komuna);
             ps.setString(2, vendbanimi);
-            ps.setString(3, "%" + rruga + "%");
+            ps.setString(3, "%" + adresa + "%");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -113,8 +113,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
                         rs.getString("komuna"),
                         rs.getString("vendbanimi"),
                         rs.getString("lagjia"),
-                        rs.getString("rruga"),
-                        rs.getInt("numri"),
+                        rs.getString("adresa"),
                         rs.getInt("kodi_postar")
                 ));
             }
