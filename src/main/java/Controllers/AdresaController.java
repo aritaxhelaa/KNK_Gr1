@@ -11,7 +11,7 @@ import utils.SceneLocator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class AdresaController {
+public class AdresaController extends BaseController{
 
     @FXML
     private ComboBox<String> komunaComboBox;
@@ -101,23 +101,5 @@ public class AdresaController {
         }
     }
 
-    @FXML
-    private void switchToEn() {
-        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
-        try {
-            SceneManager.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    @FXML
-    private void switchToSq() {
-        LanguageManager.getInstance().setLocale(new Locale("sq"));
-        try {
-            SceneManager.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

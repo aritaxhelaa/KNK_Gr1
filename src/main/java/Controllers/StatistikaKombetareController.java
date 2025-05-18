@@ -8,7 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import repository.UserRepository;
 
-public class StatistikaKombetareController {
+public class StatistikaKombetareController extends BaseController{
 
     @FXML
     private Label lblGjithsej;

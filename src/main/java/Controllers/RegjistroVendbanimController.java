@@ -10,7 +10,7 @@ import repository.KomunaRepository;
 
 import java.util.List;
 
-public class RegjistroVendbanimController {
+public class RegjistroVendbanimController extends BaseController {
 
     @FXML
     private ComboBox<String> komunaComboBox;

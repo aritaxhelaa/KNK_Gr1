@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class MenaxhoPerdoruesitController {
+public class MenaxhoPerdoruesitController extends BaseController {
 
     @FXML
     private TableView<User> tabelaPerdoruesve;

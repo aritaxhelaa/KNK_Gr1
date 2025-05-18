@@ -46,8 +46,8 @@
         <StackPane alignment="CENTER" styleClass="content-container">
             <VBox spacing="10" alignment="CENTER" styleClass="form-container" maxWidth="350">
                 <HBox alignment="TOP_RIGHT" styleClass="language-buttons">
-                    <Button fx:id="sqButton" text="AL" onAction="#switchToSq" />
-                    <Button fx:id="enButton" text="EN" onAction="#switchToEn" />
+                    <Button fx:id="sqButton" text="AL" onAction="#switchToAlbanian" />
+                    <Button fx:id="enButton" text="EN" onAction="#switchToEnglish" />
                 </HBox>
 
                 <Label text="%register.title" styleClass="form-title" />

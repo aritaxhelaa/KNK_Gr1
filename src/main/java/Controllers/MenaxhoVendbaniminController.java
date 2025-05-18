@@ -9,7 +9,7 @@ import repository.AdresaRepository;
 
 import java.util.List;
 
-public class MenaxhoVendbaniminController {
+public class MenaxhoVendbaniminController extends BaseController{
 
     @FXML
     private TableView<Adresa> tabelaPerdoruesve;

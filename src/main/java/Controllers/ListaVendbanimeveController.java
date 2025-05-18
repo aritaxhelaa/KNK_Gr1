@@ -11,7 +11,7 @@ import repository.AdresaRepository;
 
 import java.util.List;
 
-public class ListaVendbanimeveController {
+public class ListaVendbanimeveController extends BaseController {
 
     @FXML
     private TableView<Adresa> vendbanimeTable;

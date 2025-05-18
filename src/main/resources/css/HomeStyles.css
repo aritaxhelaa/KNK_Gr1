@@ -253,3 +253,18 @@ GridPane {
     -fx-wrap-text: true;
     -fx-text-alignment: center;
 }
+.language-buttons {
+    -fx-spacing: 10;
+    -fx-alignment: top-right;
+    -fx-padding: 5 0 15 0;
+}
+
+.language-buttons .button {
+    -fx-background-color: white;
+    -fx-text-fill: #263238;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 4 10;
+    -fx-font-size: 12px;
+}

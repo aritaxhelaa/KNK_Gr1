@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane fx:controller="Controllers.MenaxhoVendbaniminController"
             maxHeight="-Infinity" maxWidth="-Infinity"
@@ -25,14 +26,18 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
+                <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                    <Button text="AL" onAction="#switchToAlbanian" />
+                    <Button text="EN" onAction="#switchToEnglish" />
+                </HBox>
                 <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Menaxho Përdoruesit" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Menaxho Vendbanimet" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="Statistika Kombetare" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.manage.users" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.national.stats" />
             </children>
         </VBox>
     </left>
@@ -41,22 +46,22 @@
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
                 <Label prefWidth="548.0" styleClass="title"
-                       text="Zhvillimi i Sistemit Interaktiv për regjistimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       text="%main.title"
                        wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0" />
                     </font>
                 </Label>
-                <Label styleClass="search-label" text="Menaxho Vendbanimin" />
+                <Label styleClass="search-label" text="%manage.address.title" />
 
                 <TableView fx:id="tabelaPerdoruesve" prefHeight="400.0" prefWidth="550.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="colUser" prefWidth="100.0" text="Emri" />
-                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="Komuna" />
-                        <TableColumn fx:id="colData" text="Lloji" />
-                        <TableColumn fx:id="colKodiPostar" prefWidth="100.0" text="Kodi Postar" />
-                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="Delete" />
-                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="Update" />
+                        <TableColumn fx:id="colUser" prefWidth="100.0" text="%address.column.name" />
+                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="%address.column.municipality" />
+                        <TableColumn fx:id="colData" text="%address.column.type" />
+                        <TableColumn fx:id="colKodiPostar" prefWidth="100.0" text="%address.column.postal" />
+                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="%address.column.delete" />
+                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="%address.column.update" />
                     </columns>
                 </TableView>
             </children>

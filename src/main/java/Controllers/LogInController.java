@@ -11,7 +11,7 @@ import services.LanguageManager;
 
 import java.util.Locale;
 
-public class LogInController {
+public class LogInController extends BaseController {
 
     @FXML private TextField Username;
     @FXML private PasswordField Password;
@@ -64,24 +64,24 @@ public class LogInController {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void switchToEnglish() {
-        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
-        try {
-            SceneManager.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void switchToAlbanian() {
-        LanguageManager.getInstance().setLocale(new Locale("sq"));
-        try {
-            SceneManager.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    @FXML
+//    private void switchToEnglish() {
+//        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
+//        try {
+//            SceneManager.reload();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @FXML
+//    private void switchToAlbanian() {
+//        LanguageManager.getInstance().setLocale(new Locale("sq"));
+//        try {
+//            SceneManager.reload();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

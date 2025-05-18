@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane fx:controller="Controllers.MenaxhoPerdoruesitController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -31,9 +32,9 @@
                         <Image url="@../Images/KosovoLogo.png"/>
                     </image>
                 </ImageView>
-                <Button styleClass="sidebar-button" text="Menaxho Përdoruesit"/>
-                <Button styleClass="sidebar-button" text="Menaxho Vendbanimet"/>
-                <Button styleClass="sidebar-button" text="Statistika Kombetare"/>
+                <Button styleClass="sidebar-button" text="%sidebar.manage.users"/>
+                <Button styleClass="sidebar-button" text="%sidebar.manage.addresses"/>
+                <Button styleClass="sidebar-button" text="%sidebar.national.stats"/>
             </children>
         </VBox>
     </left>
@@ -44,44 +45,47 @@
                 <Insets top="25" bottom="25" left="25" right="25"/>
             </padding>
             <children>
+                <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                    <Button text="AL" onAction="#switchToAlbanian" />
+                    <Button text="EN" onAction="#switchToEnglish" />
+                </HBox>
                 <Label prefWidth="548.0" styleClass="title"
-                       text="Zhvillimi i Sistemit Interaktiv për regjistrimin dhe gjetjen e adresave te vendbanimeve në Kosovë"
+                       text="%main.title"
                        wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0"/>
                     </font>
                 </Label>
 
-                <Label styleClass="search-label" text="Menaxho Përdoruesit"/>
+                <Label styleClass="search-label" text="%manage.title"/>
 
                 <TableView fx:id="tabelaPerdoruesve" prefHeight="300.0" prefWidth="550.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="colUser" prefWidth="130.0" text="User"/>
-                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="Pozita"/>
-                        <TableColumn fx:id="colData" prefWidth="140.0" text="Data e krijimit"/>
-                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="Delete user"/>
-                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="Update user"/>
+                        <TableColumn fx:id="colUser" prefWidth="130.0" text="%manage.column.user"/>
+                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="%manage.column.position"/>
+                        <TableColumn fx:id="colData" prefWidth="140.0" text="%manage.column.created"/>
+                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="%manage.column.delete"/>
+                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="%manage.column.update"/>
                     </columns>
                 </TableView>
 
                 <VBox fx:id="formaUpdate" spacing="10.0" visible="false">
-                    <Label text="Përdorues i përzgjedhur:"/>
+                    <Label text="%manage.selected.user"/>
                     <Label fx:id="lblEmriZgjedhur" text="-" />
 
-                    <Label text="Ndrysho Rolin:"/>
+                    <Label text="%manage.change.role"/>
                     <ComboBox fx:id="comboRoli">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="Qytetar"/>
-                                <String fx:value="Zyrtar Komunal"/>
-                                <String fx:value="Admin"/>
+                                <String fx:value="%role.citizen"/>
+                                <String fx:value="%role.municipal"/>
+                                <String fx:value="%role.admin"/>
                             </FXCollections>
                         </items>
                     </ComboBox>
 
-                    <Button text="Ruaj Ndryshimet" onAction="#ruajNdryshimin"/>
+                    <Button text="%manage.save.changes" onAction="#ruajNdryshimin"/>
                 </VBox>
-
             </children>
         </VBox>
     </center>
