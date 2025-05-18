@@ -26,10 +26,7 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-                <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
-                    <Button text="AL" onAction="#switchToAlbanian" />
-                    <Button text="EN" onAction="#switchToEnglish" />
-                </HBox>
+
                 <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Images/KosovoLogo.png" />
@@ -45,6 +42,10 @@
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
+                <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                    <Button text="AL" onAction="#switchToAlbanian" />
+                    <Button text="EN" onAction="#switchToEnglish" />
+                </HBox>
                 <Label prefWidth="548.0" styleClass="title"
                        text="%main.title"
                        wrapText="true">
