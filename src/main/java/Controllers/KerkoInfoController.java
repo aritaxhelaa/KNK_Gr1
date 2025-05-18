@@ -15,7 +15,7 @@ import utils.SessionSearchData;
 
 import java.util.List;
 
-public class KerkoInfoController {
+public class KerkoInfoController extends BaseController{
 
     @FXML
     private TableView<AdresaViewDto> tabelaRezultateve;

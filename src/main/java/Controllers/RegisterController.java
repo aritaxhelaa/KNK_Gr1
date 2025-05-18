@@ -14,7 +14,7 @@ import utils.SessionManager;
 
 import java.util.Locale;
 
-public class RegisterController {
+public class RegisterController extends BaseController {
 
     @FXML private TextField NameField;
     @FXML private TextField EmailField;
@@ -98,25 +98,8 @@ public class RegisterController {
         }
     }
 
-    @FXML
-    private void switchToEn() {
-        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
-        reloadScene();
-    }
 
-    @FXML
-    private void switchToSq() {
-        LanguageManager.getInstance().setLocale(new Locale("sq"));
-        reloadScene();
-    }
 
-    private void reloadScene() {
-        try {
-            SceneManager.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private String getText(String key) {
         return LanguageManager.getInstance().getResourceBundle().getString(key);

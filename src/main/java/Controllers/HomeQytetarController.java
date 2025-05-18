@@ -18,7 +18,7 @@ import utils.SessionSearchData;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HomeQytetarController {
+public class HomeQytetarController extends BaseController{
 
     @FXML
     private ComboBox<String> comboKomuna;
