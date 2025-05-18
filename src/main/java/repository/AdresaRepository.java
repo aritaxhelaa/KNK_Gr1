@@ -1,11 +1,13 @@
 package repository;
 
 import models.Adresa;
+import models.Dto.AdresaDto.AdresaViewDto;
 import models.Dto.AdresaDto.CreateAdresaDto;
 import models.Dto.AdresaDto.UpdateAdresaDto;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, UpdateAdresaDto> {
 
@@ -82,4 +84,45 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         }
         return null;
     }
+
+
+
+    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String rruga) {
+        List<AdresaViewDto> rezultatet = new ArrayList<>();
+
+        String vendbanimiTabela = lloji.equalsIgnoreCase("Fshat") ? "fshati" : "qyteti";
+
+        String query = """
+        SELECT k.emri AS komuna, v.emri AS vendbanimi, l.emri AS lagjia, a.rruga, a.numri, kp.kodi AS kodi_postar
+        FROM adresa a
+        JOIN kodi_postar kp ON a.kodi_postar = kp.id
+        JOIN %s v ON kp.vendbanimi_id = v.id
+        JOIN komuna k ON v.komuna_id = k.id
+        JOIN lagjja l ON kp.lagjja_id = l.id
+        WHERE k.emri = ? AND v.emri = ? AND a.rruga LIKE ?
+    """.formatted(vendbanimiTabela);
+
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setString(1, komuna);
+            ps.setString(2, vendbanimi);
+            ps.setString(3, "%" + rruga + "%");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                rezultatet.add(new AdresaViewDto(
+                        rs.getString("komuna"),
+                        rs.getString("vendbanimi"),
+                        rs.getString("lagjia"),
+                        rs.getString("rruga"),
+                        rs.getInt("numri"),
+                        rs.getInt("kodi_postar")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rezultatet;
+    }
+
 }

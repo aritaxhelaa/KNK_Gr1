@@ -3,12 +3,17 @@ package Controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import models.Komuna;
 import models.Fshati;
 import repository.FshatiRepository;
 import repository.KomunaRepository;
 import repository.QytetiRepository;
+import services.SceneManager;
+import utils.SceneLocator;
+import utils.SessionManager;
+import utils.SessionSearchData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,6 +89,11 @@ public class HomeQytetarController {
                 comboEmriVendbanimit.getSelectionModel().clearSelection();
             }
         });
+
+        llojiGroup = new ToggleGroup();
+        radioQytet.setToggleGroup(llojiGroup);
+        radioFshat.setToggleGroup(llojiGroup);
+
     }
 
     public QytetiRepository getQytetiRepository() {
@@ -132,28 +142,31 @@ public class HomeQytetarController {
         }
     }
 
-@FXML
-private void kerkoAdrese() {
-    String komuna = comboKomuna.getValue();
-    String lloji = radioQytet.isSelected() ? "Qytet" : radioFshat.isSelected() ? "Fshat" : null;
-    String vendbanimi = comboEmriVendbanimit.getValue();
-    String rruga = txtRruga.getText();
+    @FXML
+    private void kerkoAdrese() {
+        String komuna = comboKomuna.getValue();
+        String lloji = radioQytet.isSelected() ? "Qytet" : radioFshat.isSelected() ? "Fshat" : null;
+        String vendbanimi = comboEmriVendbanimit.getValue();
+        String rruga = txtRruga.getText();
+        if (komuna == null || lloji == null || vendbanimi == null || rruga.isBlank()) {
+            showAlert("Ju lutem plotësoni të gjitha fushat!");
+            return;
+        }
 
-    if (komuna == null || lloji == null || vendbanimi == null || rruga.isBlank()) {
-        showAlert("Ju lutem plotësoni të gjitha fushat!");
-        return;
+        SessionManager.setSearchData(new SessionSearchData(komuna, lloji, vendbanimi, rruga));
+
+        try {
+            SceneManager.load(SceneLocator.KERKO_INFO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    // TODO: Dergo keto informata ne skenen KerkoInfo.fxml (p.sh. permes SceneManager ose FXMLLoader)
-
-    System.out.println("Kërkimi u dërgua me sukses: "
-            + komuna + " / " + lloji + " / " + vendbanimi + " / " + rruga);
-}
-
-    private void showAlert(String msg) {
+    private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Vërejtje");
-        alert.setContentText(msg);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }

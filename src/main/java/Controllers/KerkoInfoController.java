@@ -2,18 +2,17 @@ package Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import models.Dto.AdresaDto.AdresaViewDto;
 import services.AdresaService;
+import services.SceneManager;
+import utils.SceneLocator;
+import utils.SessionManager;
+import utils.SessionSearchData;
 
-import java.io.IOException;
 import java.util.List;
 
 public class KerkoInfoController {
@@ -53,21 +52,25 @@ public class KerkoInfoController {
         colLagjia.setCellValueFactory(new PropertyValueFactory<>("lagjia"));
         colAdresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
         colKodiPostar.setCellValueFactory(new PropertyValueFactory<>("kodiPostar"));
+
+        SessionSearchData data = SessionManager.getSearchData();
+        if (data != null) {
+            List<AdresaViewDto> rezultatet = adresaService.kerkoAdresa(
+                    data.getKomuna(),
+                    data.getLloji(),
+                    data.getVendbanimi(),
+                    data.getRruga()
+            );
+            tabelaRezultateve.setItems(FXCollections.observableArrayList(rezultatet));
+        }
     }
 
     @FXML
     private void handleKthehu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/QytetariView.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) kthehuBtn.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Kërkimi");
-            stage.show();
-        } catch (IOException e) {
+            SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

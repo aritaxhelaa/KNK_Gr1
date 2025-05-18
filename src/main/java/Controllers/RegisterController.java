@@ -6,10 +6,11 @@ import models.Dto.UserDto.CreateUserDto;
 import models.User;
 import services.UserService;
 import util.PasswordHasher;
-import util.SessionManager;
+import utils.SessionManager;
 import services.SceneManager;
 import utils.SceneLocator;
 import services.LanguageManager;
+import utils.SessionManager;
 
 import java.util.Locale;
 
@@ -77,7 +78,7 @@ public class RegisterController {
 
         try {
             User newUser = userService.create(dto);
-            SessionManager.setCurrentUser(newUser);
+            utils.SessionManager.setCurrentUser(newUser);
 
             ErrorLabel.setText(getText("register.success"));
             SceneManager.load(SceneLocator.LOGIN_PAGE);
