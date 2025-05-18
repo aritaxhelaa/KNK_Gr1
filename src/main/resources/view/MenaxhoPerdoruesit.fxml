@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -10,31 +11,26 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:controller="Controllers.MenaxhoPerdoruesitController"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MenaxhoPerdoruesitController">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
                 <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/KosovoLogo.png"/>
+                        <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button styleClass="sidebar-button" text="%sidebar.manage.users"/>
-                <Button styleClass="sidebar-button" text="%sidebar.manage.addresses"/>
-                <Button styleClass="sidebar-button" text="%sidebar.national.stats"/>
+                <Button onAction="#goToMenaxhoPerdoruesit" styleClass="sidebar-button" text="%sidebar.manage.users" />
+                <Button onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <Button onAction="#goToStatistikaKombetare" styleClass="sidebar-button" text="%sidebar.national.stats" />
             </children>
         </VBox>
     </left>
@@ -42,49 +38,47 @@
     <center>
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="25" bottom="25" left="25" right="25"/>
+                <Insets bottom="25" left="25" right="25" top="25" />
             </padding>
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
-                    <Button text="AL" onAction="#switchToAlbanian" />
-                    <Button text="EN" onAction="#switchToEnglish" />
+                    <Button onAction="#switchToAlbanian" text="AL" />
+                    <Button onAction="#switchToEnglish" text="EN" />
                 </HBox>
-                <Label prefWidth="548.0" styleClass="title"
-                       text="%main.title"
-                       wrapText="true">
+                <Label prefWidth="548.0" styleClass="title" text="%main.title" wrapText="true">
                     <font>
-                        <Font name="System Bold" size="23.0"/>
+                        <Font name="System Bold" size="23.0" />
                     </font>
                 </Label>
 
-                <Label styleClass="search-label" text="%manage.title"/>
+                <Label styleClass="search-label" text="%manage.title" />
 
                 <TableView fx:id="tabelaPerdoruesve" prefHeight="300.0" prefWidth="550.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="colUser" prefWidth="130.0" text="%manage.column.user"/>
-                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="%manage.column.position"/>
-                        <TableColumn fx:id="colData" prefWidth="140.0" text="%manage.column.created"/>
-                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="%manage.column.delete"/>
-                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="%manage.column.update"/>
+                        <TableColumn fx:id="colUser" prefWidth="130.0" text="%manage.column.user" />
+                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="%manage.column.position" />
+                        <TableColumn fx:id="colData" prefWidth="140.0" text="%manage.column.created" />
+                        <TableColumn fx:id="colDelete" prefWidth="90.0" text="%manage.column.delete" />
+                        <TableColumn fx:id="colUpdate" prefWidth="90.0" text="%manage.column.update" />
                     </columns>
                 </TableView>
 
                 <VBox fx:id="formaUpdate" spacing="10.0" visible="false">
-                    <Label text="%manage.selected.user"/>
+                    <Label text="%manage.selected.user" />
                     <Label fx:id="lblEmriZgjedhur" text="-" />
 
-                    <Label text="%manage.change.role"/>
+                    <Label text="%manage.change.role" />
                     <ComboBox fx:id="comboRoli">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="%role.citizen"/>
-                                <String fx:value="%role.municipal"/>
-                                <String fx:value="%role.admin"/>
+                                <String fx:value="%role.citizen" />
+                                <String fx:value="%role.municipal" />
+                                <String fx:value="%role.admin" />
                             </FXCollections>
                         </items>
                     </ComboBox>
 
-                    <Button text="%manage.save.changes" onAction="#ruajNdryshimin"/>
+                    <Button onAction="#ruajNdryshimin" text="%manage.save.changes" />
                 </VBox>
             </children>
         </VBox>

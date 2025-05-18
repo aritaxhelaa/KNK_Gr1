@@ -10,31 +10,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:controller="Controllers.StatistikaKombetareController"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            prefHeight="600.0" prefWidth="900.0"
-            stylesheets="@../css/HomeStyles.css">
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.StatistikaKombetareController">
 
     <!-- Sidebar -->
     <left>
-        <VBox spacing="20.0" prefWidth="200.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+        <VBox prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
             <children>
-                <ImageView fitWidth="160.0" fitHeight="150.0" preserveRatio="true">
+                <ImageView fitHeight="150.0" fitWidth="160.0" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/KosovoLogo.png"/>
+                        <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button text="%sidebar.manage.users" styleClass="sidebar-button"/>
-                <Button text="%sidebar.manage.addresses" styleClass="sidebar-button"/>
-                <Button text="%sidebar.national.stats" styleClass="sidebar-button"/>
+                <Button onAction="#goToMenaxhoPerdoruesit" styleClass="sidebar-button" text="%sidebar.manage.users" />
+                <Button onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <Button onAction="#goToStatistikaKombetare" styleClass="sidebar-button" text="%sidebar.national.stats" />
             </children>
         </VBox>
     </left>
@@ -42,50 +38,47 @@
     <center>
         <VBox spacing="25.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="25.0" right="25.0" bottom="25.0" left="25.0"/>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </padding>
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
-                    <Button text="AL" onAction="#switchToAlbanian" />
-                    <Button text="EN" onAction="#switchToEnglish" />
+                    <Button onAction="#switchToAlbanian" text="AL" />
+                    <Button onAction="#switchToEnglish" text="EN" />
                 </HBox>
-                <Label styleClass="title"
-                       text="%main.title"
-                       wrapText="true">
-                    <font><Font name="System Bold" size="22.0"/></font>
+                <Label styleClass="title" text="%main.title" wrapText="true">
+                    <font><Font name="System Bold" size="22.0" /></font>
                 </Label>
 
-                <Label styleClass="search-label" text="%stats.title"/>
+                <Label styleClass="search-label" text="%stats.title" />
 
-                <FlowPane fx:id="statPane" hgap="15" vgap="15" alignment="CENTER">
+                <FlowPane fx:id="statPane" alignment="CENTER" hgap="15" vgap="15">
                     <children>
-                        <VBox styleClass="stat-card" alignment="CENTER">
-                            <Label text="👤" styleClass="stat-icon"/>
-                            <Label fx:id="lblGjithsej" text="-" styleClass="stat-value"/>
-                            <Label text="%stats.total.users" styleClass="stat-label"/>
+                        <VBox alignment="CENTER" styleClass="stat-card">
+                            <Label styleClass="stat-icon" text="👤" />
+                            <Label fx:id="lblGjithsej" styleClass="stat-value" text="-" />
+                            <Label styleClass="stat-label" text="%stats.total.users" />
                         </VBox>
-                        <VBox styleClass="stat-card" alignment="CENTER">
-                            <Label text="✅" styleClass="stat-icon"/>
-                            <Label fx:id="lblAktiv" text="-" styleClass="stat-value"/>
-                            <Label text="%stats.active.users" styleClass="stat-label"/>
+                        <VBox alignment="CENTER" styleClass="stat-card">
+                            <Label styleClass="stat-icon" text="✅" />
+                            <Label fx:id="lblAktiv" styleClass="stat-value" text="-" />
+                            <Label styleClass="stat-label" text="%stats.active.users" />
                         </VBox>
-                        <VBox styleClass="stat-card" alignment="CENTER">
-                            <Label text="🧑" styleClass="stat-icon"/>
-                            <Label fx:id="lblQytetare" text="-" styleClass="stat-value"/>
-                            <Label text="%stats.citizens" styleClass="stat-label"/>
+                        <VBox alignment="CENTER" styleClass="stat-card">
+                            <Label styleClass="stat-icon" text="🧑" />
+                            <Label fx:id="lblQytetare" styleClass="stat-value" text="-" />
+                            <Label styleClass="stat-label" text="%stats.citizens" />
                         </VBox>
-                        <VBox styleClass="stat-card" alignment="CENTER">
-                            <Label text="🏛" styleClass="stat-icon"/>
-                            <Label fx:id="lblZyrtare" text="-" styleClass="stat-value"/>
-                            <Label text="%stats.officials" styleClass="stat-label"/>
+                        <VBox alignment="CENTER" styleClass="stat-card">
+                            <Label styleClass="stat-icon" text="🏛" />
+                            <Label fx:id="lblZyrtare" styleClass="stat-value" text="-" />
+                            <Label styleClass="stat-label" text="%stats.officials" />
                         </VBox>
                     </children>
                 </FlowPane>
 
-                <BarChart fx:id="barChartPerdorues" prefHeight="300.0" prefWidth="800.0"
-                          title="%stats.chart.title">
-                    <xAxis><CategoryAxis fx:id="xMuajt" label="%stats.chart.xaxis"/></xAxis>
-                    <yAxis><NumberAxis fx:id="yNumri" label="%stats.chart.yaxis"/></yAxis>
+                <BarChart fx:id="barChartPerdorues" prefHeight="300.0" prefWidth="800.0" title="%stats.chart.title">
+                    <xAxis><CategoryAxis label="%stats.chart.xaxis" fx:id="xMuajt" /></xAxis>
+                    <yAxis><NumberAxis fx:id="yNumri" label="%stats.chart.yaxis" /></yAxis>
                 </BarChart>
             </children>
         </VBox>

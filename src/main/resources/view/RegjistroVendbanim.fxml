@@ -10,16 +10,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:controller="Controllers.RegjistroVendbanimController"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0"
-            stylesheets="@../css/HomeStyles.css"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.RegjistroVendbanimController">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -32,9 +28,9 @@
                         <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.register" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.search" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.list" />
+                <Button mnemonicParsing="false" onAction="#goToRegjistroVendbanim" styleClass="sidebar-button" text="%sidebar.register" />
+                <Button mnemonicParsing="false" onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
+                <Button mnemonicParsing="false" onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
                 <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.stats" />
             </children>
         </VBox>
@@ -44,12 +40,10 @@
         <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
-                    <Button text="AL" onAction="#switchToAlbanian" />
-                    <Button text="EN" onAction="#switchToEnglish" />
+                    <Button onAction="#switchToAlbanian" text="AL" />
+                    <Button onAction="#switchToEnglish" text="EN" />
                 </HBox>
-                <Label prefWidth="548.0" styleClass="title"
-                       text="%main.title"
-                       wrapText="true">
+                <Label prefWidth="548.0" styleClass="title" text="%main.title" wrapText="true">
                     <font>
                         <Font name="System Bold" size="23.0" />
                     </font>
@@ -89,9 +83,7 @@
                         <Label text="%form.postal" GridPane.rowIndex="5" />
                         <TextField fx:id="kodiPostarField" promptText="%form.prompt.postal" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                        <Button fx:id="saveButton" onAction="#handleSave" mnemonicParsing="false"
-                                prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="%form.button.save"
-                                GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="%form.button.save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                     </children>
                 </GridPane>
             </children>

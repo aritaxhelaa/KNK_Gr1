@@ -42,5 +42,50 @@ public abstract class BaseController {
         }
     }
 
+    public void goToRegjistroVendbanim() {
+        try {
+            SceneManager.load(SceneLocator.REGISTER_RESIDENCE);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToMenaxhoPerdoruesit() {
+        try {
+            SceneManager.load(SceneLocator.MANAGE_USER);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToMenaxhoVendbanimet() {
+        try {
+            SceneManager.load(SceneLocator.MANAGE_RESIDENCE);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToStatistikaKombetare() {
+        try {
+            SceneManager.load(SceneLocator.STATISTICS);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToListaVendbanimeve() {
+        try {
+            SceneManager.load(SceneLocator.LISTA_VENDBANIMEVE);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
 }
 

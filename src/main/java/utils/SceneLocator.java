@@ -12,5 +12,6 @@ public class SceneLocator {
     public static final String STATISTICS = "/view/StatistikaKombetare.fxml";
     public static final String MANAGE_RESIDENCE = "/view/MenaxhoVendbanimin.fxml";
     public static final String KERKO_INFO = "/views/KerkoInfo.fxml";
+    public static final String LISTA_VENDBANIMEVE = "/view/ListaVendbanimeve.fxml";
 
 }
