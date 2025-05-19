@@ -28,7 +28,7 @@
                 <Button mnemonicParsing="false" onAction="#goToRegjistroVendbanim" styleClass="sidebar-button" text="%sidebar.register" />
                 <Button mnemonicParsing="false" onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
                 <Button mnemonicParsing="false" onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
-                <Button mnemonicParsing="false" styleClass="sidebar-button" text="%sidebar.stats" />
+                <Button mnemonicParsing="false" onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
             </children>
         </VBox>
     </left>
