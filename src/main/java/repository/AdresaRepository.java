@@ -66,7 +66,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
             return getById(adresaDto.getId());
         }
 
-        query.setLength(query.length() - 2);
+        query.setLength(query.length() - 2); // remove last comma
         query.append(" WHERE id = ?");
         params.add(adresaDto.getId());
 
@@ -85,8 +85,6 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         return null;
     }
 
-
-
     public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String adresa) {
         List<AdresaViewDto> rezultatet = new ArrayList<>();
 
@@ -100,7 +98,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         JOIN komuna k ON v.komuna_id = k.id
         JOIN lagjja l ON kp.lagjja_id = l.id
         WHERE k.emri = ? AND v.emri = ? AND a.rruga LIKE ?
-    """.formatted(vendbanimiTabela);
+        """.formatted(vendbanimiTabela);
 
         try (PreparedStatement ps = this.connection.prepareStatement(query)) {
             ps.setString(1, komuna);
@@ -113,7 +111,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
                         rs.getString("komuna"),
                         rs.getString("vendbanimi"),
                         rs.getString("lagjia"),
-                        rs.getString("adresa"),
+                        rs.getString("rruga"),
                         rs.getInt("kodi_postar")
                 ));
             }
@@ -124,4 +122,44 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         return rezultatet;
     }
 
+    //  Shto një kërkim në historikun e përdoruesit
+    public void ruajKerkim(int userId, int adresaId) {
+        String query = "INSERT INTO recent_searches (user_id, adresa_id) VALUES (?, ?)";
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, adresaId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //  Kthe kërkimet e fundit të përdoruesit
+    public List<Adresa> getRecentSearchesByUser(int userId) {
+        List<Adresa> lista = new ArrayList<>();
+
+        String query = """
+            SELECT a.*
+            FROM recent_searches rs
+            JOIN adresa a ON rs.adresa_id = a.id
+            WHERE rs.user_id = ?
+            ORDER BY rs.search_time DESC
+            LIMIT 10
+            """;
+
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Adresa adresa = Adresa.getInstance(rs);
+                lista.add(adresa);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 }

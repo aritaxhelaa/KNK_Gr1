@@ -58,3 +58,48 @@ public class Adresa {
     }
 
 }
+
+//package models;
+//
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//
+//public class Adresa {
+//    private int id;
+//    private String rruga;
+//    private int numri;
+//    private int kodiPostar;
+//
+//    public Adresa() {
+//        // Konstruktor i zbrazët për JavaFX
+//    }
+//
+//    public Adresa(int id, String rruga, int numri, int kodiPostar) {
+//        this.id = id;
+//        this.rruga = rruga;
+//        this.numri = numri;
+//        this.kodiPostar = kodiPostar;
+//    }
+//
+//    public int getId() { return id; }
+//    public void setId(int id) { this.id = id; }
+//
+//    public String getRruga() { return rruga; }
+//    public void setRruga(String rruga) { this.rruga = rruga; }
+//
+//    public int getNumri() { return numri; }
+//    public void setNumri(int numri) { this.numri = numri; }
+//
+//    public int getKodiPostar() { return kodiPostar; }
+//    public void setKodiPostar(int kodiPostar) { this.kodiPostar = kodiPostar; }
+//
+//    public static Adresa getInstance(ResultSet rs) throws SQLException {
+//        return new Adresa(
+//                rs.getInt("id"),
+//                rs.getString("rruga"),
+//                rs.getInt("numri"),
+//                rs.getInt("kodi_postar")
+//        );
+//    }
+//}
+

@@ -7,7 +7,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Adresa;
+import models.User;
 import repository.AdresaRepository;
+import utils.SessionManager;
+
 
 import java.util.List;
 
@@ -27,11 +30,11 @@ public class ListaVendbanimeveController extends BaseController {
 
     private final AdresaRepository adresaRepository = new AdresaRepository();
 
-//    @FXML
-//    private void initialize() {
-//        configureTableColumns();
-//        loadData();
-//    }
+    @FXML
+    private void initialize() {
+        configureTableColumns();
+        loadRecentSearches();
+    }
 
     private void configureTableColumns() {
         rrugaColumn.setCellValueFactory(new PropertyValueFactory<>("rruga"));
@@ -39,9 +42,15 @@ public class ListaVendbanimeveController extends BaseController {
         kodiPostarColumn.setCellValueFactory(new PropertyValueFactory<>("kodiPostar"));
     }
 
-//    private void loadData() {
-//        List<Adresa> adresaList = adresaRepository.getAll();
-//        ObservableList<Adresa> observableList = FXCollections.observableArrayList(adresaList);
-//        vendbanimeTable.setItems(observableList);
-//    }
+    private void loadRecentSearches() {
+        User currentUser = SessionManager.getCurrentUser();
+        if (currentUser == null) {
+            System.err.println("Përdoruesi nuk është i kyçur!");
+            return;
+        }
+
+        List<Adresa> kerkime = adresaRepository.getRecentSearchesByUser(currentUser.getId());
+        ObservableList<Adresa> observableList = FXCollections.observableArrayList(kerkime);
+        vendbanimeTable.setItems(observableList);
+    }
 }
