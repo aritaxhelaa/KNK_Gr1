@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="23.0" />
                     </font>
                 </Label>
-                <Label styleClass="search-label" text="%register.title" />
+                <Label styleClass="search-label" text="%sidebar.register" />
 
                 <GridPane hgap="10.0" prefWidth="548.0" vgap="10.0">
                     <columnConstraints>

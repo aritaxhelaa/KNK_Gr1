@@ -15,10 +15,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.KerkoAdreseController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.KerkoAdreseController"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../css/HomeStyles.css">
 
     <left>
-        <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+        <VBox spacing="20.0" prefWidth="200.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
@@ -28,16 +32,19 @@
                         <Image url="@../Images/KosovoLogo.png" />
                     </image>
                 </ImageView>
-                <Button mnemonicParsing="false" onAction="#goToRegjistroVendbanim" styleClass="sidebar-button" text="%sidebar.register" />
-                <Button mnemonicParsing="false" onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
-                <Button mnemonicParsing="false" onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
-                <Button mnemonicParsing="false" onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <Button onAction="#goToRegjistroVendbanim" styleClass="sidebar-button" text="%sidebar.register" />
+                <Button onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
+                <Button onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
+                <Button onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
             </children>
         </VBox>
     </left>
 
     <center>
-        <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <VBox spacing="20.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="25.0" bottom="25.0" left="25.0" right="25.0"/>
+            </padding>
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
                     <Button onAction="#switchToAlbanian" text="AL" />
@@ -52,25 +59,39 @@
 
                 <Label styleClass="search-label" text="%main.search.label" />
 
-                <GridPane hgap="10.0" prefWidth="548.0" vgap="10.0">
+                <GridPane hgap="10.0" vgap="10.0" prefWidth="548.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
+                        <ColumnConstraints prefWidth="150.0" />
+                        <ColumnConstraints prefWidth="350.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints prefHeight="40.0" />
+                        <RowConstraints prefHeight="40.0" />
+                        <RowConstraints prefHeight="40.0" />
+                        <RowConstraints prefHeight="40.0" />
+                        <RowConstraints prefHeight="50.0" />
                     </rowConstraints>
                     <children>
-                        <Label text="%form.municipality" />
-                        <ComboBox prefWidth="350.0" promptText="%form.prompt.municipality" GridPane.columnIndex="1" />
-                        <Label text="%form.street" GridPane.rowIndex="1" />
-                        <TextField promptText="%form.prompt.street" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="%form.object" GridPane.rowIndex="2" />
-                        <TextField promptText="%form.prompt.object" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="%form.button.search" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                        <Label text="%form.municipality" GridPane.rowIndex="0" />
+                        <ComboBox fx:id="komunaComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="%form.type" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="llojiComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="%form.vendbanimi" GridPane.rowIndex="2" />
+                        <TextField fx:id="vendbanimiField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="%form.street" GridPane.rowIndex="3" />
+                        <TextField fx:id="rrugaField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Button fx:id="searchButton"
+                                onAction="#handleSearch"
+                                text="%form.button.search"
+                                styleClass="search-button"
+                                GridPane.columnIndex="1"
+                                GridPane.rowIndex="4"
+                                GridPane.halignment="RIGHT"
+                                prefWidth="130.0" prefHeight="40.0" />
                     </children>
                 </GridPane>
             </children>
