@@ -52,11 +52,11 @@
 
                 <Label styleClass="search-label" text="%manage.title" />
 
-                <TableView fx:id="tabelaPerdoruesve" prefHeight="300.0" prefWidth="550.0" styleClass="table-view">
+                <TableView fx:id="tblUsers" prefHeight="300.0" prefWidth="550.0" styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="colUser" prefWidth="130.0" text="%manage.column.user" />
-                        <TableColumn fx:id="colPozita" prefWidth="100.0" text="%manage.column.position" />
-                        <TableColumn fx:id="colData" prefWidth="140.0" text="%manage.column.created" />
+                        <TableColumn fx:id="colName" prefWidth="130.0" text="%manage.column.user" />
+                        <TableColumn fx:id="colRoli" prefWidth="100.0" text="%manage.column.position" />
+                        <TableColumn fx:id="colCreatedAt" prefWidth="140.0" text="%manage.column.created" />
                         <TableColumn fx:id="colDelete" prefWidth="90.0" text="%manage.column.delete" />
                         <TableColumn fx:id="colUpdate" prefWidth="90.0" text="%manage.column.update" />
                     </columns>

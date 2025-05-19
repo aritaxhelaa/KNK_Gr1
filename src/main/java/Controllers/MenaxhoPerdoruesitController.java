@@ -4,27 +4,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import models.User;
 import models.Dto.UserDto.UpdateUserDto;
 import repository.UserRepository;
-import javafx.scene.layout.VBox;
 
-
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MenaxhoPerdoruesitController extends BaseController {
 
     @FXML
-    private TableView<User> tabelaPerdoruesve;
+    private TableView<User> tblUsers;
 
     @FXML
-    private TableColumn<User, String> colUser;
+    private TableColumn<User, String> colName;
 
     @FXML
-    private TableColumn<User, String> colPozita;
+    private TableColumn<User, String> colRoli;
 
     @FXML
-    private TableColumn<User, String> colData;
+    private TableColumn<User, Timestamp> colCreatedAt;
 
     @FXML
     private TableColumn<User, Void> colDelete;
@@ -42,30 +44,46 @@ public class MenaxhoPerdoruesitController extends BaseController {
     private ComboBox<String> comboRoli;
 
     private final UserRepository userRepository = new UserRepository();
-
     private User userZgjedhur;
 
     @FXML
     private void initialize() {
-        comboRoli.getItems().addAll("Qytetar", "Zyrtar Komunal", "Admin");
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colRoli.setCellValueFactory(new PropertyValueFactory<>("roli"));
+        colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+
+        // Formatimi i dates
+        colCreatedAt.setCellFactory(column -> new TableCell<>() {
+            private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+            @Override
+            protected void updateItem(Timestamp item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "N/A" : formatter.format(item));
+            }
+        });
+
+        comboRoli.setItems(FXCollections.observableArrayList("qytetar", "zyrtar_komunal", "admin"));
         formaUpdate.setVisible(false);
-        configureTable();
-        loadUsers();
+        ngarkoPerdoruesit();
     }
 
-    private void configureTable() {
-        colUser.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getName()));
-        colPozita.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getRoli()));
-        colData.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty("N/A"));
+    private void ngarkoPerdoruesit() {
+        List<User> lista = userRepository.getAll();
+        ObservableList<User> data = FXCollections.observableArrayList(lista);
+        tblUsers.setItems(data);
+        shtoButonat();
+    }
 
-        colDelete.setCellFactory(column -> new TableCell<>() {
+    private void shtoButonat() {
+        colDelete.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Fshi");
 
             {
-                btn.setOnAction(e -> {
-                    User u = getTableView().getItems().get(getIndex());
-                    // Fshi përdoruesin në DB (opsionale)
-                    System.out.println("Përdoruesi për fshirje: " + u.getName());
+                btn.setOnAction(event -> {
+                    User user = getTableView().getItems().get(getIndex());
+                    userRepository.delete(user.getId());
+                    ngarkoPerdoruesit();
                 });
             }
 
@@ -76,14 +94,14 @@ public class MenaxhoPerdoruesitController extends BaseController {
             }
         });
 
-        colUpdate.setCellFactory(column -> new TableCell<>() {
+        colUpdate.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Ndrysho");
 
             {
-                btn.setOnAction(e -> {
+                btn.setOnAction(event -> {
                     userZgjedhur = getTableView().getItems().get(getIndex());
                     lblEmriZgjedhur.setText(userZgjedhur.getName());
-                    comboRoli.setValue(userZgjedhur.getRoli());
+                    comboRoli.getSelectionModel().select(userZgjedhur.getRoli());
                     formaUpdate.setVisible(true);
                 });
             }
@@ -96,28 +114,15 @@ public class MenaxhoPerdoruesitController extends BaseController {
         });
     }
 
-    private void loadUsers() {
-        List<User> users = userRepository.getAll(); // sigurohu që ekziston kjo metodë
-        tabelaPerdoruesve.setItems(FXCollections.observableArrayList(users));
-    }
-
     @FXML
     private void ruajNdryshimin() {
-        if (userZgjedhur == null || comboRoli.getValue() == null) return;
-
-        UpdateUserDto dto = new UpdateUserDto();
-        dto.setId(userZgjedhur.getId());
-        dto.setRoli(comboRoli.getValue());
-
-        User updated = userRepository.update(dto);
-        if (updated != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Roli u ndryshua me sukses.");
-            alert.showAndWait();
-            loadUsers();
-            formaUpdate.setVisible(false);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Ndodhi një gabim.");
-            alert.showAndWait();
+        if (userZgjedhur != null) {
+            String roliIRi = comboRoli.getSelectionModel().getSelectedItem();
+            if (roliIRi != null && !roliIRi.equals(userZgjedhur.getRoli())) {
+                userRepository.update(new UpdateUserDto(userZgjedhur.getId(), userZgjedhur.getEmail(), roliIRi));
+                formaUpdate.setVisible(false);
+                ngarkoPerdoruesit();
+            }
         }
     }
 }

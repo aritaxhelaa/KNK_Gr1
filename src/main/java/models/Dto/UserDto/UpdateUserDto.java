@@ -3,13 +3,14 @@ package models.Dto.UserDto;
 public class UpdateUserDto {
     private int id;
     private String email;
-    private String roli; //u shtu
+    private String roli;
 
     public UpdateUserDto() {}
 
-    public UpdateUserDto(int id, String email) {
+    public UpdateUserDto(int id, String email, String roli) {
         this.id = id;
         this.email = email;
+        this.roli = roli;
     }
 
     public int getId() {
@@ -21,7 +22,7 @@ public class UpdateUserDto {
     }
 
     public String getRoli() {
-        return roli; // ✅ SHTO KËTË
+        return roli;
     }
 
     public void setEmail(String email) {
@@ -32,7 +33,7 @@ public class UpdateUserDto {
         this.id = id;
     }
 
-    public void setRoli(String roli) { // edhe kjo
+    public void setRoli(String roli) {
         this.roli = roli;
     }
 }

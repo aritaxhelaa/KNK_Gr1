@@ -8,7 +8,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import repository.UserRepository;
 
-public class StatistikaKombetareController extends BaseController{
+import java.util.Map;
+
+public class StatistikaKombetareController extends BaseController {
 
     @FXML
     private Label lblGjithsej;
@@ -41,27 +43,31 @@ public class StatistikaKombetareController extends BaseController{
 
     private void ngarkoStatistikat() {
         int total = userRepository.countAll();
-//        int aktiv = userRepository.countAktiv(); // duhet me implementu
-        int qytetare = userRepository.countByRoli("Qytetar");
-        int zyrtare = userRepository.countByRoli("Zyrtar Komunal");
+        int aktiv = userRepository.countActiveUsers();
+        int qytetare = userRepository.countByRoli("qytetar");
+        int zyrtare = userRepository.countByRoli("zyrtar_komunal");
+
 
         lblGjithsej.setText(String.valueOf(total));
-//        lblAktiv.setText(String.valueOf(aktiv));
+        lblAktiv.setText(String.valueOf(aktiv));
         lblQytetare.setText(String.valueOf(qytetare));
         lblZyrtare.setText(String.valueOf(zyrtare));
     }
 
     private void ngarkoChart() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("2025");
+        series.setName(String.valueOf(java.time.Year.now().getValue()));
 
-        // Shembull statik - zëvendëso me të dhëna nga DB nëse ke tabelë me datë regjistrimi
-        series.getData().add(new XYChart.Data<>("Janar", 20));
-        series.getData().add(new XYChart.Data<>("Shkurt", 35));
-        series.getData().add(new XYChart.Data<>("Mars", 50));
-        series.getData().add(new XYChart.Data<>("Prill", 45));
-        series.getData().add(new XYChart.Data<>("Maj", 60));
-        series.getData().add(new XYChart.Data<>("Qershor", 0));
+        Map<String, Integer> registrimetMujore = userRepository.getRegistrimetMujore();
+
+        xMuajt.setLabel("Muaji (1–12)");
+        yNumri.setLabel("Numri i përdoruesve");
+
+        for (int i = 1; i <= 12; i++) {
+            String muaji = String.valueOf(i);
+            int numri = registrimetMujore.getOrDefault(muaji, 0);
+            series.getData().add(new XYChart.Data<>(muaji, numri));
+        }
 
         barChartPerdorues.getData().clear();
         barChartPerdorues.getData().add(series);
