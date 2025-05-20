@@ -2,6 +2,7 @@ package Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -111,6 +112,7 @@ public class HomeQytetarController extends BaseController{
         }
     }
 
+
     private final KomunaRepository komunaRepository = new KomunaRepository();
     private final QytetiRepository qytetiRepository = new QytetiRepository();
     private final FshatiRepository fshatiRepository = new FshatiRepository();
@@ -169,5 +171,7 @@ public class HomeQytetarController extends BaseController{
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
 }
 

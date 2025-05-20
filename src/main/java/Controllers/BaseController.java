@@ -6,6 +6,7 @@ import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
 
+
 import java.text.CollationElementIterator;
 import java.util.Locale;
 
@@ -81,6 +82,33 @@ public abstract class BaseController {
     public void goToListaVendbanimeve() {
         try {
             SceneManager.load(SceneLocator.LISTA_VENDBANIMEVE);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToKerkimetEFundit() {
+        try {
+            SceneManager.load(SceneLocator.KERKIMET_FUNDIT);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToQytetariView() {
+        try {
+            SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
+        } catch (Exception e) {
+            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToAdresaView() {
+        try {
+            SceneManager.load(SceneLocator.ADRESA_PAGE);
         } catch (Exception e) {
             ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
             e.printStackTrace();

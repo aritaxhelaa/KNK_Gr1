@@ -15,7 +15,7 @@ public class UpdateUserActivityDto {
     }
 
     public int getId() {
-        this.id = id;
+       return this.id;
     }
 
     public String getData() {
