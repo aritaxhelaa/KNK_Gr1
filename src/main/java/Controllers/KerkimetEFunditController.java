@@ -30,6 +30,8 @@ public class KerkimetEFunditController extends BaseController {
     public void initialize() {
         colData.setCellValueFactory(new PropertyValueFactory<>("data"));
         colAdresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
+        activityTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 
         int userId = SessionManager.getCurrentUser().getId(); // ← KJO është kyçe
         List<UserActivity> teGjitha = userActivityService.getByUserId(userId);
