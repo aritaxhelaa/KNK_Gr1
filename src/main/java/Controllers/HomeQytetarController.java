@@ -61,8 +61,8 @@ public class HomeQytetarController extends BaseController{
 
     @FXML
     private void initialize() {
-        // Tekst mirëseardhjeje mund të vendoset dinamikisht më vonë
-        lblWelcome.setText("Mirë se vini, qytetar!");
+        String emri = SessionManager.getCurrentUser().getName();
+        lblWelcome.setText("Mirë se vini, " + emri + "!");
         // Mbush dropdown e komunave nga databaza
         List<Komuna> komunaList = komunaRepository.getAll();
         comboKomuna.setItems(FXCollections.observableArrayList(
