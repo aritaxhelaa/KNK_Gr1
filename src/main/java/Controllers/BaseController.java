@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
+import utils.SessionManager;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -124,4 +125,16 @@ public abstract class BaseController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleLogout() {
+        SessionManager.clearSession();
+
+        try {
+            SceneManager.load(SceneLocator.LOGIN_PAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

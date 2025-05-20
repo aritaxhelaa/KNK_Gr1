@@ -13,7 +13,7 @@ public class MainTest extends Application {
             SceneManager sceneManager = SceneManager.getInstance();
 
             // Ngarko skenën e AdresaView (adresës) direkt
-            SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD); // duhet të kesh këtë në SceneLocator
+            SceneManager.load(SceneLocator.ADRESA_PAGE); // duhet të kesh këtë në SceneLocator
 
             primaryStage.setScene(sceneManager.getScene());
             primaryStage.setTitle("Testo - AdresaView me shumëgjuhësi");

@@ -268,3 +268,19 @@ GridPane {
     -fx-padding: 4 10;
     -fx-font-size: 12px;
 }
+.logout-button {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.logout-button:hover {
+    -fx-background-color: #e74c3c;
+}
+
