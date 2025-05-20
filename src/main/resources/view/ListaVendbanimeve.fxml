@@ -29,6 +29,10 @@
                 <Button mnemonicParsing="false" onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
                 <Button mnemonicParsing="false" onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
                 <Button mnemonicParsing="false" onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <VBox fx:id="spacer" VBox.vgrow="ALWAYS" />
+
+
+                <Button fx:id="logoutBtn" onAction="#handleLogout" text="%button.logout" styleClass="logout-button" />
             </children>
         </VBox>
     </left>

@@ -36,6 +36,10 @@
                 <Button onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
                 <Button onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
                 <Button onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
+                <VBox fx:id="spacer" VBox.vgrow="ALWAYS" />
+
+
+                <Button fx:id="logoutBtn" onAction="#handleLogout" text="%button.logout" styleClass="logout-button" />
             </children>
         </VBox>
     </left>
