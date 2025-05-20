@@ -35,11 +35,21 @@
             <padding>
                 <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
             </padding>
-            <Label text="Kërkimet e Fundit" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+           
+            <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                <children>
+                    <Button fx:id="sqButton" text="AL" onAction="#switchToAlbanian" />
+                    <Button fx:id="enButton" text="EN" onAction="#switchToEnglish" />
+                </children>
+            </HBox>
+
+            <Label text="%recent.title" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
             <TableView fx:id="activityTable" prefHeight="400.0" prefWidth="550.0">
                 <columns>
-                    <TableColumn fx:id="colData" text="Data" prefWidth="150.0" />
-                    <TableColumn fx:id="colAdresa" text="Adresa e Kërkuar" prefWidth="400.0" />
+                    <TableColumn fx:id="colData" text="%recent.column.date" prefWidth="150.0" />
+                    <TableColumn fx:id="colAdresa" text="%recent.column.address" prefWidth="400.0" />
                 </columns>
             </TableView>
         </VBox>

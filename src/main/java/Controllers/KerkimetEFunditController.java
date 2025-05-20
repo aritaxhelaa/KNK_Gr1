@@ -11,7 +11,7 @@ import utils.SessionManager;
 import java.time.LocalDate;
 import java.util.List;
 
-public class KerkimetEFunditController {
+public class KerkimetEFunditController extends BaseController {
 
     @FXML
     private TableView<UserActivity> activityTable;
