@@ -2,46 +2,35 @@ package models.Dto.UserActivityDto;
 
 public class UpdateUserActivityDto {
     private int id;
-    private String veprimi;
-    private String entiteti;
-    private int entitetiId;
+    private String data;
+    private String adresa;
 
-    public UpdateUserActivityDto(int id, String veprimi, String entiteti, int entitetiId) {
+    public UpdateUserActivityDto() {
+    }
+
+    public UpdateUserActivityDto( int id, String data, String adresa) {
         this.id = id;
-        this.veprimi = veprimi;
-        this.entiteti = entiteti;
-        this.entitetiId = entitetiId;
+        this.data = data;
+        this.adresa = adresa;
     }
 
     public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
         this.id = id;
     }
 
-    public String getVeprimi() {
-        return veprimi;
+    public String getData() {
+        return data;
     }
 
-    public void setVeprimi(String veprimi) {
-        this.veprimi = veprimi;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public String getEntiteti() {
-        return entiteti;
+    public String getAdresa() {
+        return adresa;
     }
 
-    public void setEntiteti(String entiteti) {
-        this.entiteti = entiteti;
-    }
-
-    public int getEntitetiId() {
-        return entitetiId;
-    }
-
-    public void setEntitetiId(int entitetiId) {
-        this.entitetiId = entitetiId;
+    public void setAdresa(String adresa) {
+        this.adresa = adresa;
     }
 }

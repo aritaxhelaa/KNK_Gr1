@@ -5,6 +5,8 @@ import models.Dto.UserActivityDto.UpdateUserActivityDto;
 import models.UserActivity;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserActivityRepository extends BaseRepository<UserActivity, CreateUserActivityDto, UpdateUserActivityDto> {
     public UserActivityRepository() {
@@ -19,18 +21,16 @@ public class UserActivityRepository extends BaseRepository<UserActivity, CreateU
     @Override
     public UserActivity create(CreateUserActivityDto dto) {
         String query = """
-            INSERT INTO user_activity (user_id, veprimi, entiteti, entiteti_id, data)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO user_activity (user_id, data, adresa)
+            VALUES (?, ?, ?)
         """;
 
         try {
             PreparedStatement pstm = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, dto.getUserId());
-            pstm.setString(2, dto.getVeprimi());
-            pstm.setString(3, dto.getEntiteti());
-            pstm.setInt(4, dto.getEntitetiId());
-            pstm.setTimestamp(5, new Timestamp(System.currentTimeMillis())); // auto-generated time
-            pstm.execute();
+            pstm.setString(2, dto.getData());
+            pstm.setString(3, dto.getAdresa());
+            pstm.executeUpdate();
 
             ResultSet generatedKeys = pstm.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -47,17 +47,16 @@ public class UserActivityRepository extends BaseRepository<UserActivity, CreateU
     @Override
     public UserActivity update(UpdateUserActivityDto dto) {
         String query = """
-        UPDATE user_activity
-        SET veprimi = ?, entiteti = ?, entiteti_id = ?
-        WHERE id = ?
-    """;
+            UPDATE user_activity
+            SET data = ?, adresa = ?
+            WHERE id = ?
+        """;
 
         try {
             PreparedStatement pstm = this.connection.prepareStatement(query);
-            pstm.setString(1, dto.getVeprimi());
-            pstm.setString(2, dto.getEntiteti());
-            pstm.setInt(3, dto.getEntitetiId());
-            pstm.setInt(4, dto.getId());
+            pstm.setString(1, dto.getData());
+            pstm.setString(2, dto.getAdresa());
+            pstm.setInt(3, dto.getId());
 
             int updated = pstm.executeUpdate();
             if (updated == 1) {
@@ -69,5 +68,25 @@ public class UserActivityRepository extends BaseRepository<UserActivity, CreateU
         }
 
         return null;
+    }
+
+    public List<UserActivity> getByUserId(int userId) {
+        List<UserActivity> result = new ArrayList<>();
+        String query = "SELECT * FROM user_activity WHERE user_id = ?";
+
+        try {
+            PreparedStatement pstm = this.connection.prepareStatement(query);
+            pstm.setInt(1, userId);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                result.add(UserActivity.getInstance(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
