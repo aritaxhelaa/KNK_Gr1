@@ -37,6 +37,7 @@ public class MenaxhoVendbaniminController extends BaseController{
 
     @FXML
     private void initialize() {
+        tabelaPerdoruesve.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         konfiguroKolonat();
         ngarkoTeDhenat();
     }

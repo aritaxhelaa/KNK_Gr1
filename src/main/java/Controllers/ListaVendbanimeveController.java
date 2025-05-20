@@ -1,56 +1,48 @@
 package Controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.Adresa;
-import models.User;
-import repository.AdresaRepository;
+import models.UserActivity;
+import services.UserActivityService;
 import utils.SessionManager;
 
-
+import java.time.LocalDate;
 import java.util.List;
 
 public class ListaVendbanimeveController extends BaseController {
 
     @FXML
-    private TableView<Adresa> vendbanimeTable;
+    private TableView<UserActivity> activityTable;
 
     @FXML
-    private TableColumn<Adresa, String> rrugaColumn;
+    private TableColumn<UserActivity, String> colData;
 
     @FXML
-    private TableColumn<Adresa, Integer> numriColumn;
+    private TableColumn<UserActivity, String> colAdresa;
+
+    private final UserActivityService userActivityService = new UserActivityService();
+
+
 
     @FXML
-    private TableColumn<Adresa, Integer> kodiPostarColumn;
+    public void initialize() {
+        colData.setCellValueFactory(new PropertyValueFactory<>("data"));
+        colAdresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
+        activityTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-    private final AdresaRepository adresaRepository = new AdresaRepository();
 
-    @FXML
-    private void initialize() {
-        configureTableColumns();
-        loadRecentSearches();
+        int userId = SessionManager.getCurrentUser().getId(); // ← KJO është kyçe
+        List<UserActivity> teGjitha = userActivityService.getByUserId(userId);
+
+        List<UserActivity> vetem14Ditet = teGjitha.stream()
+                .filter(a -> {
+                    LocalDate dataAktivitetit = LocalDate.parse(a.getData());
+                    return dataAktivitetit.isAfter(LocalDate.now().minusDays(14));
+                })
+                .toList();
+        activityTable.getItems().setAll(vetem14Ditet);
     }
 
-    private void configureTableColumns() {
-        rrugaColumn.setCellValueFactory(new PropertyValueFactory<>("rruga"));
-        numriColumn.setCellValueFactory(new PropertyValueFactory<>("numri"));
-        kodiPostarColumn.setCellValueFactory(new PropertyValueFactory<>("kodiPostar"));
-    }
-
-    private void loadRecentSearches() {
-        User currentUser = SessionManager.getCurrentUser();
-        if (currentUser == null) {
-            System.err.println("Përdoruesi nuk është i kyçur!");
-            return;
-        }
-
-        List<Adresa> kerkime = adresaRepository.getRecentSearchesByUser(currentUser.getId());
-        ObservableList<Adresa> observableList = FXCollections.observableArrayList(kerkime);
-        vendbanimeTable.setItems(observableList);
-    }
 }

@@ -34,27 +34,27 @@
     </left>
 
     <center>
-        <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
-            <children>
-                <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
-                    <Button onAction="#switchToAlbanian" text="AL" />
-                    <Button onAction="#switchToEnglish" text="EN" />
-                </HBox>
-                <Label prefWidth="548.0" styleClass="title" text="%main.title" wrapText="true">
-                    <font>
-                        <Font name="System Bold" size="23.0" />
-                    </font>
-                </Label>
-                <Label styleClass="search-label" text="%list.title" />
+        <VBox spacing="20" alignment="TOP_LEFT" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+            </padding>
 
-                <TableView fx:id="vendbanimeTable" prefHeight="400.0" prefWidth="548.0" styleClass="table-view">
-                    <columns>
-                        <TableColumn fx:id="rrugaColumn" prefWidth="150.0" text="%list.column.rruga" />
-                        <TableColumn fx:id="numriColumn" prefWidth="100.0" text="%list.column.numri" />
-                        <TableColumn fx:id="kodiPostarColumn" prefWidth="150.0" text="%list.column.kodiPostar" />
-                    </columns>
-                </TableView>
-            </children>
+
+            <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                <children>
+                    <Button fx:id="sqButton" text="AL" onAction="#switchToAlbanian" />
+                    <Button fx:id="enButton" text="EN" onAction="#switchToEnglish" />
+                </children>
+            </HBox>
+
+            <Label text="%recent.title" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="activityTable" prefHeight="400.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colData" text="%recent.column.date"/>
+                    <TableColumn fx:id="colAdresa" text="%recent.column.address"/>
+                </columns>
+            </TableView>
         </VBox>
     </center>
 </BorderPane>
