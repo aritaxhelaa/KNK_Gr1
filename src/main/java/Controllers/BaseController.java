@@ -6,13 +6,13 @@ import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
 
-
-import java.text.CollationElementIterator;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public abstract class BaseController {
 
-    @FXML private Label ErrorLable;
+    @FXML
+    private Label ErrorLable;
 
     @FXML
     protected void switchToEnglish() {
@@ -34,11 +34,21 @@ public abstract class BaseController {
         }
     }
 
+    private void showError(String key) {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+        String message = bundle.containsKey(key) ? bundle.getString(key) : "Gabim gjatë ngarkimit.";
+        if (ErrorLable != null) {
+            ErrorLable.setText(message);
+        } else {
+            System.out.println("[Gabim UI] " + message);
+        }
+    }
+
     public void goToKerkoAdrese() {
         try {
             SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -47,7 +57,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.REGISTER_RESIDENCE);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -56,7 +66,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.MANAGE_USER);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -65,7 +75,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.MANAGE_RESIDENCE);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -74,7 +84,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.STATISTICS);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -83,7 +93,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.LISTA_VENDBANIMEVE);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -92,7 +102,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.KERKIMET_FUNDIT);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -101,7 +111,7 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
@@ -110,10 +120,8 @@ public abstract class BaseController {
         try {
             SceneManager.load(SceneLocator.ADRESA_PAGE);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            showError("error.page.load");
             e.printStackTrace();
         }
     }
-
 }
-

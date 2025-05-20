@@ -28,7 +28,6 @@ public class AdresaController extends BaseController{
     @FXML private Label messageLabel;
     @FXML private Label titleLabel;
     @FXML private Button shfaqBtn;
-    @FXML private Button backBtn;
     @FXML private WebView mapView;
 
     private KomunaRepository komunaRepository;
@@ -46,7 +45,7 @@ public class AdresaController extends BaseController{
 
         titleLabel.setText(bundle.getString("label.title"));
         shfaqBtn.setText(bundle.getString("button.shfaq"));
-        backBtn.setText(bundle.getString("button.back"));
+
 
         komunaComboBox.setPromptText(bundle.getString("prompt.komuna"));
         rrugaComboBox.setPromptText(bundle.getString("prompt.rruga"));
@@ -141,15 +140,7 @@ public class AdresaController extends BaseController{
         engine.load(url);
     }
 
-    @FXML
-    private void handleBack() {
-        try {
-            SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
-        } catch (Exception e) {
-            messageLabel.setText("Nuk u kthye dot.");
-            e.printStackTrace();
-        }
-    }
+
 
 
 }
