@@ -26,6 +26,12 @@
                 <Button mnemonicParsing="false" onAction="#goToQytetariView" styleClass="sidebar-button" text="%sidebar.search" />
                 <Button mnemonicParsing="false" onAction="#goToKerkimetEFundit" styleClass="sidebar-button" text="%sidebar.recent" />
                 <Button mnemonicParsing="false" onAction="#goToAdresaView" styleClass="sidebar-button" text="%sidebar.mapsearch" />
+
+
+                <VBox fx:id="spacer" VBox.vgrow="ALWAYS" />
+
+
+                <Button fx:id="logoutBtn" onAction="#handleLogout" text="%button.logout" styleClass="logout-button" />
             </children>
         </VBox>
     </left>

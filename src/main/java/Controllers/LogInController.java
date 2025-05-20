@@ -48,11 +48,12 @@ public class LogInController extends BaseController {
                 return;
             }
 
-            // 🔐 Ruaj përdoruesin në sesion
+
             utils.SessionManager.setCurrentUser(user);
 
-            // ℹ️ Ndaj në dashboard sipas rolit
+
             switch (user.getRoli()) {
+                case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
                 case "zyrtar_komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
                 case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
                 default -> ErrorLable.setText("Roli i panjohur.");
@@ -74,24 +75,5 @@ public class LogInController extends BaseController {
             e.printStackTrace();
         }
     }
-//
-//    @FXML
-//    private void switchToEnglish() {
-//        LanguageManager.getInstance().setLocale(Locale.ENGLISH);
-//        try {
-//            SceneManager.reload();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    @FXML
-//    private void switchToAlbanian() {
-//        LanguageManager.getInstance().setLocale(new Locale("sq"));
-//        try {
-//            SceneManager.reload();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 }

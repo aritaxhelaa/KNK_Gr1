@@ -65,7 +65,7 @@ public abstract class BaseController {
 
     public void goToMenaxhoPerdoruesit() {
         try {
-            SceneManager.load(SceneLocator.MANAGE_USER);
+            SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
         } catch (Exception e) {
             showError("error.page.load");
             e.printStackTrace();
