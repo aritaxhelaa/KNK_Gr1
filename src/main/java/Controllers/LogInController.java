@@ -26,6 +26,7 @@ public class LogInController extends BaseController {
 
     }
 
+
     @FXML
     private void handleLogin() {
         String email = Username.getText().trim();
@@ -42,18 +43,27 @@ public class LogInController extends BaseController {
             LoginUserDto loginDto = new LoginUserDto(email, password);
             User user = userService.login(loginDto);
 
-            ErrorLable.setText("Login i suksesshëm! Roli: " + user.getRoli());
+            if (user == null) {
+                ErrorLable.setText(LanguageManager.getInstance().getResourceBundle().getString("error.login_failed"));
+                return;
+            }
 
+            // 🔐 Ruaj përdoruesin në sesion
+            utils.SessionManager.setCurrentUser(user);
+
+            // ℹ️ Ndaj në dashboard sipas rolit
             switch (user.getRoli()) {
-                case "komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
+                case "zyrtar_komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
                 case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
                 default -> ErrorLable.setText("Roli i panjohur.");
             }
 
         } catch (Exception e) {
-            ErrorLable.setText(e.getMessage());
+            e.printStackTrace(); // për debug
+            ErrorLable.setText("Gabim gjatë kyçjes.");
         }
     }
+
 
     @FXML
     private void goToRegister() {
