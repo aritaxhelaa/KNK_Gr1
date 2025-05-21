@@ -236,11 +236,8 @@ public class HomeQytetarController extends BaseController {
                 return;
             }
 
-
-
-
+            // Ruaj në session për me i shfaq në faqen tjetër
             SessionManager.setSearchData(new SessionSearchData(komuna, lloji, vendbanimi, rruga));
-
 
             AdresaRepository adresaRepository = new AdresaRepository();
             List<AdresaViewDto> gjetura = adresaRepository.kerkoAdresa(komuna, lloji, vendbanimi, rruga);
@@ -250,16 +247,15 @@ public class HomeQytetarController extends BaseController {
                 return;
             }
 
-
-            Adresa adresa = Adresa.getInstanceFromViewDto(gjetura.get(0));
-            Adresa ekzistuese = adresaRepository.create(new CreateAdresaDto(
-                    adresa.getRruga(), adresa.getNumri(), adresa.getKodiPostar()
-            ));
+            // Gjej adresën ekzistuese që përputhet për me e ruajt si kërkim
+            AdresaViewDto dto = gjetura.get(0);
+            Adresa ekzistuese = adresaRepository.gjejNgaDto(dto);
 
             if (ekzistuese != null && SessionManager.getCurrentUser() != null) {
                 adresaRepository.ruajKerkim(SessionManager.getCurrentUser().getId(), ekzistuese.getId());
             }
 
+            // Shko në faqen tjetër për rezultatet
             SceneManager.load(SceneLocator.KERKO_INFO);
 
         } catch (Exception e) {
@@ -267,6 +263,7 @@ public class HomeQytetarController extends BaseController {
             showAlert("Gabim në kërkimin e adresës: " + e.getMessage());
         }
     }
+
 
 
 

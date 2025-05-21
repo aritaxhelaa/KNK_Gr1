@@ -37,6 +37,8 @@ module com.example.knk_gr1 {
 
     opens models.Dto.RrugaDto to javafx.base;
     exports models.Dto.RrugaDto;
+    opens models.Dto.AdresaDto to javafx.base;
+
 
 
 }

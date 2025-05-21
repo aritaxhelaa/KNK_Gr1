@@ -1,8 +1,9 @@
+// Modeli i përditësuar i AdresaViewDto me getter për kodiPostar
 package models.Dto.AdresaDto;
 
 public class AdresaViewDto {
     private String komuna;
-    private String vendbanimi; // qyteti ose fshati
+    private String vendbanimi;
     private String lagjia;
     private String rruga;
     private int numri;
@@ -24,7 +25,13 @@ public class AdresaViewDto {
     public int getNumri() { return numri; }
     public int getKodiPostar() { return kodiPostar; }
 
-    public void setKodiPostar(int kodiPostar) {
-        this.kodiPostar = kodiPostar;
-    }
+    public void setKomuna(String komuna) { this.komuna = komuna; }
+    public void setVendbanimi(String vendbanimi) { this.vendbanimi = vendbanimi; }
+    public void setLagjia(String lagjia) { this.lagjia = lagjia; }
+    public void setRruga(String rruga) { this.rruga = rruga; }
+    public void setNumri(int numri) { this.numri = numri; }
+    public void setKodiPostar(int kodiPostar) { this.kodiPostar = kodiPostar; }
+
+
+    public String getAdresa() { return rruga; }
 }

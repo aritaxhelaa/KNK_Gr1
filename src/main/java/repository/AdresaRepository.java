@@ -64,7 +64,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
 
         if (params.isEmpty()) return getById(adresaDto.getId());
 
-        query.setLength(query.length() - 2);
+        query.setLength(query.length() - 2); // remove last comma
         query.append(" WHERE id = ?");
         params.add(adresaDto.getId());
 
@@ -75,6 +75,24 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
             }
             int updated = pstm.executeUpdate();
             if (updated == 1) return this.getById(adresaDto.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Adresa gjejAdrese(String rruga, int numri, int kodiPostar) {
+        String query = "SELECT * FROM adresa WHERE rruga = ? AND numri = ? AND kodi_postar = ?";
+
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setString(1, rruga);
+            stmt.setInt(2, numri);
+            stmt.setInt(3, kodiPostar);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Adresa.getInstance(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +122,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         WHERE LOWER(k.emri) = ?
           AND LOWER(v.emri) = ?
           AND LOWER(a.rruga) LIKE ?
-    """.formatted(tabelaVendbanimit, kolonaID);
+        """.formatted(tabelaVendbanimit, kolonaID);
 
         try (PreparedStatement ps = this.connection.prepareStatement(query)) {
             ps.setString(1, komuna.toLowerCase());
@@ -128,8 +146,6 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
 
         return rezultatet;
     }
-
-
 
     public void ruajKerkim(int userId, int adresaId) {
         String query = "INSERT INTO recent_searches (user_id, adresa_id) VALUES (?, ?)";
@@ -169,4 +185,21 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
 
         return lista;
     }
+    public Adresa gjejNgaDto(AdresaViewDto dto) {
+        String query = "SELECT * FROM adresa WHERE LOWER(rruga) = LOWER(?) AND numri = ? AND kodi_postar = ?";
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setString(1, dto.getRruga());
+            stmt.setInt(2, dto.getNumri());
+            stmt.setInt(3, dto.getKodiPostar());
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Adresa.getInstance(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
