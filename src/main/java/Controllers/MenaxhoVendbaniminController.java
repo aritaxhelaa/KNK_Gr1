@@ -32,11 +32,7 @@ public class MenaxhoVendbaniminController extends BaseController {
     @FXML
     private TableColumn<Adresa, Void> colDelete;
 
-    @FXML
-    private TableColumn<Adresa, Void> colUpdate;
-
     private final AdresaRepository adresaRepository = new AdresaRepository();
-    private Adresa vendbanimZgjedhur;
 
     @FXML
     private void initialize() {
@@ -60,7 +56,7 @@ public class MenaxhoVendbaniminController extends BaseController {
                     ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
                     Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
                     confirm.setTitle(bundle.getString("address.confirm.title"));
-                    confirm.setHeaderText(null); // ose përkthim tjetër nëse do
+                    confirm.setHeaderText(null);
                     confirm.setContentText(bundle.getString("address.confirm.delete"));
 
                     confirm.showAndWait().ifPresent(response -> {
@@ -85,30 +81,6 @@ public class MenaxhoVendbaniminController extends BaseController {
                 } else {
                     ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
                     btn.setText(bundle.getString("address.button.delete"));
-                    setGraphic(btn);
-                }
-            }
-        });
-
-        colUpdate.setCellFactory(column -> new TableCell<>() {
-            private final Button btn = new Button();
-
-            {
-                btn.setOnAction(e -> {
-                    vendbanimZgjedhur = getTableView().getItems().get(getIndex());
-                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
-                    showAlert(bundle.getString("address.info.title"), bundle.getString("address.info.message"));
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
-                    btn.setText(bundle.getString("address.button.edit"));
                     setGraphic(btn);
                 }
             }
