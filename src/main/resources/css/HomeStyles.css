@@ -269,7 +269,7 @@ GridPane {
     -fx-font-size: 12px;
 }
 .logout-button {
-    -fx-background-color: #c0392b;
+    -fx-background-color: linear-gradient(#d4af37, #c4a030);
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-cursor: hand;
@@ -281,6 +281,6 @@ GridPane {
 }
 
 .logout-button:hover {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: linear-gradient(#e0bb43, #d4af37);
 }
 

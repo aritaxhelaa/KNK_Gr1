@@ -1,94 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/HomeStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.RegjistroVendbanimController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.RegjistroVendbanimController"
+            prefWidth="800.0" prefHeight="600.0"
+            stylesheets="@../css/HomeStyles.css">
 
     <left>
         <VBox prefHeight="600.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
+            <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
             <children>
                 <ImageView fitHeight="150.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Images/KosovoLogo.png" />
-                    </image>
+                    <image><Image url="@../Images/KosovoLogo.png" /></image>
                 </ImageView>
                 <Button mnemonicParsing="false" onAction="#goToRegjistroVendbanim" styleClass="sidebar-button" text="%sidebar.register" />
                 <Button mnemonicParsing="false" onAction="#goToKerkoAdrese" styleClass="sidebar-button" text="%sidebar.search" />
                 <Button mnemonicParsing="false" onAction="#goToListaVendbanimeve" styleClass="sidebar-button" text="%sidebar.list" />
                 <Button mnemonicParsing="false" onAction="#goToMenaxhoVendbanimet" styleClass="sidebar-button" text="%sidebar.manage.addresses" />
                 <VBox fx:id="spacer" VBox.vgrow="ALWAYS" />
-
-
                 <Button fx:id="logoutBtn" onAction="#handleLogout" text="%button.logout" styleClass="logout-button" />
             </children>
         </VBox>
     </left>
 
     <center>
-        <VBox prefHeight="600.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <VBox spacing="20" alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <padding><Insets top="30" left="20" right="20" bottom="20"/></padding>
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
                     <Button onAction="#switchToAlbanian" text="AL" />
                     <Button onAction="#switchToEnglish" text="EN" />
                 </HBox>
-                <Label prefWidth="548.0" styleClass="title" text="%main.title" wrapText="true">
-                    <font>
-                        <Font name="System Bold" size="23.0" />
-                    </font>
-                </Label>
-                <Label styleClass="search-label" text="%sidebar.register" />
-
-                <GridPane hgap="10.0" prefWidth="548.0" vgap="10.0">
+                <Label fx:id="titleLabel" text="%form.title" styleClass="title"/>
+                <GridPane hgap="15" vgap="15">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
+                        <ColumnConstraints minWidth="150" halignment="RIGHT"/>
+                        <ColumnConstraints minWidth="300"/>
                     </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
                     <children>
-                        <Label text="%form.municipality" />
-                        <ComboBox fx:id="komunaComboBox" prefWidth="350.0" promptText="%form.prompt.municipality" GridPane.columnIndex="1" />
+                        <Label text="%form.label.komuna" GridPane.rowIndex="0"/>
+                        <ComboBox fx:id="komunaComboBox" promptText="%form.prompt.komuna" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                        <Label text="%form.settlement.name" GridPane.rowIndex="2" />
-                        <TextField fx:id="emriVendbanimitField" promptText="%form.prompt.settlement" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%form.label.rruga" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="rrugaComboBox" promptText="%form.prompt.rruga" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                        <Label text="%form.street" GridPane.rowIndex="3" />
-                        <TextField fx:id="rrugaField" promptText="%form.prompt.street" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="%form.label.numri" GridPane.rowIndex="2"/>
+                        <TextField fx:id="numriField" promptText="%form.prompt.numri" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                        <Label text="%form.object" GridPane.rowIndex="4" />
-                        <TextField fx:id="objektiField" promptText="%form.prompt.object" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="%form.label.kodipostar" GridPane.rowIndex="3"/>
+                        <Label fx:id="kodiPostarLabel" text="-" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                        <Label text="%form.postal" GridPane.rowIndex="5" />
-                        <TextField fx:id="kodiPostarField" promptText="%form.prompt.postal" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" prefHeight="40.0" prefWidth="130.0" styleClass="search-button" text="%form.button.save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                  <Label text="%form.settlement.type" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="llojiVendbanimitComboBox" prefWidth="350.0" promptText="%form.prompt.type" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="regjistroButton" text="%form.button.regjistro" onAction="#handleSave" styleClass="search-button"
+                                GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
                     </children>
                 </GridPane>
+                <Label fx:id="messageLabel" textFill="red"/>
             </children>
         </VBox>
     </center>
