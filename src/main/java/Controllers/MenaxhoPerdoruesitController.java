@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import models.User;
 import models.Dto.UserDto.UpdateUserDto;
 import repository.UserRepository;
+import services.LanguageManager;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class MenaxhoPerdoruesitController extends BaseController {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colRoli.setCellValueFactory(new PropertyValueFactory<>("roli"));
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+        tblUsers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Formatimi i dates
         colCreatedAt.setCellFactory(column -> new TableCell<>() {
@@ -77,7 +79,7 @@ public class MenaxhoPerdoruesitController extends BaseController {
 
     private void shtoButonat() {
         colDelete.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Fshi");
+            private final Button btn = new Button();
 
             {
                 btn.setOnAction(event -> {
@@ -90,12 +92,17 @@ public class MenaxhoPerdoruesitController extends BaseController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    btn.setText(LanguageManager.getInstance().getResourceBundle().getString("button.delete"));
+                    setGraphic(btn);
+                }
             }
         });
 
         colUpdate.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Ndrysho");
+            private final Button btn = new Button();
 
             {
                 btn.setOnAction(event -> {
@@ -109,10 +116,16 @@ public class MenaxhoPerdoruesitController extends BaseController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    btn.setText(LanguageManager.getInstance().getResourceBundle().getString("button.edit"));
+                    setGraphic(btn);
+                }
             }
         });
     }
+
 
     @FXML
     private void ruajNdryshimin() {

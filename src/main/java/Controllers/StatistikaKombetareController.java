@@ -7,6 +7,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import repository.UserRepository;
+import services.LanguageManager;
 
 import java.util.Map;
 
@@ -60,8 +61,10 @@ public class StatistikaKombetareController extends BaseController {
 
         Map<String, Integer> registrimetMujore = userRepository.getRegistrimetMujore();
 
-        xMuajt.setLabel("Muaji (1–12)");
-        yNumri.setLabel("Numri i përdoruesve");
+        // Merr përkthimet nga ResourceBundle
+        var bundle = LanguageManager.getInstance().getResourceBundle();
+        xMuajt.setLabel(bundle.getString("stats.chart.xaxis"));
+        yNumri.setLabel(bundle.getString("stats.chart.yaxis"));
 
         for (int i = 1; i <= 12; i++) {
             String muaji = String.valueOf(i);
@@ -72,4 +75,5 @@ public class StatistikaKombetareController extends BaseController {
         barChartPerdorues.getData().clear();
         barChartPerdorues.getData().add(series);
     }
+
 }

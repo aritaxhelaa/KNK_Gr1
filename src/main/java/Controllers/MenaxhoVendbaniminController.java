@@ -1,15 +1,18 @@
 package Controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Adresa;
 import repository.AdresaRepository;
+import services.LanguageManager;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class MenaxhoVendbaniminController extends BaseController{
+public class MenaxhoVendbaniminController extends BaseController {
 
     @FXML
     private TableView<Adresa> tabelaPerdoruesve;
@@ -44,25 +47,30 @@ public class MenaxhoVendbaniminController extends BaseController{
 
     private void konfiguroKolonat() {
         colUser.setCellValueFactory(new PropertyValueFactory<>("rruga"));
-        colPozita.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty("Prishtinë")); // shembull
-        colData.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty("Qytet"));       // shembull
+        colPozita.setCellValueFactory(cellData -> new SimpleStringProperty("Prishtinë")); // shembull
+        colData.setCellValueFactory(cellData -> new SimpleStringProperty("Qytet"));       // shembull
         colKodiPostar.setCellValueFactory(new PropertyValueFactory<>("kodiPostar"));
 
         colDelete.setCellFactory(column -> new TableCell<>() {
-            private final Button btn = new Button("Fshi");
+            private final Button btn = new Button();
 
             {
                 btn.setOnAction(e -> {
                     Adresa adresa = getTableView().getItems().get(getIndex());
-                    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "A jeni i sigurt për fshirjen?");
+                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+                    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirm.setTitle(bundle.getString("address.confirm.title"));
+                    confirm.setHeaderText(null); // ose përkthim tjetër nëse do
+                    confirm.setContentText(bundle.getString("address.confirm.delete"));
+
                     confirm.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            boolean success = adresaRepository.delete(adresa.getId()); // ✅ përdor nga BaseRepository
+                            boolean success = adresaRepository.delete(adresa.getId());
                             if (success) {
                                 tabelaPerdoruesve.getItems().remove(adresa);
-                                showAlert("Sukses", "Vendbanimi u fshi me sukses.");
+                                showAlert(bundle.getString("address.success.title"), bundle.getString("address.success.message"));
                             } else {
-                                showAlert("Gabim", "Fshirja dështoi.");
+                                showAlert(bundle.getString("address.error.title"), bundle.getString("address.error.message"));
                             }
                         }
                     });
@@ -72,31 +80,39 @@ public class MenaxhoVendbaniminController extends BaseController{
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+                    btn.setText(bundle.getString("address.button.delete"));
+                    setGraphic(btn);
+                }
             }
         });
 
         colUpdate.setCellFactory(column -> new TableCell<>() {
-            private final Button btn = new Button("Ndrysho");
+            private final Button btn = new Button();
 
             {
                 btn.setOnAction(e -> {
                     vendbanimZgjedhur = getTableView().getItems().get(getIndex());
-                    showAlert("Info", "Funksioni i përditësimit mund të implementohet këtu.");
+                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+                    showAlert(bundle.getString("address.info.title"), bundle.getString("address.info.message"));
                 });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+                    btn.setText(bundle.getString("address.button.edit"));
+                    setGraphic(btn);
+                }
             }
         });
-    }
-
-    private void ngarkoTeDhenat() {
-        List<Adresa> lista = adresaRepository.getAll(); // ✅ nga BaseRepository
-        tabelaPerdoruesve.setItems(FXCollections.observableArrayList(lista));
     }
 
     private void showAlert(String title, String msg) {
@@ -105,5 +121,10 @@ public class MenaxhoVendbaniminController extends BaseController{
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
+    }
+
+    private void ngarkoTeDhenat() {
+        List<Adresa> lista = adresaRepository.getAll();
+        tabelaPerdoruesve.setItems(FXCollections.observableArrayList(lista));
     }
 }
