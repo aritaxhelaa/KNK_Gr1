@@ -7,36 +7,22 @@
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml"
             fx:controller="Controllers.LogInController"
             stylesheets="@../css/LoginRegister.css"
-            prefWidth="900.0"
-            prefHeight="600.0"
-            minWidth="850.0"
-            minHeight="550.0">
+            prefWidth="900.0" prefHeight="600.0" minWidth="850.0" minHeight="550.0">
 
     <left>
         <VBox alignment="TOP_CENTER" spacing="2" prefWidth="300" styleClass="sidebar">
             <VBox.margin>
                 <Insets top="40" />
             </VBox.margin>
-
-            <!-- Logo e Kosovës (më e madhe dhe me efekt hijë) -->
             <ImageView fitHeight="200" preserveRatio="true" styleClass="kosovo-logo">
                 <image>
                     <Image url="@../Images/KosovoLogo.png"/>
                 </image>
             </ImageView>
-
-            <!-- Separator afër logos -->
             <Separator styleClass="gold-separator" />
-
-            <!-- Teksti afër separatorit -->
             <Label text="%title" styleClass="sidebar-title">
-                <VBox.margin>
-                    <Insets top="2"/>
-                </VBox.margin>
+                <VBox.margin><Insets top="2"/></VBox.margin>
             </Label>
-
-
-            <!-- Hapësirë për frymëmarrje vizuale -->
             <Region prefHeight="40" />
         </VBox>
     </left>
@@ -51,7 +37,9 @@
 
                 <Label text="%login.title" styleClass="form-title" />
                 <TextField fx:id="Username" promptText="%login.email" styleClass="text-field" />
-                <PasswordField fx:id="Password" promptText="%login.password" styleClass="password-field" />
+                <PasswordField fx:id="Password" promptText="Password" />
+                <TextField fx:id="PasswordVisibleField" promptText="Password" visible="false" managed="false" />
+                <CheckBox fx:id="showPasswordCheckBox" text="%login.show_password" />
                 <Button fx:id="LoginBttn" text="%login.button" onAction="#handleLogin" styleClass="button-submit" />
                 <Label fx:id="ErrorLable" textFill="red" />
 
