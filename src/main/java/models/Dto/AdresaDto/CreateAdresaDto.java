@@ -6,6 +6,14 @@ public class CreateAdresaDto {
     private int numri;
     private int kodi_postar;
 
+    // Konstruktor për rastet kur id s'është i nevojshëm (krijim i ri)
+    public CreateAdresaDto(String rruga, int numri, int kodi_postar) {
+        this.rruga = rruga;
+        this.numri = numri;
+        this.kodi_postar = kodi_postar;
+    }
+
+    // Konstruktor i plotë për raste të tjera
     public CreateAdresaDto(int id, String rruga, int numri, int kodi_postar) {
         this.id = id;
         this.rruga = rruga;
@@ -13,7 +21,7 @@ public class CreateAdresaDto {
         this.kodi_postar = kodi_postar;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

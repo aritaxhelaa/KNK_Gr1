@@ -3,8 +3,11 @@ package Controllers;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import models.Dto.AdresaDto.AdresaViewDto;
+import models.Komuna;
 import repository.AdresaRepository;
+import repository.KomunaRepository;
 import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
@@ -13,15 +16,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class KerkoAdreseController extends BaseController{
+public class KerkoAdreseController extends BaseController {
 
-    @FXML private ComboBox<String> komunaComboBox;
+    @FXML private ComboBox<Komuna> komunaComboBox;
     @FXML private ComboBox<String> llojiComboBox;
     @FXML private TextField vendbanimiField;
     @FXML private TextField rrugaField;
     @FXML private Button searchButton;
 
     private final AdresaRepository adresaRepository = new AdresaRepository();
+    private final KomunaRepository komunaRepository = new KomunaRepository();
 
     @FXML
     private void initialize() {
@@ -40,23 +44,39 @@ public class KerkoAdreseController extends BaseController{
     }
 
     private void populateDropdowns() {
-        komunaComboBox.getItems().addAll("Prishtinë", "Pejë", "Mitrovicë", "Gjakovë");
-        llojiComboBox.getItems().addAll("Qytet", "Fshat");
+        komunaComboBox.setItems(FXCollections.observableArrayList(komunaRepository.getAll()));
+        llojiComboBox.setItems(FXCollections.observableArrayList("Qytet", "Fshat"));
+
+        komunaComboBox.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Komuna komuna) {
+                return komuna != null ? komuna.getEmri() : "";
+            }
+
+            @Override
+            public Komuna fromString(String s) {
+                return komunaComboBox.getItems().stream()
+                        .filter(k -> k.getEmri().equals(s))
+                        .findFirst().orElse(null);
+            }
+        });
     }
 
     @FXML
     private void handleSearch() {
-        String komuna = komunaComboBox.getValue();
+        Komuna komunaObj = komunaComboBox.getValue();
         String lloji = llojiComboBox.getValue();
         String vendbanimi = vendbanimiField.getText();
         String rruga = rrugaField.getText();
 
-        if (komuna == null || lloji == null || vendbanimi.isEmpty() || rruga.isEmpty()) {
+        if (komunaObj == null || lloji == null || vendbanimi.isEmpty() || rruga.isEmpty()) {
             showAlert("Gabim", "Ju lutem plotësoni të gjitha fushat.");
             return;
         }
 
-        List<AdresaViewDto> rezultatet = adresaRepository.kerkoAdresa(komuna, lloji, vendbanimi, rruga);
+        String komunaEmri = komunaObj.getEmri();
+
+        List<AdresaViewDto> rezultatet = adresaRepository.kerkoAdresa(komunaEmri, lloji, vendbanimi, rruga);
         if (rezultatet.isEmpty()) {
             showAlert("Nuk u gjet", "Nuk u gjet asnjë adresë.");
         } else {
@@ -65,7 +85,7 @@ public class KerkoAdreseController extends BaseController{
                 sb.append("Komuna: ").append(dto.getKomuna()).append("\n")
                         .append("Vendbanimi: ").append(dto.getVendbanimi()).append("\n")
                         .append("Lagjja: ").append(dto.getLagjia()).append("\n")
-                        .append("Adresa: ").append(dto.getAdresa()).append("\n")
+                        .append("Adresa: ").append(dto.getRruga()).append("\n")
                         .append("Kodi postar: ").append(dto.getKodiPostar()).append("\n\n");
             }
             showAlert("Rezultate", sb.toString());

@@ -23,7 +23,7 @@
                     <TableColumn fx:id="colKomuna" text="%kerko.column.komuna" prefWidth="180"/>
                     <TableColumn fx:id="colVendbanimi" text="%kerko.column.vendbanimi" prefWidth="180"/>
                     <TableColumn fx:id="colLagjia" text="%kerko.column.lagjia" prefWidth="180"/>
-                    <TableColumn fx:id="colAdresa" text="%kerko.column.adresa" prefWidth="180"/>
+                    <TableColumn fx:id="colRruga" text="rruga" prefWidth="180"/> <!-- Ndrysho emrin -->
                     <TableColumn fx:id="colKodiPostar" text="%kerko.column.kodipostar" prefWidth="180"/>
                 </columns>
             </TableView>

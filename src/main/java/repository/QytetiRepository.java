@@ -23,26 +23,30 @@ public class QytetiRepository  extends BaseRepository<Qyteti, CreateQytetiDto, U
     @Override
     public Qyteti create(CreateQytetiDto dto) {
         String query = """
-            INSERT INTO qyteti (emri, komuna_id)
-            VALUES (?, ?)
-        """;
+        INSERT INTO qyteti (emri, komuna_id)
+        VALUES (?, ?)
+        RETURNING id
+    """;
 
         try {
-            PreparedStatement pstm = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstm = this.connection.prepareStatement(query);
             pstm.setString(1, dto.getEmri());
             pstm.setInt(2, dto.getKomunaId());
-            pstm.execute();
 
-            ResultSet generatedKeys = pstm.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int id = generatedKeys.getInt(1);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt(1);
                 return getById(id);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
 
+            if (e.getMessage().contains("duplicate key")) {
+                System.err.println("Qyteti me këto të dhëna ekziston tashmë!");
+
+                return getByNameAndKomunaId(dto.getEmri(), dto.getKomunaId());
+            }
+        }
         return null;
     }
 
@@ -80,4 +84,21 @@ public class QytetiRepository  extends BaseRepository<Qyteti, CreateQytetiDto, U
 
         return null;
     }
+
+    public Qyteti getByNameAndKomunaId(String emri, int komunaId) {
+        String query = "SELECT * FROM qyteti WHERE emri = ? AND komuna_id = ?";
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setString(1, emri);
+            stmt.setInt(2, komunaId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Qyteti.getInstance(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

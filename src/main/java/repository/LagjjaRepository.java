@@ -6,6 +6,7 @@ import models.Dto.LagjjaDto.UpdateLagjjaDto;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LagjjaRepository extends BaseRepository<Lagjja, CreateLagjjaDto, UpdateLagjjaDto> {
 
@@ -14,72 +15,94 @@ public class LagjjaRepository extends BaseRepository<Lagjja, CreateLagjjaDto, Up
     }
 
     @Override
-    public Lagjja fromResultSet(ResultSet result) throws SQLException {
-        return Lagjja.getInstance(result);
+    public Lagjja fromResultSet(ResultSet resultSet) throws SQLException {
+        return Lagjja.getInstance(resultSet);
     }
 
     @Override
-    public Lagjja create(CreateLagjjaDto lagjjaDto) {
+    public Lagjja create(CreateLagjjaDto dto) {
         String query = """
-                INSERT INTO lagjja (emri, qyteti_id, komuna_id)
-                VALUES (?, ?, ?)
+                INSERT INTO lagjja (emri, komuna_id, siperfaqja, pershkrimi, statusi_zyrtar)
+                VALUES (?, ?, ?, ?, ?)
                 """;
-        try {
-            PreparedStatement pstm = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pstm.setString(1, lagjjaDto.getEmri());
-            pstm.setInt(2, lagjjaDto.getQytetiId());
-            pstm.setInt(3, lagjjaDto.getKomunaId());
-            pstm.execute();
+        try (PreparedStatement ps = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, dto.getEmri());
+            ps.setInt(2, dto.getKomunaId());
+            ps.setDouble(3, dto.getSiperfaqja());
+            ps.setString(4, dto.getPershkrimi());
+            ps.setBoolean(5, dto.isStatusiZyrtar());
+            ps.execute();
 
-            ResultSet resultSet = pstm.getGeneratedKeys();
-            if (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                return this.getById(id);
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return this.getById(rs.getInt(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
     @Override
-    public Lagjja update(UpdateLagjjaDto lagjjaDto) {
+    public Lagjja update(UpdateLagjjaDto dto) {
         StringBuilder query = new StringBuilder("UPDATE lagjja SET ");
-        ArrayList<Object> params = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
 
-        if (lagjjaDto.getEmri() != null) {
+        if (dto.getEmri() != null) {
             query.append("emri = ?, ");
-            params.add(lagjjaDto.getEmri());
+            params.add(dto.getEmri());
         }
-        if (lagjjaDto.getQytetiId() > 0) {
-            query.append("qyteti_id = ?, ");
-            params.add(lagjjaDto.getQytetiId());
-        }
-        if (lagjjaDto.getKomunaId() > 0) {
+        if (dto.getKomunaId() > 0) {
             query.append("komuna_id = ?, ");
-            params.add(lagjjaDto.getKomunaId());
+            params.add(dto.getKomunaId());
         }
-
-        if (params.isEmpty()) {
-            return getById(lagjjaDto.getId());
+        if (dto.getSiperfaqja() != null) {
+            query.append("siperfaqja = ?, ");
+            params.add(dto.getSiperfaqja());
         }
+        if (dto.getPershkrimi() != null) {
+            query.append("pershkrimi = ?, ");
+            params.add(dto.getPershkrimi());
+        }
+        query.append("statusi_zyrtar = ?, ");
+        params.add(dto.isStatusiZyrtar());
 
-        query.setLength(query.length() - 2);
+        query.setLength(query.length() - 2); // remove last comma
         query.append(" WHERE id = ?");
-        params.add(lagjjaDto.getId());
+        params.add(dto.getId());
 
-        try {
-            PreparedStatement pstm = this.connection.prepareStatement(query.toString());
+        try (PreparedStatement ps = this.connection.prepareStatement(query.toString())) {
             for (int i = 0; i < params.size(); i++) {
-                pstm.setObject(i + 1, params.get(i));
+                ps.setObject(i + 1, params.get(i));
             }
-            int updated = pstm.executeUpdate();
+
+            int updated = ps.executeUpdate();
             if (updated == 1) {
-                return this.getById(lagjjaDto.getId());
+                return this.getById(dto.getId());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
+    }
+
+    public List<Lagjja> getByKomunaId(int komunaId) {
+        List<Lagjja> lista = new ArrayList<>();
+        String query = "SELECT * FROM lagjja WHERE komuna_id = ?";
+
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setInt(1, komunaId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(Lagjja.getInstance(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

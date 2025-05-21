@@ -70,4 +70,16 @@ public class KomunaRepository extends BaseRepository<Komuna, CreateKomunaDto, Up
 
         return komunaList;
     }
+
+    public Komuna getByName(String emri) throws SQLException {
+        String query = "SELECT * FROM komuna WHERE emri = ?";
+        try (PreparedStatement ps = this.connection.prepareStatement(query)) {
+            ps.setString(1, emri);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Komuna.getInstance(rs);
+            }
+        }
+        return null;
+    }
 }

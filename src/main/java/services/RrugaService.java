@@ -27,8 +27,8 @@ public class RrugaService {
         if (dto.getEmri() == null || dto.getEmri().trim().isEmpty()) {
             throw new Exception("Emri i rrugës nuk duhet të jetë bosh.");
         }
-        if (dto.getKomunaId() <= 0 || dto.getQytetiId() <= 0) {
-            throw new Exception("Komuna ose Qyteti nuk janë validë.");
+        if (dto.getKomunaId() <= 0 || dto.getLagjjaId() <= 0) {
+            throw new Exception("Komuna ose Lagjja nuk janë valide.");
         }
 
         Rruga rruga = this.rrugaRepository.create(dto);
@@ -45,7 +45,9 @@ public class RrugaService {
 
         if ((dto.getEmri() == null || dto.getEmri().trim().isEmpty()) &&
                 dto.getKomunaId() <= 0 &&
-                dto.getQytetiId() <= 0) {
+                dto.getQytetiId() <= 0 &&
+                dto.getFshatiId() <= 0 &&
+                dto.getLagjjaId() <= 0) {
             throw new Exception("Të dhënat për përditësim nuk janë valide.");
         }
 

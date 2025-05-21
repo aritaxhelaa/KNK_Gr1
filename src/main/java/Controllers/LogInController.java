@@ -9,8 +9,6 @@ import models.User;
 import models.Dto.UserDto.LoginUserDto;
 import services.LanguageManager;
 
-import java.util.Locale;
-
 public class LogInController extends BaseController {
 
     @FXML private TextField Username;
@@ -23,9 +21,8 @@ public class LogInController extends BaseController {
 
     @FXML
     private void initialize() {
-
+        // Mund të shtosh ndonjë inicizalim në të ardhmen nëse duhet
     }
-
 
     @FXML
     private void handleLogin() {
@@ -35,7 +32,9 @@ public class LogInController extends BaseController {
         ErrorLable.setText("");
 
         if (email.isEmpty() || password.isEmpty()) {
-            ErrorLable.setText(LanguageManager.getInstance().getResourceBundle().getString("error.empty_fields"));
+            ErrorLable.setText(LanguageManager.getInstance()
+                    .getResourceBundle()
+                    .getString("error.empty_fields"));
             return;
         }
 
@@ -44,13 +43,13 @@ public class LogInController extends BaseController {
             User user = userService.login(loginDto);
 
             if (user == null) {
-                ErrorLable.setText(LanguageManager.getInstance().getResourceBundle().getString("error.login_failed"));
+                ErrorLable.setText(LanguageManager.getInstance()
+                        .getResourceBundle()
+                        .getString("error.login_failed"));
                 return;
             }
 
-
             utils.SessionManager.setCurrentUser(user);
-
 
             switch (user.getRoli()) {
                 case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
@@ -60,11 +59,9 @@ public class LogInController extends BaseController {
             }
 
         } catch (Exception e) {
-            e.printStackTrace(); // për debug
             ErrorLable.setText("Gabim gjatë kyçjes.");
         }
     }
-
 
     @FXML
     private void goToRegister() {
@@ -72,8 +69,6 @@ public class LogInController extends BaseController {
             SceneManager.load(SceneLocator.REGISTER_PAGE);
         } catch (Exception e) {
             ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
-            e.printStackTrace();
         }
     }
-
 }

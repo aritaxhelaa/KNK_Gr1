@@ -8,16 +8,16 @@ public class Rruga {
     private String emri;
     private int komunaId;
     private int qytetiId;
-    private String kategoria;
-    private double gjatesiaKM;
+    private int fshatiId;
+    private int lagjjaId;
 
-    private Rruga(int id, String emri, int komunaId, int qytetiId, String kategoria, double gjatesiaKM) {
+    private Rruga(int id, String emri, int komunaId, int qytetiId,int fshatiId, int lagjjaId) {
         this.id = id;
         this.emri = emri;
         this.komunaId = komunaId;
         this.qytetiId = qytetiId;
-        this.kategoria = kategoria;
-        this.gjatesiaKM = gjatesiaKM;
+        this.fshatiId = fshatiId;
+        this.lagjjaId = lagjjaId;
     }
 
     public int getId() {
@@ -52,31 +52,33 @@ public class Rruga {
         this.qytetiId = qytetiId;
     }
 
-    public String getKategoria() {
-        return kategoria;
+    public int getFshatiId() {
+        return fshatiId;
     }
 
-    public void setKategoria(String kategoria) {
-        this.kategoria = kategoria;
+    public void setFshatiId(int fshatiId) {
+        this.fshatiId = fshatiId;
     }
 
-    public double getGjatesiaKM() {
-        return gjatesiaKM;
+    public int getLagjjaId() {
+        return lagjjaId;
     }
 
-    public void setGjatesiaKM(double gjatesiaKM) {
-        this.gjatesiaKM = gjatesiaKM;
+    public void setLagjjaId(int lagjjaId) {
+        this.lagjjaId = lagjjaId;
     }
+
+
 
     public static Rruga getInstance(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String emri = resultSet.getString("emri");
         int komunaId = resultSet.getInt("komuna_id");
         int qytetiId = resultSet.getInt("qyteti_id");
-        String kategoria = resultSet.getString("kategoria");
-        double gjatesiaKM = resultSet.getDouble("gjatesia_km");
+        int fshatiId = resultSet.getInt("fshati_id");
+        int lagjjaId = resultSet.getInt("lagjja_id");
 
-        return new Rruga(id, emri, komunaId, qytetiId, kategoria, gjatesiaKM);
+        return new Rruga(id, emri, komunaId, qytetiId, fshatiId, lagjjaId);
     }
 
     @Override

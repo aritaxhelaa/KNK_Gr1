@@ -3,6 +3,7 @@ package repository;
 import models.Rruga;
 import models.Dto.RrugaDto.CreateRrugaDto;
 import models.Dto.RrugaDto.UpdateRrugaDto;
+import models.Dto.RrugaDto.RrugaViewDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,14 +23,16 @@ public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, Updat
     @Override
     public Rruga create(CreateRrugaDto rrugaDto) {
         String query = """
-                INSERT INTO rruga (emri, komuna_id, qyteti_id)
-                VALUES (?, ?, ?)
+                INSERT INTO rruga (emri, komuna_id, qyteti_id, fshati_id, lagjja_id)
+                VALUES (?, ?, ?, ?, ?)
                 """;
         try {
             PreparedStatement pstm = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, rrugaDto.getEmri());
             pstm.setInt(2, rrugaDto.getKomunaId());
             pstm.setInt(3, rrugaDto.getQytetiId());
+            pstm.setInt(4, rrugaDto.getFshatiId());
+            pstm.setInt(5, rrugaDto.getLagjjaId());
             pstm.execute();
 
             ResultSet resultSet = pstm.getGeneratedKeys();
@@ -60,6 +63,14 @@ public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, Updat
             query.append("qyteti_id = ?, ");
             params.add(rrugaDto.getQytetiId());
         }
+        if (rrugaDto.getFshatiId() > 0) {
+            query.append("fshati_id = ?, ");
+            params.add(rrugaDto.getFshatiId());
+        }
+        if (rrugaDto.getLagjjaId() > 0) {
+            query.append("lagjja_id = ?, ");
+            params.add(rrugaDto.getLagjjaId());
+        }
 
         if (params.isEmpty()) {
             return getById(rrugaDto.getId());
@@ -83,6 +94,7 @@ public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, Updat
         }
         return null;
     }
+
     public List<Rruga> getByKomunaId(int komunaId) {
         List<Rruga> lista = new ArrayList<>();
         String query = "SELECT * FROM rruga WHERE komuna_id = ?";
@@ -99,5 +111,51 @@ public class RrugaRepository extends BaseRepository<Rruga, CreateRrugaDto, Updat
 
         return lista;
     }
+    public List<RrugaViewDto> getByKomunaAndVendbanimi(int komunaId, Integer qytetiId, Integer fshatiId) {
+        List<RrugaViewDto> results = new ArrayList<>();
+        String query;
 
-}
+        if (qytetiId != null) {
+            query = """
+        SELECT r.id, r.emri, k.emri as komuna, q.emri as qyteti, 
+               l.emri as lagjia
+        FROM rruga r
+        JOIN lagjja l ON r.lagjja_id = l.id
+        JOIN komuna k ON l.komuna_id = k.id
+        JOIN qyteti q ON r.qyteti_id = q.id
+        WHERE k.id = ? AND q.id = ?
+        """;
+        } else if (fshatiId != null) {
+            query = """
+        SELECT r.id, r.emri, k.emri as komuna, f.emri as fshati, 
+               l.emri as lagjia
+        FROM rruga r
+        JOIN lagjja l ON r.lagjja_id = l.id
+        JOIN komuna k ON l.komuna_id = k.id
+        JOIN fshati f ON r.fshati_id = f.id
+        WHERE k.id = ? AND f.id = ?
+        """;
+        } else {
+            return results;
+        }
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, komunaId);
+            ps.setInt(2, qytetiId != null ? qytetiId : fshatiId);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                results.add(new RrugaViewDto(
+                        rs.getString("komuna"),
+                        qytetiId != null ? rs.getString("qyteti") : rs.getString("fshati"),
+                        rs.getString("lagjia"),
+                        rs.getString("emri"),
+                        null
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }}

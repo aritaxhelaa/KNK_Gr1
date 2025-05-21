@@ -35,5 +35,8 @@ module com.example.knk_gr1 {
     opens Application to javafx.fxml;
     exports Application;
 
+    opens models.Dto.RrugaDto to javafx.base;
+    exports models.Dto.RrugaDto;
+
 
 }

@@ -4,11 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import models.Adresa;
 import models.UserActivity;
-import services.UserActivityService;
+import repository.AdresaRepository;
 import utils.SessionManager;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class KerkimetEFunditController extends BaseController {
@@ -22,9 +24,7 @@ public class KerkimetEFunditController extends BaseController {
     @FXML
     private TableColumn<UserActivity, String> colAdresa;
 
-    private final UserActivityService userActivityService = new UserActivityService();
-
-
+    private final AdresaRepository adresaRepo = new AdresaRepository();
 
     @FXML
     public void initialize() {
@@ -32,17 +32,24 @@ public class KerkimetEFunditController extends BaseController {
         colAdresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
         activityTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        if (SessionManager.getCurrentUser() == null) {
+            System.out.println("Nuk ka përdorues të kyçur!");
+            return;
+        }
 
-        int userId = SessionManager.getCurrentUser().getId(); // ← KJO është kyçe
-        List<UserActivity> teGjitha = userActivityService.getByUserId(userId);
+        int userId = SessionManager.getCurrentUser().getId();
+        List<Adresa> recent = adresaRepo.getRecentSearchesByUser(userId);
 
-        List<UserActivity> vetem14Ditet = teGjitha.stream()
-                .filter(a -> {
-                    LocalDate dataAktivitetit = LocalDate.parse(a.getData());
-                    return dataAktivitetit.isAfter(LocalDate.now().minusDays(14));
-                })
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        List<UserActivity> formatted = recent.stream()
+                .map(a -> new UserActivity(
+                        userId,
+                        a.getDataKerkimit() != null ? a.getDataKerkimit().toLocalDateTime().toLocalDate().format(formatter) : "",
+                        a.getRruga() + " nr. " + a.getNumri() + ", Kodi: " + a.getKodiPostar()
+                ))
                 .toList();
-        activityTable.getItems().setAll(vetem14Ditet);
-    }
 
+        activityTable.getItems().setAll(formatted);
+    }
 }

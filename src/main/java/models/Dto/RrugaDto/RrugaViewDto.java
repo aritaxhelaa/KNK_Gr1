@@ -1,30 +1,25 @@
-package models.Dto.AdresaDto;
+package models.Dto.RrugaDto;
 
-public class AdresaViewDto {
+public class RrugaViewDto {
     private String komuna;
     private String vendbanimi; // qyteti ose fshati
     private String lagjia;
     private String rruga;
-    private int numri;
-    private int kodiPostar;
+    private String kodiPostar;
 
-    public AdresaViewDto(String komuna, String vendbanimi, String lagjia, String rruga, int numri, int kodiPostar) {
+    public RrugaViewDto(String komuna, String vendbanimi, String lagjia,
+                        String rruga, String kodiPostar) {
         this.komuna = komuna;
         this.vendbanimi = vendbanimi;
         this.lagjia = lagjia;
         this.rruga = rruga;
-        this.numri = numri;
         this.kodiPostar = kodiPostar;
     }
 
+    // Getters
     public String getKomuna() { return komuna; }
     public String getVendbanimi() { return vendbanimi; }
     public String getLagjia() { return lagjia; }
     public String getRruga() { return rruga; }
-    public int getNumri() { return numri; }
-    public int getKodiPostar() { return kodiPostar; }
-
-    public void setKodiPostar(int kodiPostar) {
-        this.kodiPostar = kodiPostar;
-    }
+    public String getKodiPostar() { return kodiPostar; }
 }

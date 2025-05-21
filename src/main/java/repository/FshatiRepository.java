@@ -124,4 +124,21 @@ public class FshatiRepository extends BaseRepository<Fshati, CreateFshatiDto, Up
         return lista;
     }
 
+    public Fshati getByNameAndKomunaId(String emri, int komunaId) {
+        String query = "SELECT * FROM fshati WHERE emri = ? AND komuna_id = ?";
+        try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
+            stmt.setString(1, emri);
+            stmt.setInt(2, komunaId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Fshati.getInstance(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

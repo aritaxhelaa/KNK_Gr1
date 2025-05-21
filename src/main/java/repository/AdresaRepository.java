@@ -62,11 +62,9 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
             params.add(adresaDto.getKodi_postar());
         }
 
-        if (params.isEmpty()) {
-            return getById(adresaDto.getId());
-        }
+        if (params.isEmpty()) return getById(adresaDto.getId());
 
-        query.setLength(query.length() - 2); // remove last comma
+        query.setLength(query.length() - 2);
         query.append(" WHERE id = ?");
         params.add(adresaDto.getId());
 
@@ -76,34 +74,42 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
                 pstm.setObject(i + 1, params.get(i));
             }
             int updated = pstm.executeUpdate();
-            if (updated == 1) {
-                return this.getById(adresaDto.getId());
-            }
+            if (updated == 1) return this.getById(adresaDto.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String adresa) {
+    public List<AdresaViewDto> kerkoAdresa(String komuna, String lloji, String vendbanimi, String rruga) {
         List<AdresaViewDto> rezultatet = new ArrayList<>();
 
-        String vendbanimiTabela = lloji.equalsIgnoreCase("Fshat") ? "fshati" : "qyteti";
+        String tabelaVendbanimit = lloji.equalsIgnoreCase("Fshat") ? "fshati" : "qyteti";
+        String kolonaID = lloji.equalsIgnoreCase("Fshat") ? "fshati_id" : "qyteti_id";
 
         String query = """
-        SELECT k.emri AS komuna, v.emri AS vendbanimi, l.emri AS lagjia, a.rruga, a.numri, kp.kodi AS kodi_postar
+        SELECT 
+            k.emri AS komuna,
+            v.emri AS vendbanimi,
+            l.emri AS lagjia,
+            a.rruga,
+            a.numri,
+            kp.kodi AS kodi_postar
         FROM adresa a
-        JOIN kodi_postar kp ON a.kodi_postar = kp.id
-        JOIN %s v ON kp.vendbanimi_id = v.id
-        JOIN komuna k ON v.komuna_id = k.id
-        JOIN lagjja l ON kp.lagjja_id = l.id
-        WHERE k.emri = ? AND v.emri = ? AND a.rruga LIKE ?
-        """.formatted(vendbanimiTabela);
+        JOIN rruga r ON LOWER(a.rruga) = LOWER(r.emri)
+        JOIN lagjja l ON r.lagjja_id = l.id
+        JOIN komuna k ON l.komuna_id = k.id
+        JOIN kodi_postar kp ON a.kodi_postar::VARCHAR = kp.kodi
+        JOIN %s v ON r.%s = v.id
+        WHERE LOWER(k.emri) = ?
+          AND LOWER(v.emri) = ?
+          AND LOWER(a.rruga) LIKE ?
+    """.formatted(tabelaVendbanimit, kolonaID);
 
         try (PreparedStatement ps = this.connection.prepareStatement(query)) {
-            ps.setString(1, komuna);
-            ps.setString(2, vendbanimi);
-            ps.setString(3, "%" + adresa + "%");
+            ps.setString(1, komuna.toLowerCase());
+            ps.setString(2, vendbanimi.toLowerCase());
+            ps.setString(3, "%" + rruga.toLowerCase() + "%");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -112,6 +118,7 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
                         rs.getString("vendbanimi"),
                         rs.getString("lagjia"),
                         rs.getString("rruga"),
+                        rs.getInt("numri"),
                         rs.getInt("kodi_postar")
                 ));
             }
@@ -122,7 +129,8 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         return rezultatet;
     }
 
-    //  Shto një kërkim në historikun e përdoruesit
+
+
     public void ruajKerkim(int userId, int adresaId) {
         String query = "INSERT INTO recent_searches (user_id, adresa_id) VALUES (?, ?)";
         try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
@@ -134,18 +142,17 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
         }
     }
 
-    //  Kthe kërkimet e fundit të përdoruesit
     public List<Adresa> getRecentSearchesByUser(int userId) {
         List<Adresa> lista = new ArrayList<>();
 
         String query = """
-            SELECT a.*
+            SELECT a.*, rs.search_time
             FROM recent_searches rs
             JOIN adresa a ON rs.adresa_id = a.id
             WHERE rs.user_id = ?
             ORDER BY rs.search_time DESC
             LIMIT 10
-            """;
+        """;
 
         try (PreparedStatement stmt = this.connection.prepareStatement(query)) {
             stmt.setInt(1, userId);
@@ -153,9 +160,9 @@ public class AdresaRepository extends BaseRepository<Adresa, CreateAdresaDto, Up
 
             while (rs.next()) {
                 Adresa adresa = Adresa.getInstance(rs);
+                adresa.setDataKerkimit(rs.getTimestamp("search_time"));
                 lista.add(adresa);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
