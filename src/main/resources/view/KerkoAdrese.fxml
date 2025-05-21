@@ -15,6 +15,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="Controllers.KerkoAdreseController"
@@ -45,57 +47,66 @@
     </left>
 
     <center>
-        <VBox spacing="20.0" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="25.0" bottom="25.0" left="25.0" right="25.0"/>
-            </padding>
+        <VBox alignment="TOP_LEFT" spacing="20" BorderPane.alignment="CENTER">
+            <padding><Insets top="40" right="40" bottom="20" left="40" /></padding>
             <children>
                 <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
                     <Button onAction="#switchToAlbanian" text="AL" />
                     <Button onAction="#switchToEnglish" text="EN" />
                 </HBox>
 
-                <Label prefWidth="548.0" styleClass="title" text="%main.title" wrapText="true">
-                    <font>
-                        <Font name="System Bold" size="23.0" />
-                    </font>
-                </Label>
+                <Label fx:id="lblWelcome" style="-fx-font-size: 16px; -fx-text-fill: #006699; -fx-font-weight: bold;" text="%qytetar.welcome" />
+                <Label fx:id="lblTitulli" style="-fx-text-fill: #002147; -fx-font-size: 18px; -fx-font-weight: bold;" text="%main.title" wrapText="true" />
+                <Label fx:id="lblKerkoAdrese" styleClass="search-label" text="%search.title" />
 
-                <Label styleClass="search-label" text="%main.search.label" />
-
-                <GridPane hgap="10.0" vgap="10.0" prefWidth="548.0">
+                <GridPane hgap="10" vgap="10" prefWidth="548.0">
                     <columnConstraints>
-                        <ColumnConstraints prefWidth="150.0" />
-                        <ColumnConstraints prefWidth="350.0" />
+                        <ColumnConstraints prefWidth="150.0" hgrow="SOMETIMES" />
+                        <ColumnConstraints prefWidth="350.0" hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints prefHeight="40.0" />
                         <RowConstraints prefHeight="40.0" />
                         <RowConstraints prefHeight="40.0" />
-                        <RowConstraints prefHeight="40.0" />
                         <RowConstraints prefHeight="50.0" />
+                        <RowConstraints />
                     </rowConstraints>
+
                     <children>
-                        <Label text="%form.municipality" GridPane.rowIndex="0" />
-                        <ComboBox fx:id="komunaComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <!-- Komuna -->
+                        <Label fx:id="lblKomuna" text="%form.municipality" />
+                        <ComboBox fx:id="comboKomuna" onAction="#handleKomunaLlojiChanged"
+                                  prefWidth="350.0" promptText="%form.prompt.municipality"
+                                  GridPane.columnIndex="1" />
 
-                        <Label text="%form.type" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="llojiComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <!-- Lloji i vendbanimit -->
+                        <Label fx:id="lblLlojiVendbanimit" text="%form.settlement.type" GridPane.rowIndex="1" />
+                        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <RadioButton fx:id="radioQytet" onAction="#handleKomunaLlojiChanged" text="%form.city">
+                                <toggleGroup><ToggleGroup fx:id="llojiGroup" /></toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="radioFshat" onAction="#handleKomunaLlojiChanged"
+                                         text="%form.village" toggleGroup="$llojiGroup" />
+                        </HBox>
 
-                        <Label text="%form.vendbanimi" GridPane.rowIndex="2" />
-                        <TextField fx:id="vendbanimiField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <!-- Vendbanimi -->
+                        <Label fx:id="lblEmriVendbanimit" text="%form.settlement.name" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="comboEmriVendbanimit" editable="true" prefWidth="350.0"
+                                  promptText="%form.prompt.settlement"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                        <Label text="%form.street" GridPane.rowIndex="3" />
-                        <TextField fx:id="rrugaField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <!-- Rruga (e përmirësuar me ComboBox) -->
+                        <Label fx:id="lblRruga" text="%form.street" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="comboRruga" promptText="%form.prompt.street"
+                                  prefWidth="350.0"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                        <Button fx:id="searchButton"
-                                onAction="#handleSearch"
-                                text="%form.button.search"
-                                styleClass="search-button"
-                                GridPane.columnIndex="1"
-                                GridPane.rowIndex="4"
-                                GridPane.halignment="RIGHT"
-                                prefWidth="130.0" prefHeight="40.0" />
+                        <!-- Butoni Kërko -->
+                        <Button fx:id="btnKerko" onAction="#kerkoAdrese"
+                                text="%form.button.search" styleClass="search-button"
+                                prefWidth="130.0" prefHeight="40.0"
+                                GridPane.columnIndex="1" GridPane.rowIndex="4"
+                                GridPane.halignment="RIGHT" />
                     </children>
                 </GridPane>
             </children>

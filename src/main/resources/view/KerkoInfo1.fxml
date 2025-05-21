@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.KerkoInfoController1"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <children>
+        <VBox spacing="20.0" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+            <HBox alignment="TOP_RIGHT" spacing="10" styleClass="language-buttons">
+                <Button text="AL" onAction="#switchToAlbanian" />
+                <Button text="EN" onAction="#switchToEnglish" />
+            </HBox>
+
+            <Label text="%kerko.title"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tabelaRezultateve" prefWidth="760">
+                <columns>
+                    <TableColumn fx:id="colKomuna" text="%kerko.column.komuna" prefWidth="180"/>
+                    <TableColumn fx:id="colVendbanimi" text="%kerko.column.vendbanimi" prefWidth="180"/>
+                    <TableColumn fx:id="colLagjia" text="%kerko.column.lagjia" prefWidth="180"/>
+                    <TableColumn fx:id="colRruga" text="list.column.rruga" prefWidth="180"/> <!-- Ndrysho emrin -->
+                    <TableColumn fx:id="colKodiPostar" text="%kerko.column.kodipostar" prefWidth="180"/>
+                </columns>
+            </TableView>
+
+            <Button text="%button.back" onAction="#handleKthehu"
+                    style="-fx-background-color: #d9a441; -fx-text-fill: white;" />
+        </VBox>
+    </children>
+</AnchorPane>
