@@ -2,18 +2,18 @@ package Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.Button;
 import models.Dto.AdresaDto.AdresaViewDto;
 import repository.AdresaRepository;
+import services.LanguageManager;
 import services.SceneManager;
 import utils.SceneLocator;
 import utils.SessionManager;
 import utils.SessionSearchData;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class KerkoInfoController extends BaseController {
 
@@ -42,6 +42,8 @@ public class KerkoInfoController extends BaseController {
 
     @FXML
     public void initialize() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         // Inicializimi i kolonave
         colKomuna.setCellValueFactory(new PropertyValueFactory<>("komuna"));
         colVendbanimi.setCellValueFactory(new PropertyValueFactory<>("vendbanimi"));
@@ -49,9 +51,14 @@ public class KerkoInfoController extends BaseController {
         colRruga.setCellValueFactory(new PropertyValueFactory<>("rruga"));
         colKodiPostar.setCellValueFactory(new PropertyValueFactory<>("kodiPostar"));
 
-        // Merr të dhënat nga sesioni
         SessionSearchData data = SessionManager.getSearchData();
-        if (data != null) {
+
+        if (data == null) {
+            showAlert(bundle.getString("alert.warning.title"), bundle.getString("alert.no_search_data"));
+            return;
+        }
+
+        try {
             List<AdresaViewDto> rezultatet = adresaRepository.kerkoAdresa(
                     data.getKomuna(),
                     data.getLloji(),
@@ -59,7 +66,16 @@ public class KerkoInfoController extends BaseController {
                     data.getAdresa()
             );
 
-            tabelaRezultateve.setItems(FXCollections.observableArrayList(rezultatet));
+            if (rezultatet == null || rezultatet.isEmpty()) {
+                showAlert(bundle.getString("alert.warning.title"), bundle.getString("alert.no_results_found"));
+            } else {
+                tabelaRezultateve.setItems(FXCollections.observableArrayList(rezultatet));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(bundle.getString("alert.warning.title"),
+                    bundle.getString("alert.search_failed") + ": " + e.getMessage());
         }
     }
 
@@ -69,6 +85,16 @@ public class KerkoInfoController extends BaseController {
             SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
         } catch (Exception e) {
             e.printStackTrace();
+            ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+            showAlert(bundle.getString("alert.warning.title"), bundle.getString("alert.scene_load_failed"));
         }
+    }
+
+    private void showAlert(String title, String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

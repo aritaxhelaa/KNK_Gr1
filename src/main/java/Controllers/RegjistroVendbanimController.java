@@ -7,8 +7,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import models.Komuna;
 import repository.KomunaRepository;
+import services.LanguageManager;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class RegjistroVendbanimController extends BaseController {
 
@@ -49,8 +51,10 @@ public class RegjistroVendbanimController extends BaseController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Gabim", "Nuk u arrit të ngarkohen komunat.");
+            ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+            showAlert(bundle.getString("alert.error.title"), bundle.getString("alert.no_municipalities"));
         }
+
     }
 
     @FXML
@@ -62,9 +66,11 @@ public class RegjistroVendbanimController extends BaseController {
         String objekti = objektiField.getText();
         String kodiPostar = kodiPostarField.getText();
 
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         if (komuna == null || lloji == null || emri.isEmpty() || rruga.isEmpty()
                 || objekti.isEmpty() || kodiPostar.isEmpty()) {
-            showAlert("Gabim", "Ju lutem plotësoni të gjitha fushat.");
+            showAlert(bundle.getString("alert.warning.title"), bundle.getString("alert.fill_all_fields"));
             return;
         }
 
@@ -76,7 +82,8 @@ public class RegjistroVendbanimController extends BaseController {
         System.out.println("Objekti: " + objekti);
         System.out.println("Kodi Postar: " + kodiPostar);
 
-        showAlert("Sukses", "Vendbanimi u regjistrua me sukses.");
+
+        showAlert(bundle.getString("alert.success.title"), bundle.getString("register.settlement.success"));
         clearFields();
     }
 

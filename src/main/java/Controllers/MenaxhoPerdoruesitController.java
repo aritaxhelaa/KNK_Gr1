@@ -14,47 +14,40 @@ import services.LanguageManager;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MenaxhoPerdoruesitController extends BaseController {
 
-    @FXML
-    private TableView<User> tblUsers;
-
-    @FXML
-    private TableColumn<User, String> colName;
-
-    @FXML
-    private TableColumn<User, String> colRoli;
-
-    @FXML
-    private TableColumn<User, Timestamp> colCreatedAt;
-
-    @FXML
-    private TableColumn<User, Void> colDelete;
-
-    @FXML
-    private TableColumn<User, Void> colUpdate;
-
-    @FXML
-    private VBox formaUpdate;
-
-    @FXML
-    private Label lblEmriZgjedhur;
-
-    @FXML
-    private ComboBox<String> comboRoli;
+    @FXML private TableView<User> tblUsers;
+    @FXML private TableColumn<User, String> colName;
+    @FXML private TableColumn<User, String> colRoli;
+    @FXML private TableColumn<User, Timestamp> colCreatedAt;
+    @FXML private TableColumn<User, Void> colDelete;
+    @FXML private TableColumn<User, Void> colUpdate;
+    @FXML private VBox formaUpdate;
+    @FXML private Label lblEmriZgjedhur;
+    @FXML private ComboBox<String> comboRoli;
 
     private final UserRepository userRepository = new UserRepository();
     private User userZgjedhur;
 
     @FXML
     private void initialize() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
+        // Përkthim titujsh kolonash
+        colName.setText(bundle.getString("manage.column.user"));
+        colRoli.setText(bundle.getString("manage.column.position"));
+        colCreatedAt.setText(bundle.getString("manage.column.created"));
+        colDelete.setText(bundle.getString("manage.column.delete"));
+        colUpdate.setText(bundle.getString("manage.column.update"));
+
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colRoli.setCellValueFactory(new PropertyValueFactory<>("roli"));
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
         tblUsers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Formatimi i dates
+        // Formatimi i datës
         colCreatedAt.setCellFactory(column -> new TableCell<>() {
             private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
@@ -65,7 +58,12 @@ public class MenaxhoPerdoruesitController extends BaseController {
             }
         });
 
-        comboRoli.setItems(FXCollections.observableArrayList("qytetar", "zyrtar_komunal", "admin"));
+        comboRoli.setItems(FXCollections.observableArrayList(
+                bundle.getString("role.citizen"),
+                bundle.getString("role.municipal"),
+                bundle.getString("role.admin")
+        ));
+
         formaUpdate.setVisible(false);
         ngarkoPerdoruesit();
     }
@@ -78,6 +76,8 @@ public class MenaxhoPerdoruesitController extends BaseController {
     }
 
     private void shtoButonat() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         colDelete.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button();
 
@@ -95,7 +95,7 @@ public class MenaxhoPerdoruesitController extends BaseController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    btn.setText(LanguageManager.getInstance().getResourceBundle().getString("button.delete"));
+                    btn.setText(bundle.getString("button.delete"));
                     setGraphic(btn);
                 }
             }
@@ -108,7 +108,17 @@ public class MenaxhoPerdoruesitController extends BaseController {
                 btn.setOnAction(event -> {
                     userZgjedhur = getTableView().getItems().get(getIndex());
                     lblEmriZgjedhur.setText(userZgjedhur.getName());
-                    comboRoli.getSelectionModel().select(userZgjedhur.getRoli());
+
+                    // Krahasim sipas kodit të brendshëm (p.sh. "qytetar") dhe përkthim për shfaqje
+                    String roli = userZgjedhur.getRoli();
+                    ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
+                    if (roli != null) {
+                        if (roli.equals("qytetar")) comboRoli.getSelectionModel().select(bundle.getString("role.citizen"));
+                        else if (roli.equals("zyrtar_komunal")) comboRoli.getSelectionModel().select(bundle.getString("role.municipal"));
+                        else if (roli.equals("admin")) comboRoli.getSelectionModel().select(bundle.getString("role.admin"));
+                    }
+
                     formaUpdate.setVisible(true);
                 });
             }
@@ -119,18 +129,25 @@ public class MenaxhoPerdoruesitController extends BaseController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    btn.setText(LanguageManager.getInstance().getResourceBundle().getString("button.edit"));
+                    btn.setText(bundle.getString("button.edit"));
                     setGraphic(btn);
                 }
             }
         });
     }
 
-
     @FXML
     private void ruajNdryshimin() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         if (userZgjedhur != null) {
-            String roliIRi = comboRoli.getSelectionModel().getSelectedItem();
+            String roliZgjedhur = comboRoli.getSelectionModel().getSelectedItem();
+            String roliIRi = null;
+
+            if (roliZgjedhur.equals(bundle.getString("role.citizen"))) roliIRi = "qytetar";
+            else if (roliZgjedhur.equals(bundle.getString("role.municipal"))) roliIRi = "zyrtar_komunal";
+            else if (roliZgjedhur.equals(bundle.getString("role.admin"))) roliIRi = "admin";
+
             if (roliIRi != null && !roliIRi.equals(userZgjedhur.getRoli())) {
                 userRepository.update(new UpdateUserDto(userZgjedhur.getId(), userZgjedhur.getEmail(), roliIRi));
                 formaUpdate.setVisible(false);

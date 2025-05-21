@@ -55,11 +55,17 @@ public class LogInController extends BaseController {
                 case "admin" -> SceneManager.load(SceneLocator.ADMIN_DASHBOARD);
                 case "zyrtar_komunal" -> SceneManager.load(SceneLocator.KOMUNAL_DASHBOARD);
                 case "qytetar" -> SceneManager.load(SceneLocator.QYTETAR_DASHBOARD);
-                default -> ErrorLable.setText("Roli i panjohur.");
+                default -> ErrorLable.setText(LanguageManager.getInstance()
+                        .getResourceBundle()
+                        .getString("error.unknown_role"));
+
             }
 
         } catch (Exception e) {
-            ErrorLable.setText("Gabim gjatë kyçjes.");
+            ErrorLable.setText(LanguageManager.getInstance()
+                    .getResourceBundle()
+                    .getString("error.database_failed1"));
+
         }
     }
 
@@ -68,7 +74,10 @@ public class LogInController extends BaseController {
         try {
             SceneManager.load(SceneLocator.REGISTER_PAGE);
         } catch (Exception e) {
-            ErrorLable.setText("Nuk mund të hapet faqja e regjistrimit.");
+            ErrorLable.setText(LanguageManager.getInstance()
+                    .getResourceBundle()
+                    .getString("error.open_register_failed"));
+
         }
     }
 }

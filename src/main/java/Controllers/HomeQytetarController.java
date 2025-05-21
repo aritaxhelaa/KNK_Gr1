@@ -12,11 +12,13 @@ import models.Dto.QytetiDto.CreateQytetiDto;
 import models.Dto.RrugaDto.RrugaViewDto;
 import repository.*;
 import services.SceneManager;
+import services.LanguageManager;
 import utils.SceneLocator;
 import utils.SessionManager;
 import utils.SessionSearchData;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class HomeQytetarController extends BaseController {
@@ -46,20 +48,20 @@ public class HomeQytetarController extends BaseController {
 
     @FXML
     private void initialize() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         try {
-            // Inicializimi i përdoruesit
             if (SessionManager.getCurrentUser() != null) {
                 String emri = SessionManager.getCurrentUser().getName();
-                lblWelcome.setText("Mirë se vini, " + emri + "!");
+                lblWelcome.setText(bundle.getString("qytetar.welcome") + " " + emri + "!");
             } else {
-                lblWelcome.setText("Mirë se vini!");
+                lblWelcome.setText(bundle.getString("qytetar.welcome"));
                 System.err.println("[Gabim] Përdoruesi nuk është loguar");
             }
 
-            // Ngarkimi i komunave
             List<Komuna> komunaList = komunaRepository.getAll();
             if (komunaList == null || komunaList.isEmpty()) {
-                showAlert("Nuk u gjetën komuna në bazën e të dhënave!");
+                showAlert(bundle.getString("alert.no_municipalities"));
                 return;
             }
 
@@ -73,7 +75,6 @@ public class HomeQytetarController extends BaseController {
                 }
             });
 
-            // Inicializimi i listave të vendbanimeve dhe rrugëve
             vendbanimeList = FXCollections.observableArrayList();
             filteredVendbanime = new FilteredList<>(vendbanimeList, p -> true);
             comboEmriVendbanimit.setItems(filteredVendbanime);
@@ -82,7 +83,6 @@ public class HomeQytetarController extends BaseController {
             rrugaList = FXCollections.observableArrayList();
             comboRruga.setItems(rrugaList);
 
-            // Filter për vendbanimet
             comboEmriVendbanimit.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
                 final TextField editor = comboEmriVendbanimit.getEditor();
                 final String selected = comboEmriVendbanimit.getSelectionModel().getSelectedItem();
@@ -98,24 +98,24 @@ public class HomeQytetarController extends BaseController {
                 }
             });
 
-            // Inicializimi i toggle group për llojin e vendbanimit
             llojiGroup = new ToggleGroup();
             radioQytet.setToggleGroup(llojiGroup);
             radioFshat.setToggleGroup(llojiGroup);
 
-            // Listener për ndryshime
             comboKomuna.setOnAction(event -> handleKomunaLlojiChanged());
             radioQytet.setOnAction(event -> handleKomunaLlojiChanged());
             radioFshat.setOnAction(event -> handleKomunaLlojiChanged());
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Gabim në inicializimin e faqes: " + e.getMessage());
+            showAlert(bundle.getString("alert.processing_error") + ": " + e.getMessage());
         }
     }
 
     @FXML
     private void handleKomunaLlojiChanged() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         try {
             String lloji = radioQytet.isSelected() ? "Qytet" : radioFshat.isSelected() ? "Fshat" : null;
             String komuna = comboKomuna.getValue();
@@ -134,12 +134,11 @@ public class HomeQytetarController extends BaseController {
             if (selectedKomuna == null) {
                 vendbanimeList.clear();
                 rrugaList.clear();
-                showAlert("Komuna e zgjedhur nuk u gjet në bazën e të dhënave!");
+                showAlert(bundle.getString("alert.selected_municipality_not_found"));
                 return;
             }
 
             if (lloji.equals("Qytet")) {
-                // Për qytet
                 vendbanimeList.setAll(List.of(komuna));
                 comboEmriVendbanimit.getSelectionModel().selectFirst();
 
@@ -157,14 +156,13 @@ public class HomeQytetarController extends BaseController {
                         qyteti = qytetiRepository.create(qytetiDto);
 
                         if (qyteti == null) {
-                            showAlert("Gabim në krijimin e qytetit të ri!");
+                            showAlert(bundle.getString("alert.city_creation_failed"));
                             rrugaList.clear();
                             return;
                         }
                     }
                 }
 
-                // Merr rrugët për këtë qytet
                 List<RrugaViewDto> rruget = rrugaRepository.getByKomunaAndVendbanimi(
                         selectedKomuna.getId(), qyteti.getId(), null);
 
@@ -173,13 +171,11 @@ public class HomeQytetarController extends BaseController {
                         rrugaList.add(r.getRruga());
                     }
 
-
                 } else {
                     rrugaList.clear();
-                    showAlert("Nuk u gjetën rrugë për këtë qytet!");
+                    showAlert(bundle.getString("alert.no_streets_found_city"));
                 }
             } else {
-                // Për fshat
                 List<Fshati> fshatrat = fshatiRepository.getByKomunaName(komuna);
 
                 if (fshatrat != null && !fshatrat.isEmpty()) {
@@ -187,7 +183,6 @@ public class HomeQytetarController extends BaseController {
                             .map(Fshati::getEmri)
                             .collect(Collectors.toList()));
 
-                    // Nëse është zgjedhur një fshat, merr rrugët për atë fshat
                     String selectedFshat = comboEmriVendbanimit.getValue();
                     if (selectedFshat != null) {
                         Fshati fshati = fshatrat.stream()
@@ -211,20 +206,20 @@ public class HomeQytetarController extends BaseController {
                     }
                 } else {
                     vendbanimeList.clear();
-                    showAlert("Nuk u gjetën fshatra për këtë komunë!");
                     rrugaList.clear();
+                    showAlert(bundle.getString("alert.no_villages_found"));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Gabim në përpunimin e të dhënave: " + e.getMessage());
+            showAlert(bundle.getString("alert.processing_error") + ": " + e.getMessage());
         }
     }
 
-
-
     @FXML
     private void kerkoAdrese() {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
+
         try {
             String komuna = comboKomuna.getValue();
             String lloji = radioQytet.isSelected() ? "Qytet" : radioFshat.isSelected() ? "Fshat" : null;
@@ -232,22 +227,20 @@ public class HomeQytetarController extends BaseController {
             String rruga = comboRruga.getValue();
 
             if (komuna == null || lloji == null || vendbanimi == null || rruga == null || rruga.isBlank()) {
-                showAlert("Ju lutem plotësoni të gjitha fushat!");
+                showAlert(bundle.getString("alert.fill_all_fields"));
                 return;
             }
 
-            // Ruaj në session për me i shfaq në faqen tjetër
             SessionManager.setSearchData(new SessionSearchData(komuna, lloji, vendbanimi, rruga));
 
             AdresaRepository adresaRepository = new AdresaRepository();
             List<AdresaViewDto> gjetura = adresaRepository.kerkoAdresa(komuna, lloji, vendbanimi, rruga);
 
             if (gjetura.isEmpty()) {
-                showAlert("Nuk u gjet asnjë adresë për ruajtje.");
+                showAlert(bundle.getString("alert.no_address_found"));
                 return;
             }
 
-            // Gjej adresën ekzistuese që përputhet për me e ruajt si kërkim
             AdresaViewDto dto = gjetura.get(0);
             Adresa ekzistuese = adresaRepository.gjejNgaDto(dto);
 
@@ -255,22 +248,18 @@ public class HomeQytetarController extends BaseController {
                 adresaRepository.ruajKerkim(SessionManager.getCurrentUser().getId(), ekzistuese.getId());
             }
 
-            // Shko në faqen tjetër për rezultatet
             SceneManager.load(SceneLocator.KERKO_INFO);
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Gabim në kërkimin e adresës: " + e.getMessage());
+            showAlert(bundle.getString("alert.search_failed") + ": " + e.getMessage());
         }
     }
 
-
-
-
-
     private void showAlert(String message) {
+        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Vërejtje");
+        alert.setTitle(bundle.getString("alert.warning.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

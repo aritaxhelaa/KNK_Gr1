@@ -13,7 +13,6 @@ import services.SceneManager;
 import utils.SceneLocator;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class KerkoAdreseController extends BaseController {
@@ -27,15 +26,16 @@ public class KerkoAdreseController extends BaseController {
     private final AdresaRepository adresaRepository = new AdresaRepository();
     private final KomunaRepository komunaRepository = new KomunaRepository();
 
+    private ResourceBundle bundle;
+
     @FXML
     private void initialize() {
+        bundle = LanguageManager.getInstance().getResourceBundle();
         loadLocalizedTexts();
         populateDropdowns();
     }
 
     private void loadLocalizedTexts() {
-        ResourceBundle bundle = LanguageManager.getInstance().getResourceBundle();
-
         komunaComboBox.setPromptText(bundle.getString("form.prompt.municipality"));
         llojiComboBox.setPromptText(bundle.getString("form.prompt.lloji"));
         vendbanimiField.setPromptText(bundle.getString("form.prompt.vendbanimi"));
@@ -45,7 +45,11 @@ public class KerkoAdreseController extends BaseController {
 
     private void populateDropdowns() {
         komunaComboBox.setItems(FXCollections.observableArrayList(komunaRepository.getAll()));
-        llojiComboBox.setItems(FXCollections.observableArrayList("Qytet", "Fshat"));
+
+        llojiComboBox.setItems(FXCollections.observableArrayList(
+                bundle.getString("form.city"),
+                bundle.getString("form.village")
+        ));
 
         komunaComboBox.setConverter(new StringConverter<>() {
             @Override
@@ -70,25 +74,25 @@ public class KerkoAdreseController extends BaseController {
         String rruga = rrugaField.getText();
 
         if (komunaObj == null || lloji == null || vendbanimi.isEmpty() || rruga.isEmpty()) {
-            showAlert("Gabim", "Ju lutem plotësoni të gjitha fushat.");
+            showAlert(bundle.getString("alert.warning.title"), bundle.getString("alert.fill_all_fields"));
             return;
         }
 
         String komunaEmri = komunaObj.getEmri();
-
         List<AdresaViewDto> rezultatet = adresaRepository.kerkoAdresa(komunaEmri, lloji, vendbanimi, rruga);
+
         if (rezultatet.isEmpty()) {
-            showAlert("Nuk u gjet", "Nuk u gjet asnjë adresë.");
+            showAlert(bundle.getString("alert.no_results.title"), bundle.getString("alert.no_address_found"));
         } else {
             StringBuilder sb = new StringBuilder();
             for (AdresaViewDto dto : rezultatet) {
-                sb.append("Komuna: ").append(dto.getKomuna()).append("\n")
-                        .append("Vendbanimi: ").append(dto.getVendbanimi()).append("\n")
-                        .append("Lagjja: ").append(dto.getLagjia()).append("\n")
-                        .append("Adresa: ").append(dto.getRruga()).append("\n")
-                        .append("Kodi postar: ").append(dto.getKodiPostar()).append("\n\n");
+                sb.append(bundle.getString("label.municipality")).append(": ").append(dto.getKomuna()).append("\n")
+                        .append(bundle.getString("label.settlement")).append(": ").append(dto.getVendbanimi()).append("\n")
+                        .append(bundle.getString("label.neighborhood")).append(": ").append(dto.getLagjia()).append("\n")
+                        .append(bundle.getString("label.address")).append(": ").append(dto.getRruga()).append("\n")
+                        .append(bundle.getString("label.postal_code")).append(": ").append(dto.getKodiPostar()).append("\n\n");
             }
-            showAlert("Rezultate", sb.toString());
+            showAlert(bundle.getString("alert.results.title"), sb.toString());
         }
     }
 
@@ -99,5 +103,4 @@ public class KerkoAdreseController extends BaseController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-
 }
